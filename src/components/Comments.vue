@@ -165,6 +165,11 @@ export default {
 
   .comment--last
     margin-bottom 1.5em
+
+  .qcw-comment__content img.emojione
+    display inline-block
+    vertical-align middle
+    width 14px
 </style>
 
 

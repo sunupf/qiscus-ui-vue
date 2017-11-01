@@ -1,5 +1,12 @@
 <template lang="pug">
   .qcw-comment-form
+    picker(set="emojione" :exclude="excludedEmoji" title="" 
+      @click="addEmoji" class="qcw-emoji-picker" :class="{'qcw-emoji-picker--active': toggleEmoji}" v-if="toggleEmoji")
+    
+    i(@click="toggleEmojiPicker" class="qcw-emoji-btn" v-if="emojione")
+      icon(name="ic-smiley" v-if="!toggleEmoji")
+      icon(name="ic-close" v-if="toggleEmoji")
+
     textarea(placeholder="Type here then press Enter to send"
       @keydown.enter="trySubmitComment($event)"
       v-model="commentInput")
@@ -16,18 +23,32 @@
 </template>
 
 <script>
+import { Picker } from 'emoji-mart-vue';
+import { scrollIntoElement } from '../lib/utils';
 import Icon from './Icon';
 
 export default {
   name: 'CommentForm',
-  components: { Icon },
+  components: { Icon, Picker },
   props: ['core', 'repliedComment', 'closeReplyHandler'],
   data() {
     return {
       commentInput: '',
+      excludedEmoji: ['flags', 'objects', 'recent'],
+      emojiSize: 16,
+      sheetSize: 16,
+      toggleEmoji: false,
+      emojione,
     };
   },
   methods: {
+    toggleEmojiPicker() {
+      this.toggleEmoji = !this.toggleEmoji;
+    },
+    addEmoji(emoji) {
+      console.info(emoji);
+      this.commentInput = this.commentInput + emoji.native;
+    },
     trySubmitComment(e) {
       if (!e.shiftKey) {
         e.preventDefault();
@@ -45,7 +66,7 @@ export default {
     submitComment(topicId, comment) {
       if (this.repliedComment === null) {
         this.core.submitComment(topicId, comment).then(() => {
-          this.scrollToBottom();
+          scrollIntoElement(this.core);
         });
       } else {
         const payload = {
@@ -60,7 +81,7 @@ export default {
         this.core.submitComment(topicId, comment, null, 'reply', JSON.stringify(payload))
           .then(() => {
             this.closeReplyHandler();
-            this.scrollToBottom();
+            scrollIntoElement(this.core);
           });
       }
     },
@@ -81,7 +102,7 @@ export default {
           vm.core.submitComment(roomId, `[file] ${url} [/file]`)
             .then(() => {
               vm.core.removeUploadedFile(files[0].name, roomId);
-              window.setTimeout(() => self.scrollToBottom(), 0);
+              window.setTimeout(() => scrollIntoElement(vm.core), 0);
             });
         } else {
           vm.$toasted.error('File uploading failed');
@@ -93,14 +114,6 @@ export default {
       // reader.onload = (e) => { vm.uploadedFiles.push(e.target.result) };
       // reader.readAsDataURL(files[0]);
     },
-    scrollToBottom() {
-      const latestCommentId = this.core
-        .selected.comments[this.core.selected.comments.length - 1].id;
-      const element = document.getElementById(latestCommentId);
-      if (element) {
-        element.scrollIntoView({ block: 'end', behaviour: 'smooth' });
-      }
-    },
   },
 };
 </script>
@@ -109,7 +122,20 @@ export default {
   .qcw-comment-form
     display flex
     justify-content space-between
-    padding 7px 20px
+    padding 7px 10px
+    position relative
+
+    .emoji-mart-scroll
+      height 170px
+
+  .qcw-emoji-picker 
+    position absolute
+    bottom: 50px;
+    left: 0;
+    width: 100% !important;
+    height: 315px;
+    box-shadow: 0 -6px 19px rgba(0,0,0,0.3);
+    transition: all 0.32s cubic-bezier(0.75, -0.02, 0.2, 0.97);
   
   .qcw-comment-form textarea
     border 0
@@ -119,13 +145,18 @@ export default {
     max-height 100%
     overflow-y auto
     resize none
+    border-bottom 1px solid #ccc
   
   .qcw-comment-form i
     display inline-block
     text-align center
     cursor pointer
-    flex 0 36px
+    flex 0 27px
     align-self center
+
+    &.qcw-emoji-btn
+      margin-right 10px
+      font-size 14px
 
     label
       cursor pointer

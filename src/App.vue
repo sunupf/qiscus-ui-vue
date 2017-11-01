@@ -8,6 +8,7 @@
 import QiscusCore from './lib/SDKCore';
 import QcwTrigger from './components/QcwTrigger';
 import ChatWindow from './components/ChatWindow';
+import { scrollIntoElement } from './lib/utils';
 
 export default {
   name: 'app',
@@ -28,7 +29,7 @@ export default {
       chatTarget(target) {
         self.core.chatTarget(target).then(() => {
           if (!self.chatWindowStatus) self.toggleWindowStatus();
-          window.setTimeout(() => self.scrollToBottom(), 0);
+          window.setTimeout(() => scrollIntoElement(self.core), 0);
         });
       },
     };
@@ -36,14 +37,6 @@ export default {
   methods: {
     toggleWindowStatus() {
       this.chatWindowStatus = !this.chatWindowStatus;
-    },
-    scrollToBottom() {
-      const latestCommentId = this.core
-        .selected.comments[this.core.selected.comments.length - 1].id;
-      const element = document.getElementById(latestCommentId);
-      if (element) {
-        element.scrollIntoView({ block: 'end', behaviour: 'smooth' });
-      }
     },
   },
 };

@@ -27,6 +27,7 @@ import Icon from './Icon';
 import Comments from './Comments';
 import CommentForm from './CommentForm';
 import CommentReplyPreview from './CommentReplyPreview';
+import { scrollIntoElement } from '../lib/utils';
 
 export default {
   name: 'ChatWindow',
@@ -52,12 +53,7 @@ export default {
       this.repliedComment = null;
     },
     scrollToBottom() {
-      const latestCommentId = this.core
-        .selected.comments[this.core.selected.comments.length - 1].id;
-      const element = document.getElementById(latestCommentId);
-      if (element) {
-        element.scrollIntoView({ block: 'end', behaviour: 'smooth' });
-      }
+      scrollIntoElement(this.core);
     },
   },
 };
