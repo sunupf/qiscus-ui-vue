@@ -7,7 +7,7 @@
       v-if="comment.type != 'system_event'"
       :class="{ 'comment--me': comment.username_real == userData.email, 'comment--parent': isParent, 'comment--mid': isMid, 'comment--last': isLast }"
     )
-      avatar(:src="comment.avatar" v-if="showAvatar" :class="{'qcw-avatar--hide': !isParent}")
+      avatar(:src="comment.avatar" :class="{'qcw-avatar--hide': !isParent}")
       div(class="qcw-comment__message")
         div(class="qcw-comment__info" v-if="isParent")
           span(class="qcw-comment__username") {{comment.username_as}}

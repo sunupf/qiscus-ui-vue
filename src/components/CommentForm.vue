@@ -1,6 +1,7 @@
 <template lang="pug">
   .qcw-comment-form
     textarea(placeholder="Type here then press Enter to send"
+      @keyup="publishTyping"
       @keydown.enter="trySubmitComment($event)"
       v-model="commentInput")
     i
@@ -63,6 +64,9 @@ export default {
             this.scrollToBottom();
           });
       }
+    },
+    publishTyping() {
+      // this.core.publishTyping();
     },
     uploadFile(e) {
       const vm = this;
