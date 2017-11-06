@@ -8,6 +8,7 @@
       icon(name="ic-close" v-if="toggleEmoji")
 
     textarea(placeholder="Type here then press Enter to send"
+      @keyup="publishTyping"
       @keydown.enter="trySubmitComment($event)"
       v-model="commentInput")
     i
@@ -46,7 +47,6 @@ export default {
       this.toggleEmoji = !this.toggleEmoji;
     },
     addEmoji(emoji) {
-      console.info(emoji);
       this.commentInput = this.commentInput + emoji.native;
     },
     trySubmitComment(e) {
@@ -84,6 +84,9 @@ export default {
             scrollIntoElement(this.core);
           });
       }
+    },
+    publishTyping() {
+      this.core.realtimeAdapter.publishTyping(1);
     },
     uploadFile(e) {
       const vm = this;

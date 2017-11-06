@@ -3,6 +3,8 @@
 
     svg-icon
 
+    image-modal(:uri="imageModalContent" :closeBtnHandler="closeImageModal" v-if="imageModalIsActive")
+
     comment-reply-preview(v-if="repliedComment" :comment="repliedComment" :closeReplyHandler="closeReply")
 
     div.qcw-header(v-if="core.selected" :style="{background: core.UI.colors.headerBackgroundColor}")
@@ -28,19 +30,28 @@ import Comments from './Comments';
 import CommentForm from './CommentForm';
 import CommentReplyPreview from './CommentReplyPreview';
 import { scrollIntoElement } from '../lib/utils';
+import ImageModal from './ImageModal';
 
 export default {
   name: 'ChatWindow',
   props: ['core', 'toggleWindowStatus'],
-  components: { Comments, SvgIcon, Icon, CommentForm, CommentReplyPreview },
+  components: { Comments, SvgIcon, Icon, CommentForm, CommentReplyPreview, ImageModal },
   data() {
     return {
       repliedComment: null,
+      imageModalContent: null,
+      imageModalIsActive: false,
     };
   },
   methods: {
-    openImageModal() {
+    openImageModal(uri) {
       console.info('opening modal');
+      this.imageModalContent = uri;
+      this.imageModalIsActive = true;
+    },
+    closeImageModal() {
+      this.imageModalIsActive = false;
+      this.imageModalContent = null;
     },
     setReply(comment) {
       console.info('set reply');

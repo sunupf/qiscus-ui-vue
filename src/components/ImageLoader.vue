@@ -92,6 +92,8 @@
 
 <style lang="stylus">
   .image-container { height: 100px; }
+  .qcw-image-container img
+    cursor -webkit-zoom-in
   .reload-image-btn {
     display: block;
     width: 100%;
