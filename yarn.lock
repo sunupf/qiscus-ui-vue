@@ -5060,9 +5060,9 @@ vue-toasted@^1.1.22:
   version "1.1.22"
   resolved "https://registry.yarnpkg.com/vue-toasted/-/vue-toasted-1.1.22.tgz#99967c579c9321e2eaa2fee7b2cceac86700eda9"
 
-vue@^2.4.2:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.2.tgz#fd367a87bae7535e47f9dc5c9ec3b496e5feb5a4"
+vue@^2.5.9:
+  version "2.5.9"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.9.tgz#b2380cd040915dca69881dafd121d760952e65f7"
 
 watchpack@^1.4.0:
   version "1.4.0"
