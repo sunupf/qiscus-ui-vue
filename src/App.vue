@@ -49,8 +49,8 @@ export default {
   -moz-osx-font-smoothing grayscale
   color #444
   position: fixed
-  bottom: 10px
-  right: 10px
+  bottom: 20px
+  right: 42px
   display flex
   flex-direction column
   align-items flex-end

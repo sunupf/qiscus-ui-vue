@@ -14,12 +14,14 @@ export default {
 };
 </script>
 
-<style>
+<style lang="stylus">
+@import '../assets/stylus/_variables.styl'
 .qc-icon {
   display: inline-block;
-  width: 1em;
-  height: 1em;
-  fill: #444;
+  margin-top 4px;
+  width: 20px;
+  height: 20px;
+  fill: $mediumGrey;
 }
 .qc-icon--light {
   fill: #FFF;

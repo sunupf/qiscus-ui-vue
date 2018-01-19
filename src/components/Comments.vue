@@ -42,7 +42,7 @@ export default {
     background rgba(0,0,0,.5)
 
   .qcw-comments
-    background #e0f2f1
+    background $darkWhite
   .qcw-comments ul
     list-style none
     margin 0

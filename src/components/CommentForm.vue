@@ -3,24 +3,25 @@
     picker(set="emojione" :exclude="excludedEmoji" title="" 
       @click="addEmoji" class="qcw-emoji-picker" :class="{'qcw-emoji-picker--active': toggleEmoji}" v-if="toggleEmoji")
     
-    i(@click="toggleEmojiPicker" class="qcw-emoji-btn" v-if="emojione")
+    //- i(@click="toggleEmojiPicker" class="qcw-emoji-btn" v-if="emojione")
       icon(name="ic-smiley" v-if="!toggleEmoji")
       icon(name="ic-close" v-if="toggleEmoji")
-
-    textarea(placeholder="Type here then press Enter to send"
-      @keyup="publishTyping"
-      @keydown.enter="trySubmitComment($event)"
-      v-model="commentInput")
+    
     i
       label
         input(class="uploader__input" name="file_all" type="file" @change="uploadFile")
-        icon(name="ic-attachment")
+        icon(name="ic-file-attachment")
     i
       label
         input(class="uploader__input" name="file_image" type="file" accept="image/*" @change="uploadFile")
-        icon(name="ic-image")
+        icon(name="ic-image-attachment")
+
+    textarea(placeholder="Type your message"
+      @keyup="publishTyping"
+      @keydown.enter="trySubmitComment($event)"
+      v-model="commentInput")
     i(@click="trySubmitComment($event)")
-      icon(name="ic-send")
+      icon(name="ic-send-message")
 </template>
 
 <script>
@@ -125,7 +126,7 @@ export default {
   .qcw-comment-form
     display flex
     justify-content space-between
-    padding 7px 10px
+    padding 20px 8px
     position relative
 
     .emoji-mart-scroll
@@ -143,18 +144,22 @@ export default {
   .qcw-comment-form textarea
     border 0
     flex 1
-    font-size 11px
+    font-size 15px
     font-family sans-serif
     max-height 100%
     overflow-y auto
     resize none
-    border-bottom 1px solid #ccc
+    margin-left 8px
   
+    :focus
+      border: 0
+
   .qcw-comment-form i
     display inline-block
     text-align center
     cursor pointer
-    flex 0 27px
+    flex 0 20px
+    padding 0 8px
     align-self center
 
     &.qcw-emoji-btn
