@@ -7,18 +7,19 @@
       icon(name="ic-smiley" v-if="!toggleEmoji")
       icon(name="ic-close" v-if="toggleEmoji")
     
-    i
+    i(class='qcw-icon')
       label
         input(class="uploader__input" name="file_all" type="file" @change="uploadFile")
         icon(name="ic-file-attachment")
-    i
+    i(class='qcw-icon')
       label
         input(class="uploader__input" name="file_image" type="file" accept="image/*" @change="uploadFile")
         icon(name="ic-image-attachment")
 
-    textarea(placeholder="Type your message"
-      @keyup="publishTyping"
+    textarea(placeholder="Type your message" autofocus='autofocus'
+      @keyup="isTyping"
       @keydown.enter="trySubmitComment($event)"
+      @keypress="enableSend"
       v-model="commentInput")
     i(@click="trySubmitComment($event)")
       icon(name="ic-send-message")
@@ -62,6 +63,7 @@ export default {
         this.submitComment(this.core.selected.id, message);
         // this.commentFormHandler();
         // this.showActions = false;
+        this.setButtonColor('#979797');
       }
     },
     submitComment(topicId, comment) {
@@ -86,8 +88,26 @@ export default {
           });
       }
     },
+    isTyping() {
+      this.enableSend();
+      this.publishTyping();
+    },
     publishTyping() {
       this.core.realtimeAdapter.publishTyping(1);
+    },
+    setButtonColor(color) {
+      const sendButton = document.querySelector('#ic-send-message');
+      sendButton.style.fill = color;
+    },
+    enableSend() {
+      const textarea = document.querySelector('.qcw-comment-form textarea');
+
+      console.log(textarea.value.length);
+      if (textarea.value.length > 0) {
+        this.setButtonColor('#94ca62');
+      } else {
+        this.setButtonColor('#979797');
+      }
     },
     uploadFile(e) {
       const vm = this;
@@ -123,6 +143,7 @@ export default {
 </script>
 
 <style lang="stylus">
+  @import '../assets/stylus/_variables.styl'
   .qcw-comment-form
     display flex
     justify-content space-between
@@ -171,4 +192,8 @@ export default {
 
     input[type="file"]
       display none
+
+    &.qcw-icon:hover svg.qc-icon
+      fill $green
+
 </style>

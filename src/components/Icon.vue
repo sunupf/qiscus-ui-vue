@@ -16,15 +16,15 @@ export default {
 
 <style lang="stylus">
 @import '../assets/stylus/_variables.styl'
-.qc-icon {
+.qc-icon 
   display: inline-block;
   margin-top 4px;
   width: 20px;
   height: 20px;
   fill: $mediumGrey;
-}
-.qc-icon--light {
+
+.qc-icon--light 
   fill: #FFF;
-}
+
 </style>
 

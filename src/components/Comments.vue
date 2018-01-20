@@ -168,6 +168,7 @@ export default {
         cursor pointer
     &.failed--last
       margin-bottom 24px
+      margin-top -27px
   
 
 
@@ -185,7 +186,7 @@ export default {
     flex 0 auto
     padding 8px
     font-size 14px
-    background $white
+    background $lightGrey
     box-shadow 0 7px 16px rgba(199,199,199,.25)
     margin-bottom 4px
     position relative
@@ -220,7 +221,7 @@ export default {
       height 0
       width 0
       border 4px solid transparent
-      border-right-color $white
+      border-right-color $lightGrey
     .comment--parent.comment--me &:before
       border-left-color $white
       border-right-color transparent
@@ -228,6 +229,8 @@ export default {
       left auto
       right -8px
 
+  .comment--last
+    margin-bottom 24px
   .qcw-comment__content img.emojione
     display inline-block
     vertical-align middle
