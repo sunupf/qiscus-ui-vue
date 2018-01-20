@@ -42,29 +42,29 @@ export default {
     background rgba(0,0,0,.5)
 
   .qcw-comments
-    background #e0f2f1
+    background $darkWhite
   .qcw-comments ul
     list-style none
     margin 0
     padding 0
 
-  i.reply-btn, .qcw-comment__state
+  /*i.reply-btn, .qcw-comment__state
     position absolute
     top 7px
-    right -20px
+    right -28px
     display none
     cursor pointer
     .comment--me &
       right auto
-      left -20px
+      left -28px
     .qcw-comments li:hover &
-      display block
+      display block*/
   
   .comment--me i.reply-btn
-    left -40px
+    left -56px
   
   .qcw-comment-container
-    padding 0 25px
+    padding 0 16px
     display: flex;
     flex-wrap: wrap;
     &.comment--me
@@ -89,7 +89,7 @@ export default {
     flex 0 auto
   
   .qcw-avatar
-    flex 0 0 50px
+    flex 0 0 36px
     img
       width 36px
       height 36px
@@ -99,7 +99,6 @@ export default {
       text-align right
       
   .qcw-comment__info
-    border-bottom 1px dashed #ddd
     padding-bottom 7px
     margin-bottom 7px
     flex 1 100%
@@ -108,12 +107,71 @@ export default {
     align-items: center;
   .qcw-comment__username
     font-weight bold
-  .qcw-comment__time
-    font-size: 10px;
-    color: #717171;
-    margin-left: 10px;
-    min-width 50px
   
+  .qcw-comment__state
+    font-size 11px;
+    text-transform lowercase
+    color $darkGrey;
+    position absolute
+    top 16px
+    
+    svg.qc-icon
+        margin-top 3px
+
+  .qcw-comment
+    .qcw-comment__time
+        font-size 11px;
+        text-transform lowercase
+        color $darkGrey;
+        position absolute
+        min-width 50px
+        top 8px
+        right -58px
+    &.comment--me
+      .qcw-comment__time
+        top 2px
+        left -58px
+      .qcw-comment__state
+        left -20px
+        svg.qc-icon
+            width 12px
+            height 9px
+      .qcw-comment__state--read,
+      .qcw-comment__state--delivered
+        left -24px
+        svg.qc-icon
+            width 16px
+            height 9px
+            margin 0 auto
+      .qcw-comment__state--sending
+        left -19px
+        -webkit-animation:spin 1s ease-in-out infinite;
+        -moz-animation:spin 1s ease-in-out infinite;
+        animation:spin 1s ease-in-out infinite;
+      .qcw-comment__state--failed
+        color $red
+        text-transform capitalize
+        left -17px
+        cursor pointer
+
+  .failed-info
+    text-align right
+    margin-top -3px
+    font-size 11px
+    margin-bottom 4px
+    margin-right 64px
+    color $red
+    span
+      color $green
+      &:hover
+        text-decoration underline
+        cursor pointer
+    &.failed--last
+      margin-bottom 24px
+      margin-top -27px
+  
+
+
   .qcw-comment--system-event
     text-align: center;
     align-self: center !important;
@@ -126,46 +184,53 @@ export default {
 
   .qcw-comment__message
     flex 0 auto
-    padding 10px
-    font-size 13px
-    background $bubble-color
-    box-shadow 0 2px 3px rgba(0,0,0,.15)
-    margin-bottom 3px
+    padding 8px
+    font-size 14px
+    background $lightGrey
+    box-shadow 0 7px 16px rgba(199,199,199,.25)
+    margin-bottom 4px
     position relative
     display flex
-    max-width 249px
+    max-width 210px
     align-items flex-end
     .comment--parent &
+      margin-left 12px
       flex-wrap wrap
     .comment--me &
-      background $mybubble-color
+      margin-left 0px
+      margin-right 12px
+      background $white
     .comment--parent &, .comment--mid &
-      border-radius: 5px 5px 5px 0
+      margin-left 12px
+      border-radius: 8px
     .comment--mid &
-      border-radius: 0 5px 5px 0
+      margin-left 12px
+      border-radius: 8px
     .comment--last &
-      border-radius 0 5px 5px 5px
+      margin-left 12px
+      border-radius 8px
     .comment--parent.comment--last &
-      border-radius 5px
+      margin-left 12px
+      border-radius 8px
     .comment--parent &:before
       position absolute
-      top 12px
-      left -16px
+      top 15px
+      left -8px
       pointer-events none
       content " "
       height 0
       width 0
-      border 8px solid transparent
-      border-right-color $bubble-color
+      border 4px solid transparent
+      border-right-color $lightGrey
     .comment--parent.comment--me &:before
-      border-left-color $mybubble-color
+      border-left-color $white
       border-right-color transparent
+      box-shadow 0 7px 16px rgba(199,199,199,.25)
       left auto
-      right -16px
+      right -8px
 
   .comment--last
-    margin-bottom 1.5em
-
+    margin-bottom 24px
   .qcw-comment__content img.emojione
     display inline-block
     vertical-align middle

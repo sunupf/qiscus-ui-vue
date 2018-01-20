@@ -1,6 +1,6 @@
 <template lang="pug">
   .qcw-trigger-btn(@click="clickHandler")
-    | {{ (label) ? label : 'Chat' }}
+    | {{ (label) ? label : 'Talk To Us' }}
 </template>
 
 <script>
@@ -14,20 +14,21 @@ export default {
 @import '../assets/stylus/_variables.styl'
 
 .qcw-trigger-btn
-  background: $primary-color
-  color: #FFF
-  padding: 5px 15px
-  border-radius: 15px
+  background: $green
+  color: $white
+  padding: 10px 15px
+  border-radius: $big-border-radius
   vertical-align middle
-  width 70px
+  width 120px
   text-align center
   cursor pointer
   transition all .3s ease
-  box-shadow 0 2px 3px rgba(0,0,0,.3)
+  box-shadow 0 7px 16px rgba(46,46,46,.15)
   margin-top: 15px
   
   &:hover
     transform translateY(-3px)
+    box-shadow 0 7px 16px rgba(46,46,46,.25)
   
   .qcw-container.qcw-container--wide &
     display none
