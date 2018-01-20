@@ -13,7 +13,7 @@
       div.qcw-header-info
         div
           div.qcw-user-display-name {{ core.selected.name }}
-          div.qcw-user-status online
+          div.qcw-user-status--online online
 
       i(@click="toggleWindowStatus" class="qcw-window-toggle-btn")
         icon(name="ic-minimize")
@@ -78,6 +78,7 @@ export default {
 
   .qcw-chat-wrapper
     font "Open Sans",sans-serif
+    letter-spacing 0.5px
     line-height 130%
     height 480px
     width 360px
@@ -91,7 +92,7 @@ export default {
     transition all .32s ease
 
     .qcw-container.qcw-container--open &
-      bottom 45px
+      bottom 64px
   
   .qcw-window-toggle-btn
     cursor pointer
@@ -116,8 +117,9 @@ export default {
       .qcw-user-display-name
         font-size 15px
         font-weight 600 
-      .qcw-user-status
+      .qcw-user-status--online
         font-size 13px 
+        color $green
 
   
   .qcw-comments

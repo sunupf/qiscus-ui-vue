@@ -126,7 +126,7 @@ export default {
   .qcw-comment-form
     display flex
     justify-content space-between
-    padding 20px 8px
+    padding 18px 8px
     position relative
 
     .emoji-mart-scroll
@@ -145,14 +145,14 @@ export default {
     border 0
     flex 1
     font-size 15px
-    font-family sans-serif
+    font-family "Open Sans", sans-serif
     max-height 100%
     overflow-y auto
     resize none
     margin-left 8px
-  
-    :focus
-      border: 0
+    &:focus
+      border 0
+      outline none
 
   .qcw-comment-form i
     display inline-block
