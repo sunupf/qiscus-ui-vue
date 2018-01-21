@@ -16,10 +16,9 @@
     textarea(placeholder="Type your message" autofocus='autofocus'
       @keyup="isTyping"
       @keydown.enter="trySubmitComment($event)"
-      @keypress="enableSend"
       v-model="commentInput")
     i(@click="trySubmitComment($event)")
-      icon(name="ic-send-message")
+      icon(name="ic-send-message" :fill="sendBtnStatus")
 </template>
 
 <script>
@@ -40,6 +39,9 @@ export default {
       emojione,
     };
   },
+  computed: {
+    sendBtnStatus() { return (this.commentInput.length > 0 ? '#94ca62' : null); },
+  },
   methods: {
     // toggleEmojiPicker() {
     //   this.toggleEmoji = !this.toggleEmoji;
@@ -59,7 +61,7 @@ export default {
         this.submitComment(this.core.selected.id, message);
         // this.commentFormHandler();
         // this.showActions = false;
-        this.setButtonColor('#979797');
+        // this.setButtonColor('#979797');
       }
     },
     submitComment(topicId, comment) {
@@ -90,20 +92,6 @@ export default {
     },
     publishTyping() {
       this.core.realtimeAdapter.publishTyping(1);
-    },
-    setButtonColor(color) {
-      const sendButton = document.querySelector('#ic-send-message');
-      sendButton.style.fill = color;
-    },
-    enableSend() {
-      const textarea = document.querySelector('.qcw-comment-form textarea');
-
-      console.log(textarea.value.length);
-      if (textarea.value.length > 0) {
-        this.setButtonColor('#94ca62');
-      } else {
-        this.setButtonColor('#979797');
-      }
     },
     uploadFile(e) {
       const vm = this;
@@ -146,18 +134,6 @@ export default {
     padding 18px 8px
     position relative
 
-    .emoji-mart-scroll
-      height 170px
-
-  .qcw-emoji-picker 
-    position absolute
-    bottom: 50px;
-    left: 0;
-    width: 100% !important;
-    height: 315px;
-    box-shadow: 0 -6px 19px rgba(0,0,0,0.3);
-    transition: all 0.32s cubic-bezier(0.75, -0.02, 0.2, 0.97);
-  
   .qcw-comment-form textarea
     border 0
     flex 1
@@ -179,10 +155,6 @@ export default {
     padding 0 8px
     align-self center
 
-    &.qcw-emoji-btn
-      margin-right 10px
-      font-size 14px
-
     label
       cursor pointer
 
@@ -191,5 +163,4 @@ export default {
 
     &.qcw-icon:hover svg.qc-icon
       fill $green
-
 </style>
