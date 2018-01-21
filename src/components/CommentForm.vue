@@ -1,12 +1,6 @@
 <template lang="pug">
   .qcw-comment-form
-    picker(set="emojione" :exclude="excludedEmoji" title="" 
-      @click="addEmoji" class="qcw-emoji-picker" :class="{'qcw-emoji-picker--active': toggleEmoji}" v-if="toggleEmoji")
-    
-    i(@click="toggleEmojiPicker" class="qcw-emoji-btn" v-if="emojione")
-      icon(name="ic-smiley" v-if="!toggleEmoji")
-      icon(name="ic-close" v-if="toggleEmoji")
-
+  
     textarea(placeholder="Type here then press Enter to send"
       @keyup="publishTyping"
       @keydown.enter="trySubmitComment($event)"
@@ -24,13 +18,12 @@
 </template>
 
 <script>
-import { Picker } from 'emoji-mart-vue';
 import { scrollIntoElement } from '../lib/utils';
 import Icon from './Icon';
 
 export default {
   name: 'CommentForm',
-  components: { Icon, Picker },
+  components: { Icon },
   props: ['core', 'repliedComment', 'closeReplyHandler'],
   data() {
     return {
@@ -43,12 +36,12 @@ export default {
     };
   },
   methods: {
-    toggleEmojiPicker() {
-      this.toggleEmoji = !this.toggleEmoji;
-    },
-    addEmoji(emoji) {
-      this.commentInput = this.commentInput + emoji.native;
-    },
+    // toggleEmojiPicker() {
+    //   this.toggleEmoji = !this.toggleEmoji;
+    // },
+    // addEmoji(emoji) {
+    //   this.commentInput = this.commentInput + emoji.native;
+    // },
     trySubmitComment(e) {
       if (!e.shiftKey) {
         e.preventDefault();
