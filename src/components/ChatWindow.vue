@@ -12,11 +12,11 @@
         img(:src="core.selected.avatar")
       div.qcw-header-info
         div
-          div.qcw-user-display-name {{ core.selected.name }}
-          div.qcw-user-status--online online
+          div.qcw-user-display-name(:style="{color: core.UI.colors.headerTitleColor}") {{ core.selected.name }}
+          div.qcw-user-status--online(:style="{color: core.UI.colors.statusOnlineColor}") online
 
       i(@click="toggleWindowStatus" class="qcw-window-toggle-btn")
-        icon(name="ic-minimize")
+        icon(name="ic-minimize" :fill="core.UI.colors.headerIconColor")
 
     comments(:core="core" :on-click-image="openImageModal" 
       :repliedComment="repliedComment"
