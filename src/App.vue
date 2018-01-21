@@ -1,6 +1,7 @@
 <template lang="pug">
   .qcw-container(:class="{'qcw-container--open': chatWindowStatus}")
-    chat-window(:core="core" :toggleWindowStatus="toggleWindowStatus")
+    chat-window(v-if="core.isInit" :core="core" :toggleWindowStatus="toggleWindowStatus")
+    div(v-if="!core.isInit" class="qcw-connecting-indicator") Connecting to chat server ...
     qcw-trigger(:clickHandler="toggleWindowStatus")
 </template>
 
@@ -101,6 +102,10 @@ export default {
   display flex
   flex-direction column
   align-items flex-end
+.qcw-connecting-indicator
+  background #FFF
+  padding 20px
+  border-radius 20px
 .qcw-container *, .qcw-container *:after, .qcw-container *:before
   box-sizing border-box
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
