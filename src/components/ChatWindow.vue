@@ -11,10 +11,12 @@
       div.qcw-header-avatar
         img(:src="core.selected.avatar")
       div.qcw-header-info
-        strong {{ core.selected.name }}
+        div
+          div.qcw-user-display-name {{ core.selected.name }}
+          div.qcw-user-status--online online
 
       i(@click="toggleWindowStatus" class="qcw-window-toggle-btn")
-        icon(name="ic-chevron-down" fill="#FFFFFF")
+        icon(name="ic-minimize")
 
     comments(:core="core" :on-click-image="openImageModal" 
       :repliedComment="repliedComment"
@@ -71,39 +73,54 @@ export default {
 </script>
 
 <style lang="stylus">
+  @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600')
   @import '../assets/stylus/_variables.styl'
+
   .qcw-chat-wrapper
-    height 450px
-    width 400px
+    font "Open Sans",sans-serif
+    letter-spacing 0.5px
+    line-height 130%
+    height 480px
+    width 360px
     display flex
     flex-direction column
-    box-shadow 0 2px 15px rgba(0,0,0,.3)
-    border-radius 5px
+    box-shadow 0 7px 16px rgba(46,46,46,.15)
+    border-radius 19px
     overflow hidden
     position absolute
     bottom -700px
     transition all .32s ease
 
     .qcw-container.qcw-container--open &
-      bottom 45px
+      bottom 64px
   
   .qcw-window-toggle-btn
     cursor pointer
   .qcw-header
-    flex 0 0 50px
-    background $primary-color
+    flex 0 0 73px
+    background $white
     display flex
     align-items center
-    padding 5px 10px
+    padding 13px 16px
+    border-bottom 0.5px solid $lightGrey
     .qcw-header-avatar 
-      flex 0 0 35px
+      flex 0 0 48px
     .qcw-header-avatar img
-      width 24px
-      height 24px
+      width 48px
+      height 48px
       border-radius 50%
+      margin-top 6px
     .qcw-header-info
       flex 1
-      color #FFF
+      color $darkGrey
+      margin-left 16px
+      .qcw-user-display-name
+        font-size 15px
+        font-weight 600 
+      .qcw-user-status--online
+        font-size 13px 
+        color $green
+
   
   .qcw-comments
     flex 1
@@ -112,8 +129,9 @@ export default {
     position relative
   
   .qcw-comment-form
-    flex 0 0 50px
+    flex 0 0 64px
     background #FFF
+    border-top 0.5px solid $lightGrey
 
   .qcw-avatar--hide
     visibility hidden

@@ -8,7 +8,7 @@
     <style>
       *, *:before, *:after { box-sizing: border-box; }
       html, body { width: 100%; height: 100%; overflow: hidden; padding: 0; margin: 0; }
-      body { background: linear-gradient(to top, #30cfd0 0%, #330867 100%); }
+      body { background: url("./static/bg.png") center 105px no-repeat, linear-gradient(140.45deg, #9873BA 28.28%, rgba(0, 158, 244, 0.8) 109.19%) }
     </style>
   </head>
   <body>
@@ -43,11 +43,12 @@
         // login to qiscus
         // QiscusSDK.core.setUser('amsibsam@qiscus.com', 'password', 'Bisma Rahardian', 'https://d1edrlpyc25xu0.cloudfront.net/kiwari-prod/image/upload/s322Ji9RLe/1507605762-Rubick_icon.png');
         // QiscusSDK.core.setUser('juang@qiscus.com', 'password', 'Ashari Juang', 'https://d1edrlpyc25xu0.cloudfront.net/kiwari-prod/image/upload/BTDIXHEr9u/1507605766-Timbersaw_icon.png');
-        if(curUser){
-          QiscusSDK.core.setUser('guest@qiscus.com', 'password', 'Qiscus Guest', 'https://d1edrlpyc25xu0.cloudfront.net/kiwari-prod/image/upload/s322Ji9RLe/1507605762-Rubick_icon.png');
-        } else {
-          QiscusSDK.core.setUser('fikri@qiscus.com', 'password', 'Rijalul Fikri', 'https://d1edrlpyc25xu0.cloudfront.net/kiwari-prod/image/upload/ixIrQHwz2w/1507605797-Lifestealer_icon.png');
-        }
+        // if(curUser){
+          // QiscusSDK.core.setUser('guest@qiscus.com', 'password', 'Qiscus Guest','https://res.cloudinary.com/qiscus/image/upload/v1507272514/kiwari-prod_user_id_340/uvwlno1qkkgh9xwwjzgq.png');
+          QiscusSDK.core.setUser('niwang@qiscus.com', 'password', 'Niwang Jati Sasongko');
+        // } else {
+          // QiscusSDK.core.setUser('fikri@qiscus.com', 'password', 'Rijalul Fikri', 'https://res.cloudinary.com/qiscus/image/upload/v1507272514/kiwari-prod_user_id_340/uvwlno1qkkgh9xwwjzgq.png');
+        // }
         // QiscusSDK.core.setUser('rajapulau@qiscus.com', 'password', 'Ganjar Widyatmansyah', 'https://d1edrlpyc25xu0.cloudfront.net/kiwari-prod/image/upload/swD5H65c89/1507605880-Ogre_Magi_icon.png');
         // QiscusSDK.core.setUser('arief@qiscus.com', 'password', 'Arief Nur', 'https://d1edrlpyc25xu0.cloudfront.net/kiwari-prod/image/upload/0AlS8O2rr_/1507606591-Lina_icon.png');
         // QiscusSDK.core.setUser('sunu@qiscus.com', 'password', 'Sunu PF', 'https://d1edrlpyc25xu0.cloudfront.net/kiwari-prod/image/upload/6nsJ-eS_nd/1507605872-Animal_Courier_(Radiant)_icon.png');

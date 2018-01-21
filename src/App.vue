@@ -44,16 +44,19 @@ export default {
 
 <style lang="stylus">
 .qcw-container 
-  font-family 'Avenir', Helvetica, Arial, sans-serif
+  font-family 'Open Sans', sans-serif
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
   color #444
   position: fixed
-  bottom: 10px
-  right: 10px
+  bottom: 20px
+  right: 42px
   display flex
   flex-direction column
   align-items flex-end
 .qcw-container *, .qcw-container *:after, .qcw-container *:before
   box-sizing border-box
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 </style>

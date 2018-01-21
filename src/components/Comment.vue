@@ -1,102 +1,107 @@
 <template lang="pug">
-  div(class="qcw-comment-container" :id="comment.id" :class="commentClass")
-    div(class="qcw-comment-date" v-if="showDate") - {{ dateToday }} -
-    div(v-if="comment.type == 'system_event'" class="qcw-comment--system-event") {{ comment.message }}
-    div(
-      class="qcw-comment"
-      v-if="comment.type != 'system_event'"
-      :class="{ 'comment--me': comment.username_real == userData.email, 'comment--parent': isParent, 'comment--mid': isMid, 'comment--last': isLast }"
-    )
-      avatar(:src="comment.avatar" :class="{'qcw-avatar--hide': !isParent}")
-      div(class="qcw-comment__message")
-        div(class="qcw-comment__info" v-if="isParent")
-          span(class="qcw-comment__username") {{comment.username_as}}
-          span(class="qcw-comment__time") {{comment.time}}
+  div
+    div(class="qcw-comment-container" :id="comment.id" :class="commentClass")
+      div(class="qcw-comment-date" v-if="showDate") - {{ dateToday }} -
+      div(v-if="comment.type == 'system_event'" class="qcw-comment--system-event") {{ comment.message }}
+      div(
+        class="qcw-comment"
+        v-if="comment.type != 'system_event'"
+        :class="{ 'comment--me': comment.username_real == userData.email, 'comment--parent': isParent, 'comment--mid': isMid, 'comment--last': isLast }"
+      )
+        avatar(:src="comment.avatar" :class="{'qcw-avatar--hide': !isParent}")
+        div(class="qcw-comment__message")
+          //- div(class="qcw-comment__info" v-if="isParent")
+            //- span(class="qcw-comment__username") {{comment.username_as}}
+            //- span(class="qcw-comment__time") {{comment.time}}
 
-        //- reply button
-        i(@click="replyHandler(comment)" class="reply-btn" :class="{'reply-btn--me': isMe}")
-          icon(name="ic-reply")
-        
-        //- CommentType: "contact_person"
-        div(v-if="comment.type == 'contact_person'" class="qcw-comment--contact")
-          i
-            icon(name="ic-user")
-            strong {{ comment.payload.name }}
-            br
-          i
-            icon(:name="(comment.payload.type=='phone') ? 'ic-phone' : 'ic-envelope'")
-            span {{ comment.payload.value }}
+          //- Comment Time
+          span(class="qcw-comment__time" :class="{'qcw-comment__time--me': isMe}") {{comment.time}}
 
-        //- CommentType: "location"
-        static-map(:lat="comment.payload.latitude"
-          :lng="comment.payload.longitude"
-          :name="comment.payload.name"
-          :message="comment.message"
-          :mapurl="comment.payload.map_url"
-          v-if="comment.type == 'location'")
+          //- reply button
+          //- i(@click="replyHandler(comment)" class="reply-btn" :class="{'reply-btn--me': isMe}")
+            icon(name="ic-reply")
+          
+          //- CommentType: "contact_person"
+          div(v-if="comment.type == 'contact_person'" class="qcw-comment--contact")
+            i
+              icon(name="ic-user")
+              strong {{ comment.payload.name }}
+              br
+            i
+              icon(:name="(comment.payload.type=='phone') ? 'ic-phone' : 'ic-envelope'")
+              span {{ comment.payload.value }}
 
-        //- CommentType: "file_attachment"
-        file-attachment(v-if="comment.type == 'file_attachment'"
-          :comment="comment"
-          :on-click-image="onClickImage"
-          :callback="onupdate")
-        
-        //- CommentType: "TEXT"
-        div(v-if="comment.type == 'text' || comment.type == 'reply'")
-          image-loader(v-if="comment.isAttachment(comment.message) && comment.type != 'reply'"
-            :comment="comment"
+          //- CommentType: "location"
+          static-map(:lat="comment.payload.latitude"
+            :lng="comment.payload.longitude"
+            :name="comment.payload.name"
             :message="comment.message"
+            :mapurl="comment.payload.map_url"
+            v-if="comment.type == 'location'")
+
+          //- CommentType: "file_attachment"
+          file-attachment(v-if="comment.type == 'file_attachment'"
+            :comment="comment"
             :on-click-image="onClickImage"
             :callback="onupdate")
-
-          comment-reply(v-if="comment.type =='reply'"
-            :comment="comment"
-            :isMe="isMe"
-            :clickHandler="gotoComment"
-            :onClickImage="onClickImage"
-            :callback="onupdate")
           
-          comment-render(:text="comment.message" v-if="!comment.isAttachment(comment.message) && comment.type=='text'")
-        
-        span(class="qcw-comment__time qcw-comment__time--children"
-          v-if="!isParent"
-          :class="{'qcw-comment__time--attachment': comment.isAttachment(comment.message)}") {{comment.time}}
+          //- CommentType: "TEXT"
+          div(v-if="comment.type == 'text' || comment.type == 'reply'")
+            image-loader(v-if="comment.isAttachment(comment.message) && comment.type != 'reply'"
+              :comment="comment"
+              :message="comment.message"
+              :on-click-image="onClickImage"
+              :callback="onupdate")
 
-        div(v-if="isMe")
-          i(class="qcw-comment__state" v-if="comment.isPending")
-            icon(name="ic-clock" class="icon--clock")
-          i(class="qcw-comment__state" v-if="comment.isSent && !comment.isDelivered")
-            icon(name="ic-check")
-          i(@click="resend(comment)" class="qcw-comment__state" v-if="comment.isFailed")
-            icon(name="ic-resend" class="icon--resend")
-          div(class="qcw-comment__state qcw-comment__state--delivered" v-if="comment.isDelivered && !comment.isRead")
-            icon(name="ic-doublecheck")
-          div(class="qcw-comment__state qcw-comment__state--read" v-if="comment.isRead")
-            icon(name="ic-doublecheck")
+            comment-reply(v-if="comment.type =='reply'"
+              :comment="comment"
+              :isMe="isMe"
+              :clickHandler="gotoComment"
+              :onClickImage="onClickImage"
+              :callback="onupdate")
+            
+            comment-render(:text="comment.message" v-if="!comment.isAttachment(comment.message) && comment.type=='text'")
+          
+          //- span(class="qcw-comment__time qcw-comment__time--children"
+            v-if="!isParent"
+            :class="{'qcw-comment__time--attachment': comment.isAttachment(comment.message)}") {{comment.time}}
 
-  //-       <!-- CommentType: "CARD" -->
-  //-       <comment-card :data="comment.payload"
-  //-         v-if="comment.type==='card'"></comment-card>
-  //-       <!-- CommentType: "CUSTOM" -->
-  //-       <div v-if="comment.type === 'custom'">
-  //-         <comment-carousel v-if="comment.subtype==='carousel'" :cards="comment.payload.content"></comment-carousel>
-  //-       </div>
-  //-       <!-- CommentType: "ACCOUNT_LINKING" -->
-  //-       <div v-if="comment.type == 'account_linking'">
-  //-         <comment-render :text="comment.payload.text || message"></comment-render>
-  //-         <div class="action_buttons">
-  //-           <button @click="openAccountBox">{{ comment.payload.params.button_text }} &rang;</button>
-  //-         </div>
-  //-       </div>
-  //-       <!-- CommentType: "BUTTON" -->
-  //-       <div v-if="comment.type == 'buttons'">
-  //-         <div class="qcw-comment__content" v-html="comment.payload.text || message"></div>
-  //-         <comment-buttons :buttons="comment.payload.buttons" :postbackHandler="postbackSubmit"></comment-buttons>
-  //-       </div>
-  //-     </div>
-  //-     <avatar :src="comment.avatar" v-if="options.avatar && isMe" :class="{'qcw-avatar--hide': !isParent}"></avatar>
-  //-   </div>
-  //- </div>
+          div(v-if="isMe")
+            i(class="qcw-comment__state qcw-comment__state--sending" v-if="comment.isPending")
+              icon(name="ic-load" class="icon--load")
+            i(class="qcw-comment__state" v-if="comment.isSent && !comment.isDelivered")
+              icon(name="ic-check")
+            div(@click="resend(comment)" class="qcw-comment__state qcw-comment__state--failed" v-if="comment.isFailed") !!!
+            div(class="qcw-comment__state qcw-comment__state--delivered" v-if="comment.isDelivered && !comment.isRead")
+              icon(name="ic-double-check")
+            div(class="qcw-comment__state qcw-comment__state--read" v-if="comment.isRead")
+              icon(name="ic-double-check")
+
+    //-       <!-- CommentType: "CARD" -->
+    //-       <comment-card :data="comment.payload"
+    //-         v-if="comment.type==='card'"></comment-card>
+    //-       <!-- CommentType: "CUSTOM" -->
+    //-       <div v-if="comment.type === 'custom'">
+    //-         <comment-carousel v-if="comment.subtype==='carousel'" :cards="comment.payload.content"></comment-carousel>
+    //-       </div>
+    //-       <!-- CommentType: "ACCOUNT_LINKING" -->
+    //-       <div v-if="comment.type == 'account_linking'">
+    //-         <comment-render :text="comment.payload.text || message"></comment-render>
+    //-         <div class="action_buttons">
+    //-           <button @click="openAccountBox">{{ comment.payload.params.button_text }} &rang;</button>
+    //-         </div>
+    //-       </div>
+    //-       <!-- CommentType: "BUTTON" -->
+    //-       <div v-if="comment.type == 'buttons'">
+    //-         <div class="qcw-comment__content" v-html="comment.payload.text || message"></div>
+    //-         <comment-buttons :buttons="comment.payload.buttons" :postbackHandler="postbackSubmit"></comment-buttons>
+    //-       </div>
+    //-     </div>
+    //-     <avatar :src="comment.avatar" v-if="options.avatar && isMe" :class="{'qcw-avatar--hide': !isParent}"></avatar>
+    //-   </div>
+    //- </div>
+    div(class="failed-info" v-if="comment.isFailed" :class="{ 'failed--last': isLast }") Message failed to send. 
+            span(@click="resend(comment)" class="" v-if="comment.isFailed") Resend
 </template>
 
 <script>
@@ -149,3 +154,13 @@ export default {
   },
 };
 </script>
+
+<style lang="stylus">
+  @import '../assets/stylus/_variables.styl'
+
+  #ic-load,
+  #ic-check,
+  #ic-double-check
+    fill $green
+    margin-right 8px
+</style>
