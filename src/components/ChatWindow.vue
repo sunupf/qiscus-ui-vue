@@ -13,7 +13,10 @@
       div.qcw-header-info
         div
           div.qcw-user-display-name(:style="{color: core.UI.colors.headerTitleColor}") {{ core.selected.name }}
-          div.qcw-user-status--online(:style="{color: core.UI.colors.statusOnlineColor}") online
+          div.qcw-user-status--online(v-if="core.isTypingStatus"
+            :style="{color: core.UI.colors.statusOnlineColor}") {{ core.isTypingStatus }}
+          div.qcw-user-status--online(v-if="!core.isTypingStatus"
+            :style="{color: core.UI.colors.statusOnlineColor}") {{ core.chatmateStatus }}
 
       i(@click="toggleWindowStatus" class="qcw-window-toggle-btn")
         icon(name="ic-minimize" :fill="core.UI.colors.headerIconColor")

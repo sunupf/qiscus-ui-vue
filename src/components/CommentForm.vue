@@ -1,9 +1,6 @@
 <template lang="pug">
   .qcw-comment-form
-    //- i(@click="toggleEmojiPicker" class="qcw-emoji-btn" v-if="emojione")
-      icon(name="ic-smiley" v-if="!toggleEmoji")
-      icon(name="ic-close" v-if="toggleEmoji")
-    
+
     i(class='qcw-icon')
       label
         input(class="uploader__input" name="file_all" type="file" @change="uploadFile")
@@ -87,7 +84,6 @@ export default {
       }
     },
     isTyping() {
-      this.enableSend();
       this.publishTyping();
     },
     publishTyping() {
