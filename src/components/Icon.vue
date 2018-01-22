@@ -22,6 +22,7 @@ export default {
   width: 20px;
   height: 20px;
   fill: $mediumGrey;
+  transition: fill 0.3s ease-out
 
 .qc-icon--light 
   fill: #FFF;

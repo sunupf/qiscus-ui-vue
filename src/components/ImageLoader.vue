@@ -92,8 +92,21 @@
 
 <style lang="stylus">
   .image-container { height: 100px; }
-  .qcw-image-container img
-    cursor -webkit-zoom-in
+  .qcw-image-container 
+    width calc(100%+8px)
+    margin -4px
+    padding-bottom -4px
+    img
+      width 100%
+      border-radius 4px
+  .qcw-file-container
+    i
+      display inline-block
+      width 36px
+      flex 0 36px
+    div.file-name
+      display inline-block
+      width 150px
   .reload-image-btn {
     display: block;
     width: 100%;

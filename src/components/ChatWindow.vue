@@ -83,19 +83,18 @@ export default {
     font "Open Sans",sans-serif
     letter-spacing 0.5px
     line-height 130%
-    height 480px
     width 360px
+    height 0
     display flex
     flex-direction column
     box-shadow 0 7px 16px rgba(46,46,46,.15)
     border-radius 19px
     overflow hidden
     position absolute
-    bottom -700px
-    transition all .32s ease
-
+    transition all .5s ease
+    bottom 64px
     .qcw-container.qcw-container--open &
-      bottom 64px
+      height 480px
   
   .qcw-window-toggle-btn
     cursor pointer
@@ -141,33 +140,35 @@ export default {
   
   .reply-wrapper
     position relative
-    padding 15px
-    background $mybubble-color
+    padding 16px 8px 16px 24px
+    background $white
 
   .reply-wrapper:before
     content ""
     position: absolute
-    left 5px
-    width 3px
-    height calc(100% - 30px)
-    background #444
+    left 8px
+    width 4px
+    height calc(100% - 32px)
+    background $green
+    border-radius 2px
   
   .reply-wrapper.reply-wrapper--preview
     position absolute
-    bottom 50px
+    bottom 64px
     z-index 500
-    background $mybubble-color
     width 100%
-    box-shadow 0 -3px 5px rgba(0,0,0,.3)
+    animation fadeInUp 0.3s ease-out
+    box-shadow 0 -3px 5px rgba(232,232,232,.2)
 
   .reply-sender
-    font-size 13px
+    font-size 15px
     margin-bottom 10px
+    font-weight 600
   
   .reply-close-btn
     position absolute
-    right 10px
-    top 10px
+    right 8px
+    top 16px
     font-size 10px
     cursor pointer
 </style>

@@ -43,26 +43,60 @@ export default {
 
   .qcw-comments
     background $darkWhite
+    &::-webkit-scrollbar-track
+      border-radius: 10px;
+      background-color: #fafafa;
+
+    &::-webkit-scrollbar
+      width: 8px;
+      background-color: #fafafa;
+
+    &::-webkit-scrollbar-thumb
+      border-radius: 4px;
+      background-color: #e0e0e0;
+
   .qcw-comments ul
     list-style none
     margin 0
     padding 0
 
-  /*i.reply-btn, .qcw-comment__state
+  i.reply-btn
     position absolute
-    top 7px
-    right -28px
-    display none
+    overflow hidden
+    right -32px
+    top 6px
+    height 24px
     cursor pointer
-    .comment--me &
-      right auto
-      left -28px
-    .qcw-comments li:hover &
-      display block*/
+    width 24px
+    border-radius 50%
+    background: $lightGrey
+    display: none;
+    z-index 2
+    animation:fadeInLeftBig 0.3s ease-out;
+    transition: background 0.3s ease-out
+    &.reply-btn--me
+      left -32px
+    &:hover
+      background-color $green
+      .qc-icon
+        fill $white
+    & svg.qc-icon
+      display block
+      width 12px
+      height 12px
+      margin 6px auto
+
+  .qcw-comments li:hover
+    i.reply-btn
+      display inline-block
+    .qcw-comment__state
+      display none
+    .qcw-comment__time
+      display none
   
-  .comment--me i.reply-btn
-    left -56px
-  
+  .qcw-comment__time, .qcw-comment__state
+    animation:fadeInDown 0.3s ease-out;
+
   .qcw-comment-container
     padding 0 16px
     display: flex;
@@ -73,17 +107,17 @@ export default {
   .qcw-comment-date
     text-align center
     font-weight bold
-    font-size 12px
-    margin 10px auto
+    font-size 9px
+    margin 24px auto 12px auto
     flex: 1 100%;
-  
-  .qcw-image-container
-    width 90%
-    height 100px
-    img
-      width 100%
-      height 100px
-  
+    color $darkGrey
+    text-transform uppercase
+    div
+      width: 170px;
+      margin: auto;
+      padding: 2px 8px;
+      background-color: $lightGrey;
+      border-radius: 12px;
   .qcw-comment
     display flex
     flex 0 auto
@@ -107,7 +141,7 @@ export default {
     align-items: center;
   .qcw-comment__username
     font-weight bold
-  
+
   .qcw-comment__state
     font-size 11px;
     text-transform lowercase
@@ -192,6 +226,7 @@ export default {
     position relative
     display flex
     max-width 210px
+    min-width 56px
     align-items flex-end
     .comment--parent &
       margin-left 12px
@@ -231,10 +266,13 @@ export default {
 
   .comment--last
     margin-bottom 24px
-  .qcw-comment__content img.emojione
-    display inline-block
-    vertical-align middle
-    width 14px
+  .qcw-comment__content 
+    font-size 14px
+    img.emojione
+      display inline-block
+      vertical-align middle
+      width 14px
+
 </style>
 
 
