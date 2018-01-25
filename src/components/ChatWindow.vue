@@ -91,7 +91,7 @@ export default {
     border-radius 19px
     overflow hidden
     position absolute
-    transition all .5s ease
+    transition all .15s ease-in-out
     bottom 64px
     .qcw-container.qcw-container--open &
       height 480px

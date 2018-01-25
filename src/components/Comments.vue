@@ -41,6 +41,9 @@ export default {
     align-items center
     background rgba(0,0,0,.5)
 
+  .comment-text
+    width 100%
+
   .qcw-comments
     background $darkWhite
     &::-webkit-scrollbar-track

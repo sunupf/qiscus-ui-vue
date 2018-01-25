@@ -47,7 +47,7 @@
             :callback="onupdate")
           
           //- CommentType: "TEXT"
-          div(v-if="comment.type == 'text' || comment.type == 'reply'")
+          div(class="comment-text" v-if="comment.type == 'text' || comment.type == 'reply'")
             image-loader(v-if="comment.isAttachment(comment.message) && comment.type != 'reply'"
               :comment="comment"
               :message="comment.message"

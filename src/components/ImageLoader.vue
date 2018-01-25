@@ -1,6 +1,11 @@
 <template>
   <div>
-    <div class="image-container" v-if="isLoading">Loading image ...</div>
+    <div class="loading-image-container" v-if="isLoading"> 
+      <i class="">
+        <icon name="ic-load"></icon>
+      </i>
+      Loading Image...
+    </div>
     <div class="qcw-image-container" v-if="isImage && !isLoading && error==''" @click="onClickImage(uri)">
       <img :src="imageSrc" :alt="imageSrc" />
     </div>
@@ -91,14 +96,34 @@
 </script>
 
 <style lang="stylus">
-  .image-container { height: 100px; }
+  @import '../assets/stylus/_variables.styl'
+  .loading-image-container
+    width 100%
+    height auto
+    background-color $lightGrey
+    padding 8px
+    border-radius 2px
+    i
+      display block 
+      width 20px
+      height 20px
+      margin 0px auto 8px auto
+      svg
+        animation spin 1s ease-in-out infinite
   .qcw-image-container 
     width calc(100%+8px)
     margin -4px
     padding-bottom -4px
     img
-      width 100%
-      border-radius 4px
+      zoom 2
+      display: block;
+
+      height: auto;
+      max-height: 100%;
+
+      width: auto;
+      max-width: 100%;
+      border-radius 2px
   .qcw-file-container
     i
       display inline-block
