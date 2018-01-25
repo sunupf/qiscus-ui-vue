@@ -131,6 +131,18 @@ export default {
     transform: none;
   }
 }
+
+@keyframes fadeInZoom {
+  from {
+    opacity: 0;
+    transform: scale3d(.4, .4, .4) translate3d(85%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: scale3d(1, 1, 1)
+  }
+}
+
 @keyframes fadeInLeftBig {
   from {
     opacity: 0;
