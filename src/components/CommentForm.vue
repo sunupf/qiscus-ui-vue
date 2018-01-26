@@ -126,6 +126,7 @@ export default {
     justify-content space-between
     padding 18px 8px
     position relative
+    order 2
 
   .qcw-comment-form textarea
     border 0

@@ -61,6 +61,7 @@ export default {
     setReply(comment) {
       console.info('set reply');
       this.repliedComment = comment;
+      console.log(comment);
       // focus the textarea of commentform
       const element = document.querySelector('.qcw-comment-form textarea');
       if (element) element.focus();
@@ -93,6 +94,7 @@ export default {
     position absolute
     transition all .15s ease-in-out
     bottom 64px
+    background-color $darkWhite
     .qcw-container.qcw-container--open &
       height 480px
   
@@ -140,37 +142,46 @@ export default {
   
   .reply-wrapper
     position relative
-    padding 16px 8px 16px 24px
-    background $white
+    padding 4px 8px 4px 12px
+    background-color $lightGrey
+    margin-bottom 8px
+    .reply-sender
+      font-size 13px
+      font-weight 600
+    .qcw-comment__content
+      font-size 13px
 
   .reply-wrapper:before
     content ""
     position: absolute
-    left 8px
+    left 0px
+    top 0px
     width 4px
-    height calc(100% - 32px)
+    height calc(100% - 0px)
     background $green
-    border-radius 2px
+    border-radius 2px 0 0 2px
   
   .reply-wrapper.reply-wrapper--preview
-    position absolute
-    bottom 64px
-    z-index 500
+    margin-bottom 0
+    order 1
     width 100%
+    background-color $white
+    padding 8px 8px 8px 12px
     animation fadeInUp 0.3s ease-out
-    box-shadow 0 -3px 5px rgba(232,232,232,.2)
+    box-shadow 0 -8px 16px rgba(199,199,199,0.2)
+    z-index 500
+    &:before
+      border-radius 0
 
-  .reply-sender
-    font-size 15px
-    margin-bottom 10px
-    font-weight 600
-  
   .reply-close-btn
     position absolute
     right 8px
-    top 16px
+    top 8px
     font-size 10px
     cursor pointer
+    svg.qc-icon
+      height 12px
+      width 12px
 </style>
 
 

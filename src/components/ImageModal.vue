@@ -38,6 +38,9 @@ export default {
   align-items center
   z-index 9999
 .qcw-image-modal__wrapper
+  min-width: 240px;
+  min-height: 160px;
+  background-color: $darkWhite
   box-shadow 0 3px 15px rgba(0,0,0,.7)
   position relative
   max-width 80%

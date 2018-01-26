@@ -106,6 +106,8 @@ export default {
     flex-wrap: wrap;
     &.comment--me
       justify-content flex-end
+      .qcw-avatar
+        display none
   
   .qcw-comment-date
     text-align center
