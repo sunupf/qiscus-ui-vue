@@ -118,7 +118,7 @@
     align-items center
     justify-content center
     overflow hidden
-    max-height 210px
+    max-height 120px
 
   .qcw-image-container 
     width calc(100%+8px)

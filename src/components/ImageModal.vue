@@ -43,13 +43,12 @@ export default {
   padding 20px
 .qcw-image-modal__wrapper
   min-width 240px
-  paddin
-  box-shadow 0 3px 15px rgba(0,0,0,.7)
   position relative
   max-width 90%
   max-height 90%
   animation fadeInZoom 0.2s ease-out
   .image-loader
+    box-shadow 0 3px 15px rgba(0,0,0,.7)
     display block
   .loading-image-container
     padding 48px 0
