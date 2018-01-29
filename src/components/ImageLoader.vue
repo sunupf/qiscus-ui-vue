@@ -16,7 +16,10 @@
     <div class="qcw-file-container" v-if="!isImage && !isLoading">
       <a :href="uri" target="_blank">
         <i><icon :name="fileClassName"></icon></i>
-        <div class="file-name">{{ filename }}</div>
+        <div class='file-meta'>
+          <div class="file-name">{{ filename }}</div>
+          <!-- <div class="file-ext">{{ ext }}</div> -->
+        </div>
       </a>
     </div>
   </div>
@@ -47,7 +50,7 @@
         const images = ['jpg', 'jpeg', 'gif', 'webp', 'png'];
         // const archives = ['tar', 'zip', 'rar', 'iso'];
         if (images.indexOf(ext) > -1) return 'ic-image';
-        return 'ic-docs-attachment-render-buble';
+        return 'ic-file-attachment';
       },
     },
     created() {
@@ -103,10 +106,9 @@
     background-color $lightGrey
     padding 8px
     border-radius 2px
+    text-align center
     i
       display block 
-      width 20px
-      height 20px
       margin 0px auto 8px auto
       svg
         animation spin 1s ease-in-out infinite
@@ -125,13 +127,30 @@
       max-width: 100%;
       border-radius 2px
   .qcw-file-container
+    background-color: #e8e8e8;
+    padding: 4px 8px;
+    border-radius: 2px;
+    margin: -4px;
+    a
+      color $darkGrey
+      text-decoration none
+      display flex
+      align-items top
+      justify-content center
     i
+      margin-top 4px
       display inline-block
-      width 36px
-      flex 0 36px
-    div.file-name
-      display inline-block
-      width 150px
+      margin-right 8px
+      svg
+        margin 0
+        fill $mediumGreyGrey
+        width 36px
+        height 36px
+    .file-meta
+      font-size 13px
+      overflow ellipsis
+      .file-name
+        font-weight 600
   .reload-image-btn {
     display: block;
     width: 100%;

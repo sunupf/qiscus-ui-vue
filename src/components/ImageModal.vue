@@ -6,6 +6,10 @@
           icon(name="ic-link-out" fill="#FFFFFF")
         i.qcw-image-modal__action(@click="closeBtnHandler" style="font-size: 13px")
           icon(name="ic-close" fill="#FFFFFF")
+      div.loading-image-container(v-if="isLoading")
+        i
+          icon(name="ic-load") Loading Image...          
+        span Loading Image...
       img(:src="uri")
 </template>
 
@@ -26,6 +30,7 @@ export default {
 </script>
 
 <style lang="stylus">
+@import '../assets/stylus/_variables.styl'
 .qcw-image-modal__overlay
   position fixed
   top 0
@@ -40,12 +45,17 @@ export default {
 .qcw-image-modal__wrapper
   min-width: 240px;
   min-height: 160px;
-  background-color: $darkWhite
+  background-color: $white
   box-shadow 0 3px 15px rgba(0,0,0,.7)
   position relative
   max-width 80%
   max-height 90%
+  display: flex;
+  align-items: center;
   animation:fadeInZoom 0.2s ease-out
+  .loading-image-container
+    background-color: $white
+    height 80px
   img
     display block
     width auto
