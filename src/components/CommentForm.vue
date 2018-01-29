@@ -11,7 +11,7 @@
         icon(name="ic-image-attachment")
 
     textarea(placeholder="Type your message" autofocus='autofocus'
-      @keyup="isTyping"
+      @keyup="publishTyping"
       @keydown.enter="trySubmitComment($event)"
       v-model="commentInput")
     i(@click="trySubmitComment($event)")
@@ -83,9 +83,6 @@ export default {
           });
       }
     },
-    isTyping() {
-      this.publishTyping();
-    },
     publishTyping() {
       this.core.realtimeAdapter.publishTyping(1);
     },
@@ -129,6 +126,7 @@ export default {
     justify-content space-between
     padding 18px 8px
     position relative
+    order 2
 
   .qcw-comment-form textarea
     border 0

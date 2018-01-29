@@ -1,7 +1,8 @@
 <template lang="pug">
   div
     div(class="qcw-comment-container" :id="comment.id" :class="commentClass")
-      div(class="qcw-comment-date" v-if="showDate") - {{ dateToday }} -
+      div(class="qcw-comment-date" v-if="showDate") 
+        div {{ dateToday }}
       div(v-if="comment.type == 'system_event'" class="qcw-comment--system-event") {{ comment.message }}
       div(
         class="qcw-comment"
@@ -18,7 +19,7 @@
           span(class="qcw-comment__time" :class="{'qcw-comment__time--me': isMe}") {{comment.time}}
 
           //- reply button
-          //- i(@click="replyHandler(comment)" class="reply-btn" :class="{'reply-btn--me': isMe}")
+          i(@click="replyHandler(comment)" class="reply-btn" :class="{'reply-btn--me': isMe}")
             icon(name="ic-reply")
           
           //- CommentType: "contact_person"
@@ -46,7 +47,7 @@
             :callback="onupdate")
           
           //- CommentType: "TEXT"
-          div(v-if="comment.type == 'text' || comment.type == 'reply'")
+          div(class="comment-text" v-if="comment.type == 'text' || comment.type == 'reply'")
             image-loader(v-if="comment.isAttachment(comment.message) && comment.type != 'reply'"
               :comment="comment"
               :message="comment.message"

@@ -61,6 +61,7 @@ export default {
     setReply(comment) {
       console.info('set reply');
       this.repliedComment = comment;
+      console.log(comment);
       // focus the textarea of commentform
       const element = document.querySelector('.qcw-comment-form textarea');
       if (element) element.focus();
@@ -83,19 +84,19 @@ export default {
     font "Open Sans",sans-serif
     letter-spacing 0.5px
     line-height 130%
-    height 480px
     width 360px
+    height 0
     display flex
     flex-direction column
     box-shadow 0 7px 16px rgba(46,46,46,.15)
     border-radius 19px
     overflow hidden
     position absolute
-    bottom -700px
-    transition all .32s ease
-
+    transition all .15s ease-in-out
+    bottom 64px
+    background-color $darkWhite
     .qcw-container.qcw-container--open &
-      bottom 64px
+      height 480px
   
   .qcw-window-toggle-btn
     cursor pointer
@@ -141,35 +142,46 @@ export default {
   
   .reply-wrapper
     position relative
-    padding 15px
-    background $mybubble-color
+    padding 4px 8px 4px 12px
+    background-color $lightGrey
+    margin-bottom 8px
+    .reply-sender
+      font-size 13px
+      font-weight 600
+    .qcw-comment__content
+      font-size 13px
 
   .reply-wrapper:before
     content ""
     position: absolute
-    left 5px
-    width 3px
-    height calc(100% - 30px)
-    background #444
+    left 0px
+    top 0px
+    width 4px
+    height calc(100% - 0px)
+    background $green
+    border-radius 2px 0 0 2px
   
   .reply-wrapper.reply-wrapper--preview
-    position absolute
-    bottom 50px
-    z-index 500
-    background $mybubble-color
+    margin-bottom 0
+    order 1
     width 100%
-    box-shadow 0 -3px 5px rgba(0,0,0,.3)
+    background-color $white
+    padding 8px 8px 8px 12px
+    animation fadeInUp 0.3s ease-out
+    box-shadow 0 -8px 16px rgba(199,199,199,0.2)
+    z-index 500
+    &:before
+      border-radius 0
 
-  .reply-sender
-    font-size 13px
-    margin-bottom 10px
-  
   .reply-close-btn
     position absolute
-    right 10px
-    top 10px
+    right 8px
+    top 8px
     font-size 10px
     cursor pointer
+    svg.qc-icon
+      height 12px
+      width 12px
 </style>
 
 

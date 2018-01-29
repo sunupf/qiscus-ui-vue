@@ -38,17 +38,24 @@ export default {
   align-items center
   z-index 9999
 .qcw-image-modal__wrapper
+  min-width: 240px;
+  min-height: 160px;
+  background-color: $darkWhite
   box-shadow 0 3px 15px rgba(0,0,0,.7)
   position relative
   max-width 80%
-  max-height 80%
+  max-height 90%
+  animation:fadeInZoom 0.2s ease-out
   img
-    width 100%
-    height 100%
+    display block
+    width auto
+    height auto
+    max-width 100%
+    max-height 100%
 .qcw-image-modal__actions
   position absolute
   display flex
-  top -25px
+  top -36px
   right 0
   align-items center
 .qcw-image-modal__action
