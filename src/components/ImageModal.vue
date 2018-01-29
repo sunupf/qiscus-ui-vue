@@ -6,11 +6,8 @@
           icon(name="ic-link-out" fill="#FFFFFF")
         i.qcw-image-modal__action(@click="closeBtnHandler" style="font-size: 13px")
           icon(name="ic-close" fill="#FFFFFF")
-      div.loading-image-container(v-if="isLoading")
-        i
-          icon(name="ic-load") Loading Image...          
-        span Loading Image...
-      img(:src="uri")
+      image-loader(:comment="comment"
+        :message="comment.message")
 </template>
 
 <script>
@@ -20,7 +17,7 @@ import ImageLoader from './ImageLoader';
 export default {
   name: 'ImageModal',
   components: { ImageLoader, Icon },
-  props: ['uri', 'closeBtnHandler'],
+  props: ['uri', 'closeBtnHandler', 'comment'],
   methods: {
     openImage() {
       window.open(this.uri, '_blank');
@@ -42,26 +39,28 @@ export default {
   justify-content center
   align-items center
   z-index 9999
+  overflow-y scroll
+  padding 20px
 .qcw-image-modal__wrapper
-  min-width: 240px;
-  min-height: 160px;
-  background-color: $white
+  min-width 240px
+  paddin
   box-shadow 0 3px 15px rgba(0,0,0,.7)
   position relative
-  max-width 80%
+  max-width 90%
   max-height 90%
-  display: flex;
-  align-items: center;
-  animation:fadeInZoom 0.2s ease-out
-  .loading-image-container
-    background-color: $white
-    height 80px
-  img
+  animation fadeInZoom 0.2s ease-out
+  .image-loader
     display block
-    width auto
-    height auto
-    max-width 100%
-    max-height 100%
+  .loading-image-container
+    padding 48px 0
+    margin 0px auto
+    background-color $white
+  .qcw-image-container
+    margin 0;
+    width 100%
+    img
+      border-radius 0
+      margin-bottom 16px
 .qcw-image-modal__actions
   position absolute
   display flex

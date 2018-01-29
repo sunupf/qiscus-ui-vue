@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="image-loader">
     <div class="loading-image-container" v-if="isLoading"> 
       <i class="">
         <icon name="ic-load"></icon>
       </i>
       Loading Image...
     </div>
-    <div class="qcw-image-container" v-if="isImage && !isLoading && error==''" @click="onClickImage(uri)">
+    <div class="qcw-image-container" v-if="isImage && !isLoading && error==''" @click="onClickImage(comment)">
       <img :src="imageSrc" :alt="imageSrc" />
     </div>
     <div v-if="error">
@@ -112,6 +112,14 @@
       margin 0px auto 8px auto
       svg
         animation spin 1s ease-in-out infinite
+        
+  .qcw-comment__message .qcw-image-container 
+    display flex
+    align-items center
+    justify-content center
+    overflow hidden
+    max-height 210px
+
   .qcw-image-container 
     width calc(100%+8px)
     margin -4px

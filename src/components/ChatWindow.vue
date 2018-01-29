@@ -3,7 +3,7 @@
 
     svg-icon
 
-    image-modal(:uri="imageModalContent" :closeBtnHandler="closeImageModal" v-if="imageModalIsActive")
+    image-modal(:comment="imageModalContent" :closeBtnHandler="closeImageModal" v-if="imageModalIsActive")
 
     comment-reply-preview(v-if="repliedComment" :comment="repliedComment" :closeReplyHandler="closeReply")
 
@@ -49,9 +49,8 @@ export default {
     };
   },
   methods: {
-    openImageModal(uri) {
-      console.info('opening modal');
-      this.imageModalContent = uri;
+    openImageModal(comment) {
+      this.imageModalContent = comment;
       this.imageModalIsActive = true;
     },
     closeImageModal() {
