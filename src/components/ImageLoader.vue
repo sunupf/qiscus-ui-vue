@@ -6,7 +6,7 @@
       </i>
       Loading Image...
     </div>
-    <div class="qcw-image-container" v-if="isImage && !isLoading && error==''" @click="onClickImage(uri)">
+    <div class="qcw-image-container" v-if="isImage && !isLoading && error==''" @click="onClickImage(comment)">
       <img :src="imageSrc" :alt="imageSrc" />
     </div>
     <div v-if="error">

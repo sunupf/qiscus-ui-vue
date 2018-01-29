@@ -6,7 +6,9 @@
           icon(name="ic-link-out" fill="#FFFFFF")
         i.qcw-image-modal__action(@click="closeBtnHandler" style="font-size: 13px")
           icon(name="ic-close" fill="#FFFFFF")
-      img(:src="uri")
+      //- img(:src="uri")
+      image-loader(:comment="comment"
+        :message="comment.message")
 </template>
 
 <script>
@@ -16,7 +18,7 @@ import ImageLoader from './ImageLoader';
 export default {
   name: 'ImageModal',
   components: { ImageLoader, Icon },
-  props: ['uri', 'closeBtnHandler'],
+  props: ['uri', 'closeBtnHandler', 'comment'],
   methods: {
     openImage() {
       window.open(this.uri, '_blank');
