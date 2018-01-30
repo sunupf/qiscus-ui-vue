@@ -103,7 +103,7 @@
   .loading-image-container
     width 100%
     height auto
-    background-color $lightGrey
+    background-color $darkWhite
     padding 8px
     border-radius 2px
     text-align center
@@ -112,7 +112,14 @@
       margin 0px auto 8px auto
       svg
         animation spin 1s ease-in-out infinite
-        
+  .reply-wrapper .image-loader
+    margin-top 4px
+    padding-bottom 4px
+  .reply-wrapper .qcw-image-container
+    margin 0
+    width 100%
+
+  .reply-wrapper--preview .qcw-image-container, 
   .qcw-comment__message .qcw-image-container 
     display flex
     align-items center
@@ -124,6 +131,7 @@
     width calc(100%+8px)
     margin -4px
     padding-bottom -4px
+    border-radius 3px
     img
       zoom 2
       display: block;
@@ -133,12 +141,17 @@
 
       width: auto;
       max-width: 100%;
-      border-radius 2px
+
+  .reply-wrapper--preview .qcw-file-container 
+    margin 4px 0 0 0
+    a
+      justify-content flex-start
+
   .qcw-file-container
-    background-color: #e8e8e8;
-    padding: 4px 8px;
-    border-radius: 2px;
-    margin: -4px;
+    background-color $darkWhite
+    padding 4px 8px
+    border-radius 2px
+    margin -4px
     a
       color $darkGrey
       text-decoration none
