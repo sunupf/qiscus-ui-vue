@@ -91,6 +91,16 @@ export default {
       const files    = e.target.files || e.dataTransfer.files;
       const formData = new FormData();
       const roomId   = this.core.selected.id;
+
+      // check allowed file type
+      // ambil dulu extensi file nya sebelumnya.
+      let ext = files[0].name.split('.');
+      ext = ext[ext.length - 1] || null;
+      if (this.core.allowedFileTypes && this.core.allowedFileTypes.indexOf(ext) < 0) {
+        return vm.$toasted.error('File uploading failed');
+      }
+
+      // all clear, let's upload
       formData.append('file', files[0]);
       formData.append('token', vm.core.userData.token);
       vm.core.addUploadedFile(files[0].name);
@@ -100,7 +110,7 @@ export default {
         if (xhr.status === 200) {
           // file(s) uploaded), let's post to comment
           const url = JSON.parse(xhr.response).results.file.url;
-          vm.core.submitComment(roomId, `[file] ${url} [/file]`)
+          vm.core.sendComment(roomId, `[file] ${url} [/file]`)
             .then(() => {
               vm.core.removeUploadedFile(files[0].name, roomId);
               window.setTimeout(() => scrollIntoElement(vm.core), 0);
@@ -111,9 +121,7 @@ export default {
         }
       };
       xhr.send(formData);
-
-      // reader.onload = (e) => { vm.uploadedFiles.push(e.target.result) };
-      // reader.readAsDataURL(files[0]);
+      return true;
     },
   },
 };
