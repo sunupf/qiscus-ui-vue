@@ -38,6 +38,14 @@
               // Join Qiscus AOV Room
               // QiscusSDK.core.getOrCreateRoomByUniqueId('Qiscus AOV');
             },
+          },
+          customTemplate: true,
+          templateFunction(comment) {
+            if(comment.type == 'system_event') {
+              if(comment.payload.payload.type == "application/hd.patient_info") 
+                return `<div>Nanti render nya disini</div>`;
+            }
+            return false;
           }
         });
         // login to qiscus
