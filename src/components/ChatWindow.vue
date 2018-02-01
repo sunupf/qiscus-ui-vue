@@ -142,7 +142,7 @@ export default {
   .reply-wrapper
     position relative
     padding 4px 8px 4px 12px
-    background-color $lightGrey
+    background-color $darkWhite
     margin-bottom 8px
     .reply-sender
       font-size 13px
