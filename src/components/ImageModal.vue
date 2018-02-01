@@ -6,7 +6,6 @@
           icon(name="ic-link-out" fill="#FFFFFF")
         i.qcw-image-modal__action(@click="closeBtnHandler" style="font-size: 13px")
           icon(name="ic-close" fill="#FFFFFF")
-      //- img(:src="uri")
       image-loader(:comment="comment"
         :message="comment.message")
 </template>
@@ -28,6 +27,7 @@ export default {
 </script>
 
 <style lang="stylus">
+@import '../assets/stylus/_variables.styl'
 .qcw-image-modal__overlay
   position fixed
   top 0
@@ -39,21 +39,27 @@ export default {
   justify-content center
   align-items center
   z-index 9999
+  overflow-y scroll
+  padding 20px
 .qcw-image-modal__wrapper
-  min-width: 240px;
-  min-height: 160px;
-  background-color: $darkWhite
-  box-shadow 0 3px 15px rgba(0,0,0,.7)
+  min-width 240px
   position relative
-  max-width 80%
+  max-width 90%
   max-height 90%
-  animation:fadeInZoom 0.2s ease-out
-  img
+  animation fadeInZoom 0.2s ease-out
+  .image-loader
+    box-shadow 0 3px 15px rgba(0,0,0,.7)
     display block
-    width auto
-    height auto
-    max-width 100%
-    max-height 100%
+  .loading-image-container
+    padding 48px 0
+    margin 0px auto
+    background-color $white
+  .qcw-image-container
+    margin 0;
+    width 100%
+    img
+      border-radius 0
+      margin-bottom 16px
 .qcw-image-modal__actions
   position absolute
   display flex
