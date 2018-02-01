@@ -20,6 +20,7 @@ export default {
     if (!temp) { this.finalTemplate = '<div>No template provided</div>'; return false; }
     const rgx = /{(.*?)}/g;
     const matched = temp.match(rgx) || [];
+    console.info(this.data);
     matched.forEach((r) => {
       // ambil array datanya
       let val = this.data;
