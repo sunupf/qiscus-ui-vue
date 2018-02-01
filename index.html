@@ -9,6 +9,13 @@
       *, *:before, *:after { box-sizing: border-box; }
       html, body { width: 100%; height: 100%; overflow: hidden; padding: 0; margin: 0; }
       body { background: url("./static/bg.png") center 105px no-repeat, linear-gradient(140.45deg, #9873BA 28.28%, rgba(0, 158, 244, 0.8) 109.19%) }
+      .patient-card { min-width: 250px; border: 1px solid #ddd; border-radius: 3px; text-align: center; background: #FFF; box-shadow: 0 2px 17px rgba(0,0,0,.32); }
+      .patient-card strong { display: block; padding: 10px; border-bottom: 1px solid #ddd;}
+      .patient-card h3 { border-bottom: 1px solid #ddd; padding: 10px; text-transform: uppercase; margin: 0; }
+      .patient-card small { display: block; color: grey; }
+      .patient-card ul { display: flex; list-style: none; padding: 10px 0; justify-content: space-around;}
+      .patient-card li { position: relative; flex: 1; }
+      .patient-card li:not(:nth-child(1)):before { content: ''; position: absolute; left: 0; border-left: 1px solid #ddd; height: 100%; }
     </style>
   </head>
   <body>
@@ -40,6 +47,21 @@
               // Join Qiscus AOV Room
               // QiscusSDK.core.getOrCreateRoomByUniqueId('Qiscus AOV');
             },
+          },
+          customTemplate: true,
+          templateFunction(comment) {
+            if(comment.type == 'system_event') {
+              if(comment.payload.payload.type == "application/hd.patient_info") 
+                return `<div class="patient-card">
+                  <strong>Patient Info</strong>
+                  <h3>{payload.payload.content.name} <small>{payload.payload.content.gender}</small></h3>
+                  <ul>
+                    <li>{payload.payload.content.weight} <small>Kg</small></li>
+                    <li>{payload.payload.content.height} <small>Cm</small></li>
+                  </ul>
+                </div>`;
+            }
+            return false;
           }
         });
         // login to qiscus

@@ -3,7 +3,9 @@
     div(class="qcw-comment-container" :id="comment.id" :class="commentClass")
       div(class="qcw-comment-date" v-if="showDate") 
         div {{ dateToday }}
-      div(v-if="comment.type == 'system_event'" class="qcw-comment--system-event") {{ comment.message }}
+      div(v-if="comment.type == 'system_event'" class="qcw-comment--system-event")
+        comment-custom(v-if="core.customTemplate && haveTemplate(comment)" :data="comment")
+        div(v-else) {{ comment.message }}
       div(
         class="qcw-comment"
         v-if="comment.type != 'system_event'"
@@ -46,6 +48,12 @@
             :on-click-image="onClickImage"
             :callback="onupdate")
           
+          //- CommentType: "CAROUSEL"
+          comment-carousel(:cards="comment.payload.cards" v-if="comment.type === 'carousel'")
+
+          //- CommentType: "CUSTOM"
+          comment-custom(v-if="comment.type === 'custom'" :data="comment")
+          
           //- CommentType: "TEXT"
           div(class="comment-text" v-if="comment.type == 'text' || comment.type == 'reply'")
             image-loader(v-if="comment.isAttachment(comment.message) && comment.type != 'reply'"
@@ -81,10 +89,6 @@
     //-       <!-- CommentType: "CARD" -->
     //-       <comment-card :data="comment.payload"
     //-         v-if="comment.type==='card'"></comment-card>
-    //-       <!-- CommentType: "CUSTOM" -->
-    //-       <div v-if="comment.type === 'custom'">
-    //-         <comment-carousel v-if="comment.subtype==='carousel'" :cards="comment.payload.content"></comment-carousel>
-    //-       </div>
     //-       <!-- CommentType: "ACCOUNT_LINKING" -->
     //-       <div v-if="comment.type == 'account_linking'">
     //-         <comment-render :text="comment.payload.text || message"></comment-render>
@@ -106,16 +110,28 @@
 </template>
 
 <script>
+import QiscusCore from '../lib/SDKCore';
 import Avatar from './Avatar';
 import Icon from './Icon';
 import StaticMap from './StaticMap';
 import ImageLoader from './ImageLoader';
 import CommentRender from './CommentRender';
 import CommentReply from './CommentReply';
+import CommentCustom from './CommentCustom';
+import CommentCarousel from './CommentCarousel';
 
 export default {
   name: 'Comment',
-  components: { Avatar, Icon, StaticMap, ImageLoader, CommentRender, CommentReply },
+  components: {
+    Avatar,
+    Icon,
+    StaticMap,
+    ImageLoader,
+    CommentRender,
+    CommentReply,
+    CommentCustom,
+    CommentCarousel,
+  },
   props: ['comment', 'commentBefore', 'commentAfter', 'userData', 'onClickImage', 'onupdate', 'replyHandler', 'showAvatar'],
   computed: {
     showDate() {
@@ -144,6 +160,7 @@ export default {
         [`qcw-comment--${this.comment.type} comment--me`]: this.comment.username_real === this.userData.email,
         [`qcw-comment--${this.comment.type}`]: !this.comment.username_real === this.userData.email,
       },
+      core: QiscusCore,
     };
   },
   methods: {
@@ -151,6 +168,10 @@ export default {
       const element = document.getElementById(this.comment.payload.replied_comment_id);
       if (!element) return;
       element.scrollIntoView({ block: 'end',  behaviour: 'smooth' });
+    },
+    haveTemplate(comment) {
+      if (!this.core.customTemplate) return false;
+      return this.core.templateFunction(comment);
     },
   },
 };
