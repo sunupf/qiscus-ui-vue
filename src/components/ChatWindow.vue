@@ -144,6 +144,7 @@ export default {
     padding 4px 8px 4px 12px
     background-color $darkWhite
     margin-bottom 8px
+    border-radius 2px
     .reply-sender
       font-size 13px
       font-weight 600
