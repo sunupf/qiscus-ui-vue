@@ -63,7 +63,7 @@ export default {
     },
     submitComment(topicId, comment) {
       if (this.repliedComment === null) {
-        this.core.submitComment(topicId, comment).then(() => {
+        this.core.sendComment(topicId, comment).then(() => {
           scrollIntoElement(this.core);
         });
       } else {
