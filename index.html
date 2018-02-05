@@ -33,12 +33,13 @@
           // mode: 'wide',
           options: {
             presenceCallback(data) {
-              // console.info('presence data', data);
+              console.info('presence data', data);
             },
             // When we're success login into qiscus SDK we'll have a 1-on-1 chat to guest2@qiscus.com
             // You can change this to any user you have on your AppId, e.g: contact@your_company.com, etc
             loginSuccessCallback(data) { 
               QiscusSDK.core.UI.chatTarget(targetUser) 
+              // QiscusSDK.core.UI.chatGroup(79335);
               // load Room List
               // loadRoomList();
 
@@ -67,7 +68,11 @@
         // QiscusSDK.core.setUser('juang@qiscus.com', 'password', 'Ashari Juang', 'https://d1edrlpyc25xu0.cloudfront.net/kiwari-prod/image/upload/BTDIXHEr9u/1507605766-Timbersaw_icon.png');
         // if(curUser){
           // QiscusSDK.core.setUser('guest@qiscus.com', 'password', 'Qiscus Guest','https://res.cloudinary.com/qiscus/image/upload/v1507272514/kiwari-prod_user_id_340/uvwlno1qkkgh9xwwjzgq.png');
-          QiscusSDK.core.setUser('niwang@qiscus.com', 'password', 'Niwang Jati Sasongko');
+          if(curUser == 'fikri@qiscus.com') {
+            QiscusSDK.core.setUser('guest@qiscus.com','password','Guest');
+          } else {
+            QiscusSDK.core.setUser('niwang@qiscus.com', 'password', 'Niwang Jati Sasongko');
+          }
         // } else {
           // QiscusSDK.core.setUser('fikri@qiscus.com', 'password', 'Rijalul Fikri', 'https://res.cloudinary.com/qiscus/image/upload/v1507272514/kiwari-prod_user_id_340/uvwlno1qkkgh9xwwjzgq.png');
         // }

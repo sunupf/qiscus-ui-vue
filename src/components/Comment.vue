@@ -53,6 +53,14 @@
 
           //- CommentType: "CUSTOM"
           comment-custom(v-if="comment.type === 'custom'" :data="comment")
+
+          //- CommentType: "BUTTON"
+          div(v-if="comment.type == 'buttons'")
+            div(class="qcw-comment__content" v-html="comment.payload.text || message")
+            comment-buttons(:buttons="comment.payload.buttons" :postbackHandler="postbackSubmit")
+
+          //- CommentType: "CARD"
+          comment-card(:data="comment.payload" v-if="comment.type==='card'")
           
           //- CommentType: "TEXT"
           div(class="comment-text" v-if="comment.type == 'text' || comment.type == 'reply'")
@@ -86,9 +94,6 @@
             div(class="qcw-comment__state qcw-comment__state--read" v-if="comment.isRead")
               icon(name="ic-double-check")
 
-    //-       <!-- CommentType: "CARD" -->
-    //-       <comment-card :data="comment.payload"
-    //-         v-if="comment.type==='card'"></comment-card>
     //-       <!-- CommentType: "ACCOUNT_LINKING" -->
     //-       <div v-if="comment.type == 'account_linking'">
     //-         <comment-render :text="comment.payload.text || message"></comment-render>
@@ -96,15 +101,7 @@
     //-           <button @click="openAccountBox">{{ comment.payload.params.button_text }} &rang;</button>
     //-         </div>
     //-       </div>
-    //-       <!-- CommentType: "BUTTON" -->
-    //-       <div v-if="comment.type == 'buttons'">
-    //-         <div class="qcw-comment__content" v-html="comment.payload.text || message"></div>
-    //-         <comment-buttons :buttons="comment.payload.buttons" :postbackHandler="postbackSubmit"></comment-buttons>
-    //-       </div>
     //-     </div>
-    //-     <avatar :src="comment.avatar" v-if="options.avatar && isMe" :class="{'qcw-avatar--hide': !isParent}"></avatar>
-    //-   </div>
-    //- </div>
     div(class="failed-info" v-if="comment.isFailed" :class="{ 'failed--last': isLast }") Message failed to send. 
             span(@click="resend(comment)" class="" v-if="comment.isFailed") Resend
 </template>
@@ -119,6 +116,8 @@ import CommentRender from './CommentRender';
 import CommentReply from './CommentReply';
 import CommentCustom from './CommentCustom';
 import CommentCarousel from './CommentCarousel';
+import CommentCard from './CommentCard';
+import CommentButtons from './CommentButtons';
 
 export default {
   name: 'Comment',
@@ -131,6 +130,8 @@ export default {
     CommentReply,
     CommentCustom,
     CommentCarousel,
+    CommentCard,
+    CommentButtons,
   },
   props: ['comment', 'commentBefore', 'commentAfter', 'userData', 'onClickImage', 'onupdate', 'replyHandler', 'showAvatar'],
   computed: {
