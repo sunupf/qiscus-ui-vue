@@ -4,6 +4,7 @@
       loader(width="70px" height="70px" borderWidth="5px")
 
     ul(v-if="core.selected")
+      li(class="qcw-load-more-btn" @click="loadMore") Load More
       li(v-for="(comment, index) in core.selected.comments" :key="comment.id")
         comment(
           :comment="comment"
@@ -25,11 +26,31 @@ export default {
   name: 'Comments',
   components: { Loader, Comment },
   props: ['core', 'onClickImage', 'onupdate', 'replyHandler'],
+  methods: {
+    loadMore() {
+      this.core.loadComments(this.core.selected.id,
+        this.core.selected.comments[0].id,
+        null,
+        'false');
+    },
+  },
 };
 </script>
 
 <style lang="stylus">
   @import '../assets/stylus/_variables.styl'
+  .qcw-load-more-btn
+    text-align center
+    font-weight bold
+    font-size: 9px;
+    margin: 24px auto 12px auto;
+    flex: 1 100%;
+    color #666
+    text-transform uppercase
+    cursor pointer
+    transition transform .32s ease
+    &:hover
+      transform translatey(-2px)
   .qcw-load-comment-indicator
     position absolute
     width 100%
