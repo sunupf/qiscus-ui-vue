@@ -47,6 +47,7 @@
               // Join Qiscus AOV Room
               // QiscusSDK.core.getOrCreateRoomByUniqueId('Qiscus AOV');
             },
+            typingCallback(data) { console.info('isi typing', data); },
           },
           customTemplate: true,
           templateFunction(comment) {

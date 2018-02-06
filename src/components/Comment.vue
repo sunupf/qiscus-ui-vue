@@ -174,6 +174,11 @@ export default {
       if (!this.core.customTemplate) return false;
       return this.core.templateFunction(comment);
     },
+    postbackSubmit(button) {
+      const roomId = this.core.selected.id;
+      const labelToSend = button.postback_text ? button.postback_text : button.label;
+      this.core.submitComment(roomId, labelToSend, null, 'button_postback_response', JSON.stringify(button.payload));
+    },
   },
 };
 </script>

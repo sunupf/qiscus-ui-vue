@@ -84,7 +84,11 @@ export default {
       }
     },
     publishTyping() {
-      this.core.realtimeAdapter.publishTyping(1);
+      if (this.commentInput.length > 0) {
+        this.core.realtimeAdapter.publishTyping(1);
+      } else {
+        this.core.realtimeAdapter.publishTyping(0);
+      }
     },
     uploadFile(e) {
       const vm = this;
