@@ -73,23 +73,11 @@ export default {
 
 <style lang="stylus">
 @import '../assets/stylus/_variables.styl'
-.comment__carousel { position: relative; }
-
-.comment__card--container
-  margin-left -8px
-  width calc(100% + 8px)
-  .comment__card--image
-    height 160px
-    margin-top -8px
-    border-radius 8px 8px 0 0
-  .comment__card--title
-    text-transform capitalize
-    font-size 12px
-    font-weight 600
-    margin 8px
-    display block
-  .qcw-comment__buttons
-    margin-left 0
+.comment__carousel 
+  position relative
+.qcw-carousel__item
+  .comment__card--title,.comment__card--description
+    background-color $white
 ul.carousel__bullets,
 ul.qcw-carousel__nav { list-style: none; overflow: hidden; text-align: center; display: none }
 ul.carousel__bullets li { display: inline-block; cursor: pointer; margin: 5px 10px; 
