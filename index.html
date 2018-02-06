@@ -29,8 +29,8 @@
         var targetUser = url.searchParams.get("target") || 'guest@qiscus.com';
         // let's setup options for our widget
         QiscusSDK.core.init({
-          // AppId: 'sdksample',
-          AppId: 'qiscusbot-1n2ognwddco',
+          AppId: 'sdksample',
+          // AppId: 'qiscusbot-1n2ognwddco',
           // mode: 'wide',
           options: {
             presenceCallback(data) {
@@ -39,8 +39,8 @@
             // When we're success login into qiscus SDK we'll have a 1-on-1 chat to guest2@qiscus.com
             // You can change this to any user you have on your AppId, e.g: contact@your_company.com, etc
             loginSuccessCallback(data) { 
-              QiscusSDK.core.UI.chatTarget('admin@qiscusbot.com')
-              // QiscusSDK.core.UI.chatTarget(targetUser) 
+              // QiscusSDK.core.UI.chatTarget('admin@qiscusbot.com')
+              QiscusSDK.core.UI.chatTarget(targetUser) 
               // load Room List
               // loadRoomList();
 

@@ -18,3 +18,20 @@ export default {
   },
 };
 </script>
+
+<style lang="stylus">
+  @import '../assets/stylus/_variables.styl'
+  .qcw-comment__buttons 
+    margin-left -8px
+    margin-bottom -8px
+    margin-top 8px
+    button
+      border-radius 0 0 7px 7px
+      width 210px
+      margin 0 
+      height 48px
+      background-color #fff
+      border 0
+      color $blue
+      text-transform capitalize
+</style>
