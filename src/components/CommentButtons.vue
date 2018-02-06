@@ -22,25 +22,25 @@ export default {
 <style lang="stylus">
   @import '../assets/stylus/_variables.styl'
   .qcw-comment__content
-    margin-left -8px
     padding 0 8px
-  .qcw-comment__buttons 
-    margin-left -8px
-    margin-bottom -8px
+  .qcw-comment__buttons
+    margin-top 8px
     .action_buttons:last-child
+        margin-bottom -8px
         border-radius 0 0 7px 7px
     .action_buttons 
       background-color #fff
       border-top 1px solid $lightGrey
+      width calc(100% + 16px)
+      margin-left -8px
       &:hover
         a,button
-          /*transform translateY(-4px)*/
-          text-decoration underline
+          color $blue
           cursor pointer
       &:last-child
         border-radius 0 0 7px 7px
       button, a
-        /*transition transform .5s ease-out*/
+        transition color .3s ease-out
         background-color transparent
         font-size 13px
         font-weight 600
@@ -49,7 +49,7 @@ export default {
         margin 0 
         height 48px
         border 0
-        color $blue
+        color $darkGrey
         text-transform capitalize
         text-decoration none
         display block 
