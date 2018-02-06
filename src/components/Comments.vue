@@ -219,7 +219,7 @@ export default {
     margin-top -3px
     font-size 11px
     margin-bottom 4px
-    margin-right 64px
+    width: calc(100% - 27px);
     color $red
     span
       color $green
@@ -230,8 +230,6 @@ export default {
       margin-bottom 24px
       margin-top -27px
   
-
-
   .qcw-comment--system-event
     text-align: center;
     align-self: center !important;
