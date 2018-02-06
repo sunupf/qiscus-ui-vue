@@ -292,9 +292,10 @@ export default {
 
   .comment--last
     margin-bottom 24px
-    
+  .comment-text
+    .qcw-comment__content 
+      margin 0
   .qcw-comment__content 
-    margin-left -8px
     margin-right -8px
     img.emojione
       display inline-block
