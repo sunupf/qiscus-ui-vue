@@ -271,8 +271,10 @@ export default {
 
   .comment--last
     margin-bottom 24px
+    
   .qcw-comment__content 
-    font-size 14px
+    margin-left -8px
+    margin-right -8px
     img.emojione
       display inline-block
       vertical-align middle
