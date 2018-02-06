@@ -23,3 +23,36 @@ export default {
   },
 };
 </script>
+
+
+<style lang="stylus">
+  @import '../assets/stylus/_variables.styl'
+  .comment--me
+    .comment__card--container
+      .comment__card--image
+        background-color $lightGrey
+  
+  .comment__card--container
+    margin-left -8px
+    width calc(100% + 16px)
+    .comment__card--description
+      padding 0 8px 16px 8px
+      font-size 11px
+    .comment__card--image
+      border-bottom 1px solid $lightGrey
+      background-size cover
+      background-position center
+      background-color $mediumGrey
+      height 160px
+      margin-top -8px
+      border-radius 8px 8px 0 0
+    .comment__card--title
+      text-transform capitalize
+      font-size 12px
+      font-weight 600
+      margin 0px
+      padding 8px
+      display block
+    .qcw-comment__buttons
+      margin-left 0
+</style>

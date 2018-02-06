@@ -150,8 +150,9 @@
   .qcw-file-container
     background-color $darkWhite
     padding 4px 8px
-    border-radius 2px
+    border-radius 4px
     margin -4px
+    word-break break-word
     a
       color $darkGrey
       text-decoration none
@@ -172,6 +173,7 @@
       overflow ellipsis
       .file-name
         font-weight 600
+        font-size 12px
   .reload-image-btn {
     display: block;
     width: 100%;
