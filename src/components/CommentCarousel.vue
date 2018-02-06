@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     startRotation() {
-      this.timer = setInterval(this.next, 3000);
+      this.timer = setInterval(this.next, 3000000);
     },
     stopRotation() {
       clearTimeout(this.timer);
@@ -75,9 +75,6 @@ export default {
 @import '../assets/stylus/_variables.styl'
 .comment__carousel 
   position relative
-.qcw-carousel__item
-  .comment__card--title,.comment__card--description
-    background-color $white
 ul.carousel__bullets,
 ul.qcw-carousel__nav { list-style: none; overflow: hidden; text-align: center; display: none }
 ul.carousel__bullets li { display: inline-block; cursor: pointer; margin: 5px 10px; 
