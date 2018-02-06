@@ -16,6 +16,9 @@
           :userData="core.userData"
           :showAvatar="core.options.avatar"
         )
+      //- component for uploader progress
+      li(v-if="uploadedFiles.length > 0")
+        div(v-for="file in uploadedFiles" class="qcw-upload-progress") Uploading {{ `${file.name}` }}
 </template>
 
 <script>
@@ -26,6 +29,12 @@ export default {
   name: 'Comments',
   components: { Loader, Comment },
   props: ['core', 'onClickImage', 'onupdate', 'replyHandler'],
+  computed: {
+    uploadedFiles() {
+      return this.core.uploadedFiles
+        .filter(f => f.room_id === this.core.selected.id);
+    },
+  },
   methods: {
     loadMore() {
       this.core.loadComments(this.core.selected.id,

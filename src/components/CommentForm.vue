@@ -38,6 +38,10 @@ export default {
   },
   computed: {
     sendBtnStatus() { return (this.commentInput.length > 0 ? '#94ca62' : null); },
+    uploadedFiles() {
+      return this.core.uploadedFiles
+        .filter(f => f.room_id === this.core.selected.id);
+    },
   },
   methods: {
     // toggleEmojiPicker() {
@@ -112,7 +116,7 @@ export default {
       formData.append('token', vm.core.userData.token);
       vm.core.addUploadedFile(files[0].name);
       const xhr = new XMLHttpRequest();
-      xhr.upload.addEventListener('progress', this.updateProgress);
+      xhr.upload.addEventListener('progress', this.updateProgress.bind(null, files[0].name));
       xhr.open('POST', `${vm.core.baseURL}/api/v2/sdk/upload`, true);
       xhr.onload = function responseReceived() {
         if (xhr.status === 200) {
@@ -131,10 +135,12 @@ export default {
       xhr.send(formData);
       return true;
     },
-    updateProgress(e) {
+    updateProgress(e, fileName) {
       if (e.lengthComputable) {
         const percentComplete = e.loaded / e.total;
-        console.log(percentComplete);
+        const fileObject = this.uploadedFiles
+          .find(f => f.name === fileName);
+        if (fileObject) fileObject.progress = percentComplete;
       } else {
         console.log('unkown');
       }
