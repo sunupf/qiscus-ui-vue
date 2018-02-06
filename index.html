@@ -39,8 +39,8 @@
             // When we're success login into qiscus SDK we'll have a 1-on-1 chat to guest2@qiscus.com
             // You can change this to any user you have on your AppId, e.g: contact@your_company.com, etc
             loginSuccessCallback(data) { 
-              // QiscusSDK.core.UI.chatTarget('admin@qiscusbot.com')
-              QiscusSDK.core.UI.chatTarget(targetUser) 
+              // QiscusUI.chatTarget('admin@qiscusbot.com')
+              QiscusUI.chatTarget(targetUser) 
               // load Room List
               // loadRoomList();
 
@@ -83,7 +83,7 @@
         // QiscusSDK.core.setUser('sunu@qiscus.com', 'password', 'Sunu PF', 'https://d1edrlpyc25xu0.cloudfront.net/kiwari-prod/image/upload/6nsJ-eS_nd/1507605872-Animal_Courier_(Radiant)_icon.png');
         // render the widget
         QiscusSDK.render();
-        // QiscusSDK.core.UI.setCustomColors({
+        // QiscusUI.setCustomColors({
         //   headerBackgroundColor: '#1abc9c',
         //   headerTitleColor: '#ecf0f1',
         //   headerIconColor: '#ecf0f1',

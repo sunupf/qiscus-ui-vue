@@ -81,6 +81,7 @@ export default {
         self.core.UI.colors = Object.assign({}, self.core.UI.colors, customColors);
       },
     };
+    window.QiscusUI = self.core.UI;
   },
   methods: {
     toggleWindowStatus() {
