@@ -84,10 +84,13 @@ export default {
       }
     },
     publishTyping() {
-      if (this.commentInput.length > 0) {
-        this.core.realtimeAdapter.publishTyping(1);
+      const self = this;
+      if (self.commentInput.length > 0) {
+        // publish typing, after 3 sec, unpublish
+        self.core.realtimeAdapter.publishTyping(1);
+        window.setTimeout(() => self.core.realtimeAdapter.publishTyping(0), 3000);
       } else {
-        this.core.realtimeAdapter.publishTyping(0);
+        self.core.realtimeAdapter.publishTyping(0);
       }
     },
     uploadFile(e) {

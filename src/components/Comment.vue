@@ -61,6 +61,10 @@
 
           //- CommentType: "CARD"
           comment-card(:data="comment.payload" v-if="comment.type==='card'")
+
+          //- CommentType: "CARD"
+          div(v-if="comment.type=='button_postback_response'" class="comment-text") 
+            comment-render(:text="comment.message" v-if="!comment.isAttachment(comment.message)")
           
           //- CommentType: "TEXT"
           div(class="comment-text" v-if="comment.type == 'text' || comment.type == 'reply'")
