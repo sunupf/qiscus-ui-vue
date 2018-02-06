@@ -181,7 +181,7 @@ export default {
     postbackSubmit(button) {
       const roomId = this.core.selected.id;
       const labelToSend = button.postback_text ? button.postback_text : button.label;
-      this.core.submitComment(roomId, labelToSend, null, 'button_postback_response', JSON.stringify(button.payload));
+      this.core.sendComment(roomId, labelToSend, null, 'button_postback_response', JSON.stringify(button.payload));
     },
   },
 };
