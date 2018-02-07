@@ -12,7 +12,7 @@
         :class="{ 'comment--me': comment.username_real == userData.email, 'comment--parent': isParent, 'comment--mid': isMid, 'comment--last': isLast }"
       )
         avatar(:src="comment.avatar" :class="{'qcw-avatar--hide': !isParent}")
-        div(class="qcw-comment__message")
+        div(class="qcw-comment__message" :class="{'extra-margin': comment.type === 'carousel'}")
           //- div(class="qcw-comment__info" v-if="isParent")
             //- span(class="qcw-comment__username") {{comment.username_as}}
             //- span(class="qcw-comment__time") {{comment.time}}
@@ -107,7 +107,7 @@
     //-       </div>
     //-     </div>
     div(class="failed-info" v-if="comment.isFailed" :class="{ 'failed--last': isLast }") Message failed to send. 
-            span(@click="resend(comment)" class="" v-if="comment.isFailed") Resend
+      span(@click="resend(comment)" class="" v-if="comment.isFailed") Resend
 </template>
 
 <script>
