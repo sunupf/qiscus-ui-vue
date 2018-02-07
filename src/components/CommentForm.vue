@@ -116,7 +116,9 @@ export default {
       formData.append('token', vm.core.userData.token);
       vm.core.addUploadedFile(files[0].name);
       const xhr = new XMLHttpRequest();
-      xhr.upload.addEventListener('progress', this.updateProgress.bind(null, files[0].name));
+      xhr.upload.addEventListener('progress', (uploadEvent) => {
+        this.updateProgress(uploadEvent, files[0].name);
+      });
       xhr.open('POST', `${vm.core.baseURL}/api/v2/sdk/upload`, true);
       xhr.onload = function responseReceived() {
         if (xhr.status === 200) {
@@ -138,9 +140,11 @@ export default {
     updateProgress(e, fileName) {
       if (e.lengthComputable) {
         const percentComplete = e.loaded / e.total;
-        const fileObject = this.uploadedFiles
-          .find(f => f.name === fileName);
-        if (fileObject) fileObject.progress = percentComplete;
+        // const fileObject = this.uploadedFiles
+        //   .find(f => f.name === fileName);
+        // console.log(fileObject);
+        // if (fileObject) fileObject.progress = percentComplete;
+        console.log('%s - %s', fileName, percentComplete);
       } else {
         console.log('unkown');
       }
