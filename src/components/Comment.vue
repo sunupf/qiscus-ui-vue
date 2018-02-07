@@ -89,14 +89,14 @@
 
           div(v-if="isMe")
             i(class="qcw-comment__state qcw-comment__state--sending" v-if="comment.isPending")
-              icon(name="ic-load" class="icon--load")
+              icon(name="ic-load" class="ic-load__state")
             i(class="qcw-comment__state" v-if="comment.isSent && !comment.isDelivered")
-              icon(name="ic-check")
+              icon(name="ic-check" class="ic-check__state")
             div(@click="resend(comment)" class="qcw-comment__state qcw-comment__state--failed" v-if="comment.isFailed") !!!
             div(class="qcw-comment__state qcw-comment__state--delivered" v-if="comment.isDelivered && !comment.isRead")
-              icon(name="ic-double-check")
+              icon(name="ic-double-check" class="ic-double-check__state")
             div(class="qcw-comment__state qcw-comment__state--read" v-if="comment.isRead")
-              icon(name="ic-double-check")
+              icon(name="ic-double-check" class="ic-double-check__state")
 
     //-       <!-- CommentType: "ACCOUNT_LINKING" -->
     //-       <div v-if="comment.type == 'account_linking'">
@@ -186,13 +186,3 @@ export default {
   },
 };
 </script>
-
-<style lang="stylus">
-  @import '../assets/stylus/_variables.styl'
-
-  #ic-load,
-  #ic-check,
-  #ic-double-check
-    fill $green
-    margin-right 8px
-</style>
