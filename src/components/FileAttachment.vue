@@ -16,5 +16,5 @@ export default {
   name: 'FileAttachment',
   components: { ImageLoader, CommentRender },
   props: ['comment', 'onClickImage', 'callback'],
-}
+};
 </script>
