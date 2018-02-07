@@ -20,7 +20,9 @@ export default {
   props: ['uri', 'closeBtnHandler', 'comment'],
   methods: {
     openImage() {
-      window.open(this.uri, '_blank');
+      // get url
+      const url = this.comment.message.substring(7, this.comment.message.length - 8);
+      window.open(url, '_blank');
     },
   },
 };
