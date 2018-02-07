@@ -80,9 +80,9 @@ export default {
           replied_comment_sender_username: this.repliedComment.username_as,
           replied_comment_type: this.repliedComment.type,
         };
+        this.closeReplyHandler();
         this.core.sendComment(topicId, comment, null, 'reply', JSON.stringify(payload))
           .then(() => {
-            this.closeReplyHandler();
             scrollIntoElement(this.core);
           });
       }

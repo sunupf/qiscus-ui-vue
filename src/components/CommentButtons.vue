@@ -21,8 +21,10 @@ export default {
 
 <style lang="stylus">
   @import '../assets/stylus/_variables.styl'
-  .qcw-comment__content
-    padding 0 8px
+  
+  .qcw-comment__buttons
+    .qcw-comment__content
+      padding 0 8px
   .qcw-comment__buttons
     margin-top 8px
     .action_buttons:last-child
@@ -57,4 +59,5 @@ export default {
       a
         line-height 48px
         text-align center
+  
 </style>

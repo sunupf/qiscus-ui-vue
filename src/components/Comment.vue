@@ -12,7 +12,7 @@
         :class="{ 'comment--me': comment.username_real == userData.email, 'comment--parent': isParent, 'comment--mid': isMid, 'comment--last': isLast }"
       )
         avatar(:src="comment.avatar" :class="{'qcw-avatar--hide': !isParent}")
-        div(class="qcw-comment__message")
+        div(class="qcw-comment__message" :class="{'extra-margin': comment.type === 'carousel'}")
           //- div(class="qcw-comment__info" v-if="isParent")
             //- span(class="qcw-comment__username") {{comment.username_as}}
             //- span(class="qcw-comment__time") {{comment.time}}
@@ -89,14 +89,14 @@
 
           div(v-if="isMe")
             i(class="qcw-comment__state qcw-comment__state--sending" v-if="comment.isPending")
-              icon(name="ic-load" class="icon--load")
+              icon(name="ic-load" class="ic-load__state")
             i(class="qcw-comment__state" v-if="comment.isSent && !comment.isDelivered")
-              icon(name="ic-check")
+              icon(name="ic-check" class="ic-check__state")
             div(@click="resend(comment)" class="qcw-comment__state qcw-comment__state--failed" v-if="comment.isFailed") !!!
             div(class="qcw-comment__state qcw-comment__state--delivered" v-if="comment.isDelivered && !comment.isRead")
-              icon(name="ic-double-check")
+              icon(name="ic-double-check" class="ic-double-check__state")
             div(class="qcw-comment__state qcw-comment__state--read" v-if="comment.isRead")
-              icon(name="ic-double-check")
+              icon(name="ic-double-check" class="ic-double-check__state")
 
     //-       <!-- CommentType: "ACCOUNT_LINKING" -->
     //-       <div v-if="comment.type == 'account_linking'">
@@ -107,7 +107,7 @@
     //-       </div>
     //-     </div>
     div(class="failed-info" v-if="comment.isFailed" :class="{ 'failed--last': isLast }") Message failed to send. 
-            span(@click="resend(comment)" class="" v-if="comment.isFailed") Resend
+      span(@click="resend(comment)" class="" v-if="comment.isFailed") Resend
 </template>
 
 <script>
@@ -188,13 +188,3 @@ export default {
   },
 };
 </script>
-
-<style lang="stylus">
-  @import '../assets/stylus/_variables.styl'
-
-  #ic-load,
-  #ic-check,
-  #ic-double-check
-    fill $green
-    margin-right 8px
-</style>
