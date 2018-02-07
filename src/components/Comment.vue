@@ -116,6 +116,7 @@ import Avatar from './Avatar';
 import Icon from './Icon';
 import StaticMap from './StaticMap';
 import ImageLoader from './ImageLoader';
+import FileAttachment from './FileAttachment';
 import CommentRender from './CommentRender';
 import CommentReply from './CommentReply';
 import CommentCustom from './CommentCustom';
@@ -130,6 +131,7 @@ export default {
     Icon,
     StaticMap,
     ImageLoader,
+    FileAttachment,
     CommentRender,
     CommentReply,
     CommentCustom,

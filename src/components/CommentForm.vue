@@ -33,7 +33,7 @@ export default {
       emojiSize: 16,
       sheetSize: 16,
       toggleEmoji: false,
-      emojione,
+      emojione: (typeof emojione !== 'undefined') ? emojione : {},
     };
   },
   computed: {
