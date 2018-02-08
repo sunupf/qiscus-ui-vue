@@ -118,6 +118,7 @@ export default {
     height 100%
     & .qcw-chat-wrapper
       bottom 0
+      border-radius 0
       width 100%
       height 100% !important
 .qcw-connecting-indicator

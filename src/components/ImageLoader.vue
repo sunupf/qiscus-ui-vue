@@ -110,6 +110,8 @@
     i
       display block 
       margin 0px auto 8px auto
+      .qc-icon
+        fill $green
       svg
         animation spin 1s ease-in-out infinite
   .reply-wrapper .image-loader
@@ -119,7 +121,7 @@
     margin 0
     width 100%
   .image-loader + .qcw-comment__content
-    margin-top 10px
+    margin-top 12px
 
   .reply-wrapper--preview .qcw-image-container, 
   .qcw-comment__message .qcw-image-container 
@@ -127,8 +129,7 @@
     align-items center
     justify-content center
     overflow hidden
-    height 120px
-    border 2px solid #FFF
+    max-height 120px
 
   .qcw-image-container 
     width calc(100%+8px)

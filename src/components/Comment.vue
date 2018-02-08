@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div(:class="{'parent--container':isParent, 'my--container': isMe}")
     div(class="qcw-comment-container" :id="comment.id" :class="commentClass")
       div(class="qcw-comment-date" v-if="showDate") 
         div {{ dateToday }}
@@ -13,11 +13,10 @@
       )
         avatar(:src="comment.avatar" :class="{'qcw-avatar--hide': !isParent}")
         div(class="qcw-comment__message" :class="{'extra-margin': comment.type === 'carousel'}")
-          //- div(class="qcw-comment__info" v-if="isParent")
-            //- span(class="qcw-comment__username") {{comment.username_as}}
-            //- span(class="qcw-comment__time") {{comment.time}}
+            
 
-          //- Comment Time
+          //- Comment User & Time
+          span(class="qcw-comment__username" v-if="isParent && isGroupRoom && !isMe") {{comment.username_as}}
           span(class="qcw-comment__time" :class="{'qcw-comment__time--me': isMe}") {{comment.time}}
 
           //- reply button
@@ -147,6 +146,9 @@ export default {
     isParent() {
       return this.commentBefore === null ||
         this.commentBefore.username_real !== this.comment.username_real;
+    },
+    isGroupRoom() {
+      return this.core.selected.room_type === 'group';
     },
     isMid() {
       return this.commentAfter !== null && !this.isParent &&
