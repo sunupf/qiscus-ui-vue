@@ -118,6 +118,8 @@
   .reply-wrapper .qcw-image-container
     margin 0
     width 100%
+  .image-loader + .qcw-comment__content
+    margin-top 10px
 
   .reply-wrapper--preview .qcw-image-container, 
   .qcw-comment__message .qcw-image-container 
@@ -125,7 +127,8 @@
     align-items center
     justify-content center
     overflow hidden
-    max-height 120px
+    height 120px
+    border 2px solid #FFF
 
   .qcw-image-container 
     width calc(100%+8px)
