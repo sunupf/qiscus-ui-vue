@@ -100,9 +100,6 @@ export default {
     align-items center
     background rgba(0,0,0,.5)
 
-  .comment-text
-    width 100%
-
   .qcw-comments
     background $darkWhite
     &::-webkit-scrollbar-track
@@ -122,6 +119,11 @@ export default {
     margin 0
     padding 0
 
+  .parent--container
+    margin-top 20px
+    &.my--container
+      margin-top 0
+    
   i.reply-btn
     position absolute
     overflow hidden
@@ -168,11 +170,14 @@ export default {
       .qcw-avatar
         display none
   
+  .comment--me
+    .qcw-comment-date
+      margin-bottom 12px
   .qcw-comment-date
     text-align center
     font-weight bold
     font-size 9px
-    margin 24px auto 12px auto
+    margin 24px auto 32px auto
     flex: 1 100%;
     color $darkGrey
     text-transform uppercase
@@ -225,7 +230,19 @@ export default {
         min-width 50px
         top 8px
         right -58px
+    .qcw-comment__username
+        position  absolute
+        font-size  11px
+        width  128px
+        top -20px
+        left  0
+        text-align  left
+        white-space nowrap
     &.comment--me
+      .qcw-comment__username
+        text-align right
+        right 0
+        left auto
       .qcw-comment__time
         top 2px
         left -58px
@@ -287,7 +304,7 @@ export default {
     margin-bottom 4px
     position relative
     display flex
-    min-width 56px
+    min-width 80px
     max-width 210px
     align-items flex-end
     border-radius 8px
@@ -330,15 +347,18 @@ export default {
       right -8px
 
   @media only screen and (min-width: 640px)
-    .qcw-comment__message
-      max-width 400px
+    .qcw-container--wide
+      .qcw-comment__message
+        max-width 400px
   @media only screen and (min-width: 1024px)
-    .qcw-comment__message
-      max-width 800px
+    .qcw-container--wide
+      .qcw-comment__message
+        max-width 800px
 
   .comment--last
     margin-bottom 24px
   .comment-text
+    width 100%
     .qcw-comment__content 
       margin 0
       word-break break-word
