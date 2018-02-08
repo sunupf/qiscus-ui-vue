@@ -288,6 +288,7 @@ export default {
     position relative
     display flex
     min-width 56px
+    max-width 210px
     align-items flex-end
     border-radius 8px
     .comment--parent &
@@ -328,6 +329,13 @@ export default {
       left auto
       right -8px
 
+  @media only screen and (min-width: 640px)
+    .qcw-comment__message
+      max-width 400px
+  @media only screen and (min-width: 1024px)
+    .qcw-comment__message
+      max-width 800px
+
   .comment--last
     margin-bottom 24px
   .comment-text
@@ -335,7 +343,7 @@ export default {
       margin 0
       word-break break-word
       word-wrap break-word
-      white-space pre
+      white-space pre-line
   .qcw-comment__content
     img.emojione
       display inline-block
