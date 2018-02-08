@@ -1,5 +1,5 @@
 <template lang="pug">
-  div(:class="{'parent--container':isParent}")
+  div(:class="{'parent--container':isParent, 'my--container': isMe}")
     div(class="qcw-comment-container" :id="comment.id" :class="commentClass")
       div(class="qcw-comment-date" v-if="showDate") 
         div {{ dateToday }}
@@ -16,7 +16,7 @@
             
 
           //- Comment User & Time
-          span(class="qcw-comment__username" v-if="isParent && isGroupRoom") {{comment.username_as}}
+          span(class="qcw-comment__username" v-if="isParent && isGroupRoom && !isMe") {{comment.username_as}}
           span(class="qcw-comment__time" :class="{'qcw-comment__time--me': isMe}") {{comment.time}}
 
           //- reply button

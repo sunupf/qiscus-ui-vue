@@ -124,6 +124,8 @@ export default {
 
   .parent--container
     margin-top 20px
+    &.my--container
+      margin-top 0
     
   i.reply-btn
     position absolute
@@ -171,6 +173,9 @@ export default {
       .qcw-avatar
         display none
   
+  .comment--me
+    .qcw-comment-date
+      margin-bottom 12px
   .qcw-comment-date
     text-align center
     font-weight bold
