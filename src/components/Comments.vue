@@ -330,11 +330,13 @@ export default {
       right -8px
 
   @media only screen and (min-width: 640px)
-    .qcw-comment__message
-      max-width 400px
+    .qcw-container--wide
+      .qcw-comment__message
+        max-width 400px
   @media only screen and (min-width: 1024px)
-    .qcw-comment__message
-      max-width 800px
+    .qcw-container--wide
+      .qcw-comment__message
+        max-width 800px
 
   .comment--last
     margin-bottom 24px
