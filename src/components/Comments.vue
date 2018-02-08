@@ -122,6 +122,9 @@ export default {
     margin 0
     padding 0
 
+  .parent--container
+    margin-top 20px
+    
   i.reply-btn
     position absolute
     overflow hidden
@@ -305,7 +308,6 @@ export default {
     border-radius 8px
     .comment--parent &
       margin-left 60px
-      margin-top 20px
       flex-wrap wrap
     .comment--me &
       margin-left 0px

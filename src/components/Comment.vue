@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div(:class="{'parent--container':isParent}")
     div(class="qcw-comment-container" :id="comment.id" :class="commentClass")
       div(class="qcw-comment-date" v-if="showDate") 
         div {{ dateToday }}
