@@ -4,7 +4,9 @@
       loader(width="70px" height="70px" borderWidth="5px")
 
     ul(v-if="core.selected")
-      li(class="qcw-load-more-btn" @click="loadMore") Load More
+      li(class="qcw-load-more-btn" @click="loadMore") 
+        icon(name="ic-load" class="ic-load-more__state" v-if="isLoadingMore")
+        span Load More
       li(v-for="(comment, index) in core.selected.comments" :key="comment.id")
         comment(
           :comment="comment"
@@ -22,12 +24,13 @@
 </template>
 
 <script>
+import Icon from './Icon';
 import Loader from './Loader';
 import Comment from './Comment';
 
 export default {
   name: 'Comments',
-  components: { Loader, Comment },
+  components: { Icon, Loader, Comment },
   props: ['core', 'onClickImage', 'onupdate', 'replyHandler'],
   computed: {
     uploadedFiles() {
@@ -35,12 +38,20 @@ export default {
         .filter(f => f.room_id === this.core.selected.id);
     },
   },
+  data() {
+    return {
+      isLoadingMore: false,
+    };
+  },
   methods: {
     loadMore() {
+      this.isLoadingMore = true;
       this.core.loadComments(this.core.selected.id,
         this.core.selected.comments[0].id,
         null,
-        'false');
+        'false').then(() => {
+          this.isLoadingMore = false;
+        });
     },
   },
 };
@@ -49,17 +60,35 @@ export default {
 <style lang="stylus">
   @import '../assets/stylus/_variables.styl'
   .qcw-load-more-btn
+    width 82px
+    border-radius 10px
     text-align center
     font-weight bold
     font-size: 9px;
-    margin: 24px auto 12px auto;
+    margin: 12px auto 0px auto;
     flex: 1 100%;
-    color #666
+    color $white
+    background-color $green
     text-transform uppercase
     cursor pointer
     transition transform .32s ease
+    display flex
+    align-items center
+    justify-content center
     &:hover
       transform translatey(-2px)
+  .qc-icon
+    &.ic-load__state,
+    &.ic-check__state,
+    &.ic-double-check__state
+      fill $green
+      margin-right 8px
+    &.ic-load-more__state
+      fill: #fff;
+      margin: 0 4px 0 0;
+      height: 12px;
+      width: 12px;
+      animation spin 1s ease-in-out infinite
   .qcw-load-comment-indicator
     position absolute
     width 100%
@@ -228,7 +257,7 @@ export default {
     margin-top -3px
     font-size 11px
     margin-bottom 4px
-    margin-right 64px
+    width: calc(100% - 27px);
     color $red
     span
       color $green
@@ -239,8 +268,6 @@ export default {
       margin-bottom 24px
       margin-top -27px
   
-
-
   .qcw-comment--system-event
     text-align: center;
     align-self: center !important;
@@ -303,10 +330,10 @@ export default {
 
   .comment--last
     margin-bottom 24px
-    
-  .qcw-comment__content 
-    margin-left -8px
-    margin-right -8px
+  .comment-text
+    .qcw-comment__content 
+      margin 0
+  .qcw-comment__content
     img.emojione
       display inline-block
       vertical-align middle

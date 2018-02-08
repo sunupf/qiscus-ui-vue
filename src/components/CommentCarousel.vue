@@ -22,7 +22,8 @@
     ul(class="carousel__bullets")
       li(v-for="(card, index) in cards"
           @click="gotoCard(index)"
-          :class="{'active': index == currentNumber}") &bull;
+          :class="{'active': index == currentNumber}") 
+            div(class="ic-bullet")
 </template>
 
 <script>
@@ -44,7 +45,7 @@ export default {
   },
   methods: {
     startRotation() {
-      this.timer = setInterval(this.next, 300000);
+      this.timer = setInterval(this.next, 3000000);
     },
     stopRotation() {
       clearTimeout(this.timer);
@@ -75,17 +76,48 @@ export default {
 @import '../assets/stylus/_variables.styl'
 .comment__carousel 
   position relative
-.qcw-carousel__item
-  .comment__card--title,.comment__card--description
-    background-color $white
+.extra-margin
+  margin-bottom 24px
+ul.carousel__bullets
+  position: absolute;
+  width: 100%;
+  bottom -36px
 ul.carousel__bullets,
-ul.qcw-carousel__nav { list-style: none; overflow: hidden; text-align: center; display: none }
-ul.carousel__bullets li { display: inline-block; cursor: pointer; margin: 5px 10px; 
-  color: #999; vertical-align: middle; }
-ul.carousel__bullets li.active { font-size: 24px; font-weight: bold; color: #3498db; }
-ul.qcw-carousel__nav li { position: absolute; top: 50%; transform: translateY(-50%);
-  background: #FFF; border-radius: 50%; padding: 0 5px; 
-  box-shadow: 0 0 7px rgba(0,0,0,.3); cursor: pointer; }
-ul.qcw-carousel__nav li:nth-child(1) { left: 0; }
-ul.qcw-carousel__nav li:nth-child(2) { right: 0; }
+ul.qcw-carousel__nav 
+  list-style: none; 
+  overflow: hidden; 
+  text-align: center;
+ul.carousel__bullets li 
+  display: inline-block; 
+  cursor: pointer; 
+  margin: 4px 8px; 
+  color: #999; 
+  vertical-align: middle; 
+
+ul.carousel__bullets li.active
+  font-size: 24px; 
+  font-weight: bold; 
+  color: #3498db;
+
+ul.qcw-carousel__nav li 
+  position: absolute; 
+  top: 50%; 
+  transform: translateY(-50%);
+  fill:$lightGrey;
+  border-radius: 50%; 
+  padding: 0 5px; 
+  cursor: pointer
+ul.qcw-carousel__nav li:nth-child(1)
+  left: -42px;
+ul.qcw-carousel__nav li:nth-child(2)
+  right: -42px  
+.ic-bullet
+  border: 2px solid $green;
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+.active
+  & > .ic-bullet
+    background-color $green
+    border: 2px solid $green;
 </style>

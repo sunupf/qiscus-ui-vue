@@ -59,6 +59,7 @@ export default {
   .qcw-image-container
     margin 0;
     width 100%
+    background-color: #fff;
     img
       border-radius 0
       margin-bottom 16px
