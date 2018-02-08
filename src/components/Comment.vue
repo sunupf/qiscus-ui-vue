@@ -13,11 +13,10 @@
       )
         avatar(:src="comment.avatar" :class="{'qcw-avatar--hide': !isParent}")
         div(class="qcw-comment__message" :class="{'extra-margin': comment.type === 'carousel'}")
-          //- div(class="qcw-comment__info" v-if="isParent")
-            //- span(class="qcw-comment__username") {{comment.username_as}}
-            //- span(class="qcw-comment__time") {{comment.time}}
+            
 
-          //- Comment Time
+          //- Comment User & Time
+          span(class="qcw-comment__username" v-if="isParent") {{comment.username_as}}
           span(class="qcw-comment__time" :class="{'qcw-comment__time--me': isMe}") {{comment.time}}
 
           //- reply button

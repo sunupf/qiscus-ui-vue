@@ -110,6 +110,8 @@
     i
       display block 
       margin 0px auto 8px auto
+      .qc-icon
+        fill $green
       svg
         animation spin 1s ease-in-out infinite
   .reply-wrapper .image-loader

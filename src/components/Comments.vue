@@ -225,7 +225,19 @@ export default {
         min-width 50px
         top 8px
         right -58px
+    .qcw-comment__username
+        position  absolute
+        font-size  11px
+        width  128px
+        top -20px
+        left  0
+        text-align  left
+        white-space nowrap
     &.comment--me
+      .qcw-comment__username
+        text-align right
+        right 0
+        left auto
       .qcw-comment__time
         top 2px
         left -58px
@@ -287,12 +299,13 @@ export default {
     margin-bottom 4px
     position relative
     display flex
-    min-width 56px
+    min-width 80px
     max-width 210px
     align-items flex-end
     border-radius 8px
     .comment--parent &
       margin-left 60px
+      margin-top 20px
       flex-wrap wrap
     .comment--me &
       margin-left 0px
