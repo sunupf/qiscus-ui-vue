@@ -36,7 +36,7 @@ export default {
       red: '#ff2424',
     };
 
-    const config = {
+    const colorConfig = {
       widgetButtonBackgroundColor: colors.green,
 
       headerBackgroundColor: colors.white,
@@ -61,9 +61,15 @@ export default {
       messageStatusIconColor: colors.green,
       messageFailedIconColor: colors.red,
     };
+    const uiConfig = {
+      showAvatar: true,
+      showHeader: true,
+      showCommentForm: true,
+    };
     self.core.UI = {
       useCustomColors: false,
-      colors: config,
+      colors: colorConfig,
+      config: uiConfig,
       chatTarget(target) {
         self.core.chatTarget(target).then(() => {
           if (!self.chatWindowStatus) self.toggleWindowStatus();

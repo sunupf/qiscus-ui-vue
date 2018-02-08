@@ -7,7 +7,7 @@
 
     comment-reply-preview(v-if="repliedComment" :comment="repliedComment" :closeReplyHandler="closeReply")
 
-    div.qcw-header(v-if="core.selected" :style="{background: core.UI.colors.headerBackgroundColor}")
+    div.qcw-header(v-if="core.selected && core.UI.config.showHeader" :style="{background: core.UI.colors.headerBackgroundColor}")
       div.qcw-header-avatar
         img(:src="core.selected.avatar")
       div.qcw-header-info
@@ -25,7 +25,9 @@
       :repliedComment="repliedComment"
       :replyHandler="setReply" :onupdate="scrollToBottom")
 
-    comment-form(:core="core" :repliedComment="repliedComment" :closeReplyHandler="closeReply")
+    comment-form(:core="core" 
+      v-if="core.UI.config.showCommentForm" 
+      :repliedComment="repliedComment" :closeReplyHandler="closeReply")
 </template>
 
 <script>
