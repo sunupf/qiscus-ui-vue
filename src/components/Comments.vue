@@ -333,6 +333,9 @@ export default {
   .comment-text
     .qcw-comment__content 
       margin 0
+      word-break break-word
+      word-wrap break-word
+      white-space pre
   .qcw-comment__content
     img.emojione
       display inline-block
