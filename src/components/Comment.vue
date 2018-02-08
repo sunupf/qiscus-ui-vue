@@ -16,7 +16,7 @@
             
 
           //- Comment User & Time
-          span(class="qcw-comment__username" v-if="isParent") {{comment.username_as}}
+          span(class="qcw-comment__username" v-if="isParent && isGroupRoom") {{comment.username_as}}
           span(class="qcw-comment__time" :class="{'qcw-comment__time--me': isMe}") {{comment.time}}
 
           //- reply button
@@ -146,6 +146,9 @@ export default {
     isParent() {
       return this.commentBefore === null ||
         this.commentBefore.username_real !== this.comment.username_real;
+    },
+    isGroupRoom() {
+      return this.core.selected.room_type === 'group';
     },
     isMid() {
       return this.commentAfter !== null && !this.isParent &&

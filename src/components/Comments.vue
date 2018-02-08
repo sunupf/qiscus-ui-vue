@@ -175,7 +175,7 @@ export default {
     text-align center
     font-weight bold
     font-size 9px
-    margin 24px auto 12px auto
+    margin 24px auto 32px auto
     flex: 1 100%;
     color $darkGrey
     text-transform uppercase
