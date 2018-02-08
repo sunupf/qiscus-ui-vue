@@ -287,11 +287,11 @@ export default {
     margin-bottom 4px
     position relative
     display flex
-    max-width 210px
     min-width 56px
     align-items flex-end
+    border-radius 8px
     .comment--parent &
-      margin-left 12px
+      margin-left 60px
       flex-wrap wrap
     .comment--me &
       margin-left 0px
@@ -299,16 +299,18 @@ export default {
       background $white
     .comment--parent &, .comment--mid &
       margin-left 12px
-      border-radius: 8px
     .comment--mid &
       margin-left 12px
-      border-radius: 8px
     .comment--last &
       margin-left 12px
-      border-radius 8px
+      margin-right 60px
+    .comment--parent.comment--me &
+      margin-left 60px
+    .comment--last.comment--me &
+      margin-left 60px
+      margin-right 12px
     .comment--parent.comment--last &
       margin-left 12px
-      border-radius 8px
     .comment--parent &:before
       position absolute
       top 15px
@@ -331,6 +333,9 @@ export default {
   .comment-text
     .qcw-comment__content 
       margin 0
+      word-break break-word
+      word-wrap break-word
+      white-space pre
   .qcw-comment__content
     img.emojione
       display inline-block
