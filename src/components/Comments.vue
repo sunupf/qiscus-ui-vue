@@ -94,6 +94,8 @@ export default {
     &.ic-double-check__state
       fill $green
       margin-right 8px
+    &.ic-load__state
+      animation spin 1s ease-in-out infinite
     &.ic-load-more__state
       fill: #fff;
       margin: 0 4px 0 0;
@@ -277,11 +279,6 @@ export default {
             width 16px
             height 9px
             margin 0 auto
-      .qcw-comment__state--sending
-        left -19px
-        -webkit-animation:spin 1s ease-in-out infinite;
-        -moz-animation:spin 1s ease-in-out infinite;
-        animation:spin 1s ease-in-out infinite;
       .qcw-comment__state--failed
         color $red
         text-transform capitalize

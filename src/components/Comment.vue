@@ -87,9 +87,9 @@
             :class="{'qcw-comment__time--attachment': comment.isAttachment(comment.message)}") {{comment.time}}
 
           div(v-if="isMe")
-            i(class="qcw-comment__state qcw-comment__state--sending" v-if="comment.isPending")
+            div(class="qcw-comment__state qcw-comment__state--sending" v-if="comment.isPending")
               icon(name="ic-load" class="ic-load__state")
-            i(class="qcw-comment__state" v-if="comment.isSent && !comment.isDelivered")
+            div(class="qcw-comment__state" v-if="comment.isSent && !comment.isDelivered")
               icon(name="ic-check" class="ic-check__state")
             div(@click="resend(comment)" class="qcw-comment__state qcw-comment__state--failed" v-if="comment.isFailed") !!!
             div(class="qcw-comment__state qcw-comment__state--delivered" v-if="comment.isDelivered && !comment.isRead")
