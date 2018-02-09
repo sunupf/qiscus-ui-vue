@@ -17,7 +17,7 @@ export default {
   mounted() {
     // ambil dulu templatenya
     let temp = QiscusCore.templateFunction(this.data);
-    if (!temp) { this.finalTemplate = '<div>No template provided</div>'; return false; }
+    if (!QiscusCore.templateFunction) { this.finalTemplate = '<div>No template provided</div>'; return false; }
     const rgx = /{(.*?)}/g;
     const matched = temp.match(rgx) || [];
     matched.forEach((r) => {

@@ -64,8 +64,13 @@
         const self    = this;
         const comment = this.comment;
         const xhr = new XMLHttpRequest();
-        self.isImage  = comment.isImageAttachment(this.message);
-        self.uri      = comment.getAttachmentURI(this.message);
+        if (comment.type !== 'reply') {
+          self.isImage  = comment.isImageAttachment(this.message);
+          self.uri      = comment.getAttachmentURI(this.message);
+        } else {
+          self.isImage  = comment.isImageAttachment(comment.payload.replied_comment_message);
+          self.uri      = comment.getAttachmentURI(comment.payload.replied_comment_message);
+        }
         self.filename = self.uri.split('/').pop().split('#')[0].split('?')[0];
         self.ext      = self.filename.split('.').pop();
         self.isLoading = true;
