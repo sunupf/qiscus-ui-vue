@@ -1,7 +1,7 @@
 <template lang="pug">
-  div(:class="{'parent--container':isParent, 'my--container': isMe}")
+  div(:class="{'parent--container':isParent, 'my--container': isMe, 'qcw-group': isGroupRoom, 'contain-date': showDate}")
     div(class="qcw-comment-container" :id="comment.id" :class="commentClass")
-      div(class="qcw-comment-date" v-if="showDate") 
+      div(v-if="showDate" class="qcw-comment-date" :class="{'extra-margin': addExtraMargin}") 
         div {{ dateToday }}
       div(v-if="comment.type == 'system_event'" class="qcw-comment--system-event")
         comment-custom(v-if="core.customTemplate && haveTemplate(comment)" :data="comment")
@@ -142,6 +142,10 @@ export default {
   computed: {
     showDate() {
       return this.commentBefore === null || (this.commentBefore.date !== this.comment.date);
+    },
+    addExtraMargin() {
+      return this.commentBefore !== null
+        && this.commentBefore.username_real === this.comment.username_real;
     },
     isParent() {
       return this.commentBefore === null ||

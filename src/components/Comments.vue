@@ -4,9 +4,11 @@
       loader(width="70px" height="70px" borderWidth="5px")
 
     ul(v-if="core.selected")
-      li(class="qcw-load-more-btn" @click="loadMore") 
+      li(class="qcw-load-more qcw-load-more-btn" @click="loadMore" v-if="isNotTopPage") 
         icon(name="ic-load" class="ic-load-more__state" v-if="isLoadingMore")
         span Load More
+      li(class="qcw-load-more qcw-top-page" v-else)
+        span You've reached first page 
       li(v-for="(comment, index) in core.selected.comments" :key="comment.id")
         comment(
           :comment="comment"
@@ -37,10 +39,14 @@ export default {
       return this.core.uploadedFiles
         .filter(f => f.room_id === this.core.selected.id);
     },
+    isNotTopPage() {
+      return this.core.selected.comments[0].id !== this.lastComment;
+    },
   },
   data() {
     return {
       isLoadingMore: false,
+      lastComment: 0,
     };
   },
   methods: {
@@ -51,6 +57,7 @@ export default {
         null,
         'false').then(() => {
           this.isLoadingMore = false;
+          this.lastComment = this.core.selected.comments[0].id;
         });
     },
   },
@@ -59,24 +66,28 @@ export default {
 
 <style lang="stylus">
   @import '../assets/stylus/_variables.styl'
-  .qcw-load-more-btn
-    width 82px
-    border-radius 10px
+  .qcw-load-more
+    font-size 9px
     text-align center
+    margin 12px auto 12px auto
     font-weight bold
-    font-size: 9px;
-    margin: 12px auto 0px auto;
-    flex: 1 100%;
-    color $white
-    background-color $green
-    text-transform uppercase
-    cursor pointer
-    transition transform .32s ease
-    display flex
-    align-items center
-    justify-content center
-    &:hover
-      transform translatey(-2px)
+    &.qcw-top-page
+      width 100%
+      color $mediumGrey
+    &.qcw-load-more-btn
+      width 82px
+      border-radius 10px
+      flex: 1 100%;
+      color $white
+      background-color $green
+      text-transform uppercase
+      cursor pointer
+      transition transform .32s ease
+      display flex
+      align-items center
+      justify-content center
+      &:hover
+        transform translatey(-2px)
   .qc-icon
     &.ic-load__state,
     &.ic-check__state,
@@ -119,10 +130,19 @@ export default {
     margin 0
     padding 0
 
-  .parent--container
+  .qcw-comment-date
+    margin-bottom 24px
+
+  .qcw-group.parent--container
     margin-top 20px
+    &.contain-date
+      margin-top 0
+      .qcw-comment
+        margin-top 20px
     &.my--container
       margin-top 0
+      .qcw-comment
+        margin-top 0
     
   i.reply-btn
     position absolute
@@ -170,17 +190,16 @@ export default {
       .qcw-avatar
         display none
   
-  .comment--me
-    .qcw-comment-date
-      margin-bottom 12px
   .qcw-comment-date
     text-align center
     font-weight bold
     font-size 9px
-    margin 24px auto 32px auto
+    margin-top 4px
     flex: 1 100%;
     color $darkGrey
     text-transform uppercase
+    &.extra-margin
+      margin-top 24px
     div
       width: 170px;
       margin: auto;

@@ -168,6 +168,7 @@ export default {
     font-size 15px
     font-family "Open Sans", sans-serif
     max-height 100%
+    height 26px
     overflow-y auto
     resize none
     margin-left 8px
