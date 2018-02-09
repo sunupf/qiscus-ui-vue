@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.qcw-image-modal__overlay
+  div.qcw-image-modal__overlay(@click="closeBtnHandler")
     div.qcw-image-modal__wrapper
       div.qcw-image-modal__actions
         i.qcw-image-modal__action(@click="openImage")
@@ -21,7 +21,9 @@ export default {
   methods: {
     openImage() {
       // get url
-      const url = this.comment.message.substring(7, this.comment.message.length - 8);
+      const url = (typeof this.comment !== 'string')
+                  ? this.comment.message.substring(7, this.comment.message.length - 8)
+                  : this.comment;
       window.open(url, '_blank');
     },
   },
