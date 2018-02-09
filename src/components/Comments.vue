@@ -4,7 +4,7 @@
       loader(width="70px" height="70px" borderWidth="5px")
 
     ul(v-if="core.selected")
-      li(class="qcw-load-more qcw-load-more-btn" @click="loadMore" v-if="isNotTopPage") 
+      li(class="qcw-load-more qcw-load-more-btn" @click="loadMore" v-if="!isTopPage") 
         icon(name="ic-load" class="ic-load-more__state" v-if="isLoadingMore")
         span Load More
       li(class="qcw-load-more qcw-top-page" v-else)
@@ -39,25 +39,25 @@ export default {
       return this.core.uploadedFiles
         .filter(f => f.room_id === this.core.selected.id);
     },
-    isNotTopPage() {
-      return this.core.selected.comments[0].id !== this.lastComment;
-    },
   },
   data() {
     return {
       isLoadingMore: false,
-      lastComment: 0,
+      isTopPage: false,
     };
   },
   methods: {
     loadMore() {
       this.isLoadingMore = true;
+      const commentsLength = this.core.selected.comments.length;
       this.core.loadComments(this.core.selected.id,
         this.core.selected.comments[0].id,
         null,
         'false').then(() => {
           this.isLoadingMore = false;
-          this.lastComment = this.core.selected.comments[0].id;
+          if (commentsLength === this.core.selected.comments.length) {
+            this.isTopPage = true;
+          }
         });
     },
   },
