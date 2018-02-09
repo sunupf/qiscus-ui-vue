@@ -61,7 +61,6 @@ export default {
     },
     setReply(comment) {
       this.repliedComment = comment;
-      console.log(comment);
       // focus the textarea of commentform
       const element = document.querySelector('.qcw-comment-form textarea');
       if (element) element.focus();
