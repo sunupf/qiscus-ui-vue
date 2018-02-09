@@ -60,7 +60,6 @@ export default {
       this.imageModalContent = null;
     },
     setReply(comment) {
-      console.info('set reply');
       this.repliedComment = comment;
       console.log(comment);
       // focus the textarea of commentform

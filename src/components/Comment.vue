@@ -178,6 +178,11 @@ export default {
       if (!element) return;
       element.scrollIntoView({ block: 'end',  behaviour: 'smooth' });
     },
+    resend(comment) {
+      return this.core.resendComment(comment)
+        .then(() => this.$toasted.success('Resending comment successful'),
+        () => this.$toasted.error('Resending comment failed'));
+    },
     haveTemplate(comment) {
       if (!this.core.customTemplate) return false;
       return this.core.templateFunction(comment);
