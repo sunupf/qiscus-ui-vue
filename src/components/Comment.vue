@@ -1,7 +1,7 @@
 <template lang="pug">
-  div(:class="{'parent--container':isParent, 'my--container': isMe}")
+  div(:class="{'parent--container':isParent, 'my--container': isMe, 'qcw-group': isGroupRoom, 'contain-date': showDate}")
     div(class="qcw-comment-container" :id="comment.id" :class="commentClass")
-      div(class="qcw-comment-date" v-if="showDate") 
+      div(v-if="showDate" class="qcw-comment-date" :class="{'extra-margin': addExtraMargin}") 
         div {{ dateToday }}
       div(v-if="comment.type == 'system_event'" class="qcw-comment--system-event")
         comment-custom(v-if="core.customTemplate && haveTemplate(comment)" :data="comment")
@@ -87,9 +87,9 @@
             :class="{'qcw-comment__time--attachment': comment.isAttachment(comment.message)}") {{comment.time}}
 
           div(v-if="isMe")
-            i(class="qcw-comment__state qcw-comment__state--sending" v-if="comment.isPending")
+            div(class="qcw-comment__state qcw-comment__state--sending" v-if="comment.isPending")
               icon(name="ic-load" class="ic-load__state")
-            i(class="qcw-comment__state" v-if="comment.isSent && !comment.isDelivered")
+            div(class="qcw-comment__state" v-if="comment.isSent && !comment.isDelivered")
               icon(name="ic-check" class="ic-check__state")
             div(@click="resend(comment)" class="qcw-comment__state qcw-comment__state--failed" v-if="comment.isFailed") !!!
             div(class="qcw-comment__state qcw-comment__state--delivered" v-if="comment.isDelivered && !comment.isRead")
@@ -142,6 +142,10 @@ export default {
   computed: {
     showDate() {
       return this.commentBefore === null || (this.commentBefore.date !== this.comment.date);
+    },
+    addExtraMargin() {
+      return this.commentBefore !== null
+        && this.commentBefore.username_real === this.comment.username_real;
     },
     isParent() {
       return this.commentBefore === null ||
