@@ -4,7 +4,7 @@
       loader(width="70px" height="70px" borderWidth="5px")
 
     ul(v-if="core.selected")
-      li(class="qcw-load-more-btn" @click="loadMore") 
+      li(class="qcw-load-more-btn" @click="loadMore" v-if="core.selected.comments[0].before_id > 0") 
         icon(name="ic-load" class="ic-load-more__state" v-if="isLoadingMore")
         span Load More
       li(v-for="(comment, index) in core.selected.comments" :key="comment.id")
