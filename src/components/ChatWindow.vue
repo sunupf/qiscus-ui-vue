@@ -13,10 +13,10 @@
       div.qcw-header-info
         div
           div.qcw-user-display-name(:style="{color: core.UI.colors.headerTitleColor}") {{ core.selected.name }}
-          div.qcw-user-status--online(v-if="core.isTypingStatus"
-            :style="{color: core.UI.colors.statusOnlineColor}") {{ core.isTypingStatus }}
-          div.qcw-user-status--online(v-if="!core.isTypingStatus"
-            :style="{color: core.UI.colors.statusOnlineColor}") {{ core.chatmateStatus }}
+          div.qcw-user-status.status--istyping(v-if="core.isTypingStatus"
+            :style="{color: myReactiveColor}") {{ core.isTypingStatus }}
+          div.qcw-user-status(v-if="!core.isTypingStatus" :class="{'status--online':core.chatmateStatus=='Online', 'status--lastseen':core.chatmateStatus!='Online'}"
+            :style="{color: myReactiveColor}") {{ core.chatmateStatus }}
 
       i(@click="toggleWindowStatus" class="qcw-window-toggle-btn")
         icon(name="ic-minimize" :fill="core.UI.colors.headerIconColor")
@@ -49,6 +49,17 @@ export default {
       imageModalContent: null,
       imageModalIsActive: false,
     };
+  },
+  computed: {
+    myReactiveColor() {
+      console.log(this.core.chatmateStatus);
+      if (!this.core.isTypingStatus && this.core.chatmateStatus === 'Online') {
+        return this.core.UI.colors.statusOnlineColor;
+      } else if (!this.core.isTypingStatus && this.core.chatmateStatus !== 'Online') {
+        return this.core.UI.colors.statusOfflineColor;
+      }
+      return this.core.UI.colors.statusTypingColor;
+    },
   },
   methods: {
     openImageModal(comment) {
@@ -120,9 +131,8 @@ export default {
       .qcw-user-display-name
         font-size 15px
         font-weight 600 
-      .qcw-user-status--online
-        font-size 13px 
-        color $green
+      .qcw-user-status
+        font-size 13px
 
   
   .qcw-comments
