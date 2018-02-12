@@ -8,8 +8,11 @@
         :on-click-image="void(0)"
         :callback="void(0)")
       
-      comment-render(v-if="!comment.isAttachment(comment.message)" 
-        :text="textToRender")
+      //- comment-render(v-if="!comment.isAttachment(comment.message)" 
+      //-   :text="textToRender")
+
+      div(class="qcw-comment__content" 
+        v-if="!comment.isAttachment(comment.message)") {{ textToRender }}
 
     i(@click="closeReplyHandler" class="reply-close-btn")
       icon(name="ic-close")
@@ -24,15 +27,12 @@ export default {
   name: 'CommentReplyPreview',
   components: { ImageLoader, CommentRender, Icon },
   props: ['comment', 'closeReplyHandler'],
-  data() {
-    return {
-      textToRender: '',
-    };
-  },
-  beforeMount() {
-    this.textToRender = (this.comment.type !== 'reply')
-                      ? this.comment.message
-                      : this.comment.payload.text;
+  computed: {
+    textToRender() {
+      return (this.comment.type !== 'reply')
+        ? this.comment.message
+        : this.comment.payload.text;
+    },
   },
 };
 </script>

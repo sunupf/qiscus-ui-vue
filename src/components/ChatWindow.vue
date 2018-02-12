@@ -60,6 +60,7 @@ export default {
       this.imageModalContent = null;
     },
     setReply(comment) {
+      this.closeReply();
       this.repliedComment = comment;
       // focus the textarea of commentform
       const element = document.querySelector('.qcw-comment-form textarea');

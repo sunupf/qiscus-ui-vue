@@ -71,18 +71,21 @@ export default {
       colors: colorConfig,
       config: uiConfig,
       chatTarget(target) {
-        self.core.chatTarget(target).then(() => {
+        self.core.chatTarget(target).then((res) => {
           if (!self.chatWindowStatus) self.toggleWindowStatus();
           window.setTimeout(() => scrollIntoElement(self.core), 0);
+          return Promise.resolve(res);
         }, (err) => {
           self.$toasted.error(err);
+          return Promise.reject(err);
         });
       },
       chatGroup(id) {
-        self.core.chatGroup(id).then(() => {
+        self.core.chatGroup(id).then((res) => {
           if (!self.chatWindowStatus) self.toggleWindowStatus();
           window.setTimeout(() => scrollIntoElement(self.core), 0);
-        });
+          return Promise.resolve(res);
+        }, err => Promise.reject(err));
       },
       setCustomColors(customColors) {
         self.core.UI.useCustomColors = true;
