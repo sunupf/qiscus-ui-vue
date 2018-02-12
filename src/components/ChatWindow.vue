@@ -15,7 +15,7 @@
           div.qcw-user-display-name(:style="{color: core.UI.colors.headerTitleColor}") {{ core.selected.name }}
           div.qcw-user-status.status--istyping(v-if="core.isTypingStatus"
             :style="{color: myReactiveColor}") {{ core.isTypingStatus }}
-          div.qcw-user-status(v-if="!core.isTypingStatus" :class="{'status--online':core.chatmateStatus=='Online', 'status--lastseen':core.chatmateStatus!='Online'}"
+          div.qcw-user-status(v-else="!core.isTypingStatus" :class="{'status--online':core.chatmateStatus=='Online', 'status--lastseen':core.chatmateStatus!='Online'}"
             :style="{color: myReactiveColor}") {{ core.chatmateStatus }}
 
       i(@click="toggleWindowStatus" class="qcw-window-toggle-btn")

@@ -32,7 +32,7 @@ export default {
       mediumGrey: '#979797',
       darkGrey: '#666666',
       green: '#94ca62',
-      blue: '34b6ff',
+      blue: '#34b6ff',
       red: '#ff2424',
     };
 

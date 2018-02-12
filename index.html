@@ -26,7 +26,7 @@
         var url_string = window.location.href;
         var url = new URL(url_string);
         var curUser = url.searchParams.get("login_as");
-        var targetUser = url.searchParams.get("target") || 'guest@qiscus.com';
+        var targetUser = url.searchParams.get("target") || 'niwang@qiscus.com';
         // let's setup options for our widget
         QiscusSDK.core.init({
           // AppId: 'sdksample',
@@ -76,7 +76,7 @@
           // if(curUser) {
           //   QiscusSDK.core.setUser(curUser,'password','Guest');
           // } else {
-            QiscusSDK.core.setUser('niwang@qiscus.com', 'password', 'Niwang Jati Sasongko');
+            QiscusSDK.core.setUser('guest@qiscus.com', 'password', 'Qiscus Guest');
           // }
         // } else {
           // QiscusSDK.core.setUser('fikri@qiscus.com', 'password', 'Rijalul Fikri', 'https://res.cloudinary.com/qiscus/image/upload/v1507272514/kiwari-prod_user_id_340/uvwlno1qkkgh9xwwjzgq.png');
