@@ -4,7 +4,7 @@
       loader(width="70px" height="70px" borderWidth="5px")
 
     ul(v-if="core.selected")
-      li(class="qcw-load-more qcw-load-more-btn" @click="loadMore" v-if="!isTopPage") 
+      li(class="qcw-load-more qcw-load-more-btn" @click="loadMore" v-if="core.selected.comments.length > 0 && core.selected.comments[0].before_id > 0") 
         icon(name="ic-load" class="ic-load-more__state" v-if="isLoadingMore")
         span Load More
       li(class="qcw-load-more qcw-top-page" v-else)
@@ -43,21 +43,16 @@ export default {
   data() {
     return {
       isLoadingMore: false,
-      isTopPage: false,
     };
   },
   methods: {
     loadMore() {
       this.isLoadingMore = true;
-      const commentsLength = this.core.selected.comments.length;
       this.core.loadComments(this.core.selected.id,
         this.core.selected.comments[0].id,
         null,
         'false').then(() => {
           this.isLoadingMore = false;
-          if (commentsLength === this.core.selected.comments.length) {
-            this.isTopPage = true;
-          }
         });
     },
   },

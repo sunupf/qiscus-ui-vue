@@ -74,6 +74,8 @@ export default {
         self.core.chatTarget(target).then(() => {
           if (!self.chatWindowStatus) self.toggleWindowStatus();
           window.setTimeout(() => scrollIntoElement(self.core), 0);
+        }, (err) => {
+          self.$toasted.error(err);
         });
       },
       chatGroup(id) {
