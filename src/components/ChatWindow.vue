@@ -13,9 +13,11 @@
       div.qcw-header-info
         div
           div.qcw-user-display-name(:style="{color: core.UI.colors.headerTitleColor}") {{ core.selected.name }}
-          div.qcw-user-status.status--istyping(v-if="core.isTypingStatus"
+          div.qcw-user-status.qcw-user-status--group(v-if="this.core.selected.room_type == 'group'"
+            :style="{color: myReactiveColor}") {{ participants }}
+          div.qcw-user-status.status--istyping(v-else="core.isTypingStatus && this.core.selected.room_type !== 'group'"
             :style="{color: myReactiveColor}") {{ core.isTypingStatus }}
-          div.qcw-user-status(v-else="!core.isTypingStatus" :class="{'status--online':core.chatmateStatus=='Online', 'status--lastseen':core.chatmateStatus!='Online'}"
+          div.qcw-user-status(v-else="!core.isTypingStatus && this.core.selected.room_type !== 'group'" :class="{'status--online':core.chatmateStatus=='Online', 'status--lastseen':core.chatmateStatus!='Online'}"
             :style="{color: myReactiveColor}") {{ core.chatmateStatus }}
 
       i(@click="toggleWindowStatus" class="qcw-window-toggle-btn")
@@ -59,6 +61,9 @@ export default {
       }
       return this.core.UI.colors.statusTypingColor;
     },
+    participants() {
+      return this.core.selected.participants.map(elem => elem.username).join(',');
+    },
   },
   methods: {
     openImageModal(comment) {
@@ -91,9 +96,6 @@ export default {
   @import '../assets/stylus/_variables.styl'
 
   .qcw-chat-wrapper
-    font "Open Sans",sans-serif
-    letter-spacing 0.5px
-    line-height 130%
     width 360px
     height 0
     display flex
@@ -133,6 +135,9 @@ export default {
         font-weight 600 
       .qcw-user-status
         font-size 13px
+        white-space: nowrap;
+        max-width: 220px;
+        overflow: hidden;
 
   
   .qcw-comments
