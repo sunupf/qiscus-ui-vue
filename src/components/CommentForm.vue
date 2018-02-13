@@ -33,11 +33,15 @@ export default {
       emojiSize: 16,
       sheetSize: 16,
       toggleEmoji: false,
-      emojione,
+      emojione: (typeof emojione !== 'undefined') ? emojione : {},
     };
   },
   computed: {
     sendBtnStatus() { return (this.commentInput.length > 0 ? '#94ca62' : null); },
+    uploadedFiles() {
+      return this.core.uploadedFiles
+        .filter(f => f.room_id === this.core.selected.id);
+    },
   },
   methods: {
     // toggleEmojiPicker() {
@@ -76,15 +80,22 @@ export default {
           replied_comment_sender_username: this.repliedComment.username_as,
           replied_comment_type: this.repliedComment.type,
         };
-        this.core.submitComment(topicId, comment, null, 'reply', JSON.stringify(payload))
+        this.closeReplyHandler();
+        this.core.sendComment(topicId, comment, null, 'reply', JSON.stringify(payload))
           .then(() => {
-            this.closeReplyHandler();
             scrollIntoElement(this.core);
           });
       }
     },
     publishTyping() {
-      this.core.realtimeAdapter.publishTyping(1);
+      const self = this;
+      if (self.commentInput.length > 0) {
+        // publish typing, after 3 sec, unpublish
+        self.core.realtimeAdapter.publishTyping(1);
+        window.setTimeout(() => self.core.realtimeAdapter.publishTyping(0), 3000);
+      } else {
+        self.core.realtimeAdapter.publishTyping(0);
+      }
     },
     uploadFile(e) {
       const vm = this;
@@ -105,7 +116,9 @@ export default {
       formData.append('token', vm.core.userData.token);
       vm.core.addUploadedFile(files[0].name);
       const xhr = new XMLHttpRequest();
-      xhr.upload.addEventListener('progress', this.updateProgress);
+      xhr.upload.addEventListener('progress', (uploadEvent) => {
+        this.updateProgress(uploadEvent, files[0].name);
+      });
       xhr.open('POST', `${vm.core.baseURL}/api/v2/sdk/upload`, true);
       xhr.onload = function responseReceived() {
         if (xhr.status === 200) {
@@ -124,10 +137,14 @@ export default {
       xhr.send(formData);
       return true;
     },
-    updateProgress(e) {
+    updateProgress(e, fileName) {
       if (e.lengthComputable) {
         const percentComplete = e.loaded / e.total;
-        console.log(percentComplete);
+        // const fileObject = this.uploadedFiles
+        //   .find(f => f.name === fileName);
+        // console.log(fileObject);
+        // if (fileObject) fileObject.progress = percentComplete;
+        console.log('%s - %s', fileName, percentComplete);
       } else {
         console.log('unkown');
       }
@@ -151,6 +168,7 @@ export default {
     font-size 15px
     font-family "Open Sans", sans-serif
     max-height 100%
+    height 26px
     overflow-y auto
     resize none
     margin-left 8px

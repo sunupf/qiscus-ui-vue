@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.qcw-image-modal__overlay
+  div.qcw-image-modal__overlay(@click="closeBtnHandler")
     div.qcw-image-modal__wrapper
       div.qcw-image-modal__actions
         i.qcw-image-modal__action(@click="openImage")
@@ -20,7 +20,11 @@ export default {
   props: ['uri', 'closeBtnHandler', 'comment'],
   methods: {
     openImage() {
-      window.open(this.uri, '_blank');
+      // get url
+      const url = (typeof this.comment !== 'string')
+                  ? this.comment.message.substring(7, this.comment.message.length - 8)
+                  : this.comment;
+      window.open(url, '_blank');
     },
   },
 };
@@ -57,6 +61,7 @@ export default {
   .qcw-image-container
     margin 0;
     width 100%
+    background-color: #fff;
     img
       border-radius 0
       margin-bottom 16px

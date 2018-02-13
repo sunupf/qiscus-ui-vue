@@ -5,7 +5,7 @@
       :message="comment.message"
       :on-click-image="onClickImage"
       :callback="callback")
-    comment-render(:text="comment.payload.caption")
+    comment-render(:text="comment.payload.caption" v-if="comment.payload.caption != ''")
 </template>
 
 <script>
@@ -16,5 +16,5 @@ export default {
   name: 'FileAttachment',
   components: { ImageLoader, CommentRender },
   props: ['comment', 'onClickImage', 'callback'],
-}
+};
 </script>

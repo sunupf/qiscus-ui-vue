@@ -5,7 +5,11 @@ import Toasted from 'vue-toasted';
 import QiscusWidget from './App';
 import QiscusCore from './lib/SDKCore';
 
-Vue.use(Toasted);
+Vue.use(Toasted, {
+  position: 'bottom-right',
+  duration: 3000,
+  theme: 'bubble',
+});
 Vue.config.productionTip = false;
 
 function renderSDK() {

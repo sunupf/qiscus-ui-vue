@@ -64,8 +64,13 @@
         const self    = this;
         const comment = this.comment;
         const xhr = new XMLHttpRequest();
-        self.isImage  = comment.isImageAttachment(this.message);
-        self.uri      = comment.getAttachmentURI(this.message);
+        if (comment.type !== 'reply') {
+          self.isImage  = comment.isImageAttachment(this.message);
+          self.uri      = comment.getAttachmentURI(this.message);
+        } else {
+          self.isImage  = comment.isImageAttachment(comment.payload.replied_comment_message);
+          self.uri      = comment.getAttachmentURI(comment.payload.replied_comment_message);
+        }
         self.filename = self.uri.split('/').pop().split('#')[0].split('?')[0];
         self.ext      = self.filename.split('.').pop();
         self.isLoading = true;
@@ -110,6 +115,8 @@
     i
       display block 
       margin 0px auto 8px auto
+      .qc-icon
+        fill $green
       svg
         animation spin 1s ease-in-out infinite
   .reply-wrapper .image-loader
@@ -118,6 +125,8 @@
   .reply-wrapper .qcw-image-container
     margin 0
     width 100%
+  .image-loader + .qcw-comment__content
+    margin-top 12px
 
   .reply-wrapper--preview .qcw-image-container, 
   .qcw-comment__message .qcw-image-container 

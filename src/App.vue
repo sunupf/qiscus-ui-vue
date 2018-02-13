@@ -1,5 +1,5 @@
 <template lang="pug">
-  .qcw-container(:class="{'qcw-container--open': chatWindowStatus}")
+  .qcw-container(:class="{'qcw-container--open': chatWindowStatus, 'qcw-container--wide': core.mode=='wide'}")
     chat-window(v-if="core.isInit" :core="core" :toggleWindowStatus="toggleWindowStatus")
     div(v-if="!core.isInit" class="qcw-connecting-indicator") Connecting to chat server ...
     qcw-trigger(:clickHandler="toggleWindowStatus")
@@ -32,11 +32,11 @@ export default {
       mediumGrey: '#979797',
       darkGrey: '#666666',
       green: '#94ca62',
-      blue: '34b6ff',
+      blue: '#34b6ff',
       red: '#ff2424',
     };
 
-    const config = {
+    const colorConfig = {
       widgetButtonBackgroundColor: colors.green,
 
       headerBackgroundColor: colors.white,
@@ -61,26 +61,38 @@ export default {
       messageStatusIconColor: colors.green,
       messageFailedIconColor: colors.red,
     };
+    const uiConfig = {
+      showAvatar: true,
+      showHeader: true,
+      showCommentForm: true,
+    };
     self.core.UI = {
       useCustomColors: false,
-      colors: config,
+      colors: colorConfig,
+      config: uiConfig,
       chatTarget(target) {
-        self.core.chatTarget(target).then(() => {
+        self.core.chatTarget(target).then((res) => {
           if (!self.chatWindowStatus) self.toggleWindowStatus();
           window.setTimeout(() => scrollIntoElement(self.core), 0);
+          return Promise.resolve(res);
+        }, (err) => {
+          self.$toasted.error(err);
+          return Promise.reject(err);
         });
       },
       chatGroup(id) {
-        self.core.chatGroup(id).then(() => {
+        self.core.chatGroup(id).then((res) => {
           if (!self.chatWindowStatus) self.toggleWindowStatus();
           window.setTimeout(() => scrollIntoElement(self.core), 0);
-        });
+          return Promise.resolve(res);
+        }, err => Promise.reject(err));
       },
       setCustomColors(customColors) {
         self.core.UI.useCustomColors = true;
         self.core.UI.colors = Object.assign({}, self.core.UI.colors, customColors);
       },
     };
+    window.QiscusUI = self.core.UI;
   },
   methods: {
     toggleWindowStatus() {
@@ -91,10 +103,34 @@ export default {
 </script>
 
 <style lang="stylus">
-.qcw-container 
+@import './assets/stylus/_variables.styl'
+
+body
   font-family 'Open Sans', sans-serif
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
+  letter-spacing 0.5px
+  line-height 130%
+
+.toasted-container.bottom-right
+  position: fixed
+  bottom: 20px
+  right: 42px
+  border-radius 30px
+  .toasted
+    margin-top 8px
+    padding: 10px 15px
+    &.bubble
+      line-height 130%
+      font-size 16px
+      &.error
+        background-color $darkGrey
+      &.success
+        background-color $green
+      &.info
+        background-color $blue
+
+.qcw-container 
   color #444
   position: fixed
   bottom: 20px
@@ -102,6 +138,18 @@ export default {
   display flex
   flex-direction column
   align-items flex-end
+  &.qcw-container--wide
+    position relative
+    top 0
+    right 0
+    bottom auto
+    width 100%
+    height 100%
+    & .qcw-chat-wrapper
+      bottom 0
+      border-radius 0
+      width 100%
+      height 100% !important
 .qcw-connecting-indicator
   background #FFF
   padding 20px

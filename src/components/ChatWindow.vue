@@ -7,16 +7,16 @@
 
     comment-reply-preview(v-if="repliedComment" :comment="repliedComment" :closeReplyHandler="closeReply")
 
-    div.qcw-header(v-if="core.selected" :style="{background: core.UI.colors.headerBackgroundColor}")
+    div.qcw-header(v-if="core.selected && core.UI.config.showHeader" :style="{background: core.UI.colors.headerBackgroundColor}")
       div.qcw-header-avatar
         img(:src="core.selected.avatar")
       div.qcw-header-info
         div
           div.qcw-user-display-name(:style="{color: core.UI.colors.headerTitleColor}") {{ core.selected.name }}
-          div.qcw-user-status--online(v-if="core.isTypingStatus"
-            :style="{color: core.UI.colors.statusOnlineColor}") {{ core.isTypingStatus }}
-          div.qcw-user-status--online(v-if="!core.isTypingStatus"
-            :style="{color: core.UI.colors.statusOnlineColor}") {{ core.chatmateStatus }}
+          div.qcw-user-status.status--istyping(v-if="core.isTypingStatus"
+            :style="{color: myReactiveColor}") {{ core.isTypingStatus }}
+          div.qcw-user-status(v-else="!core.isTypingStatus" :class="{'status--online':core.chatmateStatus=='Online', 'status--lastseen':core.chatmateStatus!='Online'}"
+            :style="{color: myReactiveColor}") {{ core.chatmateStatus }}
 
       i(@click="toggleWindowStatus" class="qcw-window-toggle-btn")
         icon(name="ic-minimize" :fill="core.UI.colors.headerIconColor")
@@ -25,7 +25,9 @@
       :repliedComment="repliedComment"
       :replyHandler="setReply" :onupdate="scrollToBottom")
 
-    comment-form(:core="core" :repliedComment="repliedComment" :closeReplyHandler="closeReply")
+    comment-form(:core="core" 
+      v-if="core.UI.config.showCommentForm" 
+      :repliedComment="repliedComment" :closeReplyHandler="closeReply")
 </template>
 
 <script>
@@ -48,6 +50,16 @@ export default {
       imageModalIsActive: false,
     };
   },
+  computed: {
+    myReactiveColor() {
+      if (!this.core.isTypingStatus && this.core.chatmateStatus === 'Online') {
+        return this.core.UI.colors.statusOnlineColor;
+      } else if (!this.core.isTypingStatus && this.core.chatmateStatus !== 'Online') {
+        return this.core.UI.colors.statusOfflineColor;
+      }
+      return this.core.UI.colors.statusTypingColor;
+    },
+  },
   methods: {
     openImageModal(comment) {
       this.imageModalContent = comment;
@@ -58,9 +70,8 @@ export default {
       this.imageModalContent = null;
     },
     setReply(comment) {
-      console.info('set reply');
+      this.closeReply();
       this.repliedComment = comment;
-      console.log(comment);
       // focus the textarea of commentform
       const element = document.querySelector('.qcw-comment-form textarea');
       if (element) element.focus();
@@ -80,9 +91,6 @@ export default {
   @import '../assets/stylus/_variables.styl'
 
   .qcw-chat-wrapper
-    font "Open Sans",sans-serif
-    letter-spacing 0.5px
-    line-height 130%
     width 360px
     height 0
     display flex
@@ -120,9 +128,8 @@ export default {
       .qcw-user-display-name
         font-size 15px
         font-weight 600 
-      .qcw-user-status--online
-        font-size 13px 
-        color $green
+      .qcw-user-status
+        font-size 13px
 
   
   .qcw-comments

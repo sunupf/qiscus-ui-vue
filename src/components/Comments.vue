@@ -4,6 +4,11 @@
       loader(width="70px" height="70px" borderWidth="5px")
 
     ul(v-if="core.selected")
+      li(class="qcw-load-more qcw-load-more-btn" @click="loadMore" v-if="core.selected.comments.length > 0 && core.selected.comments[0].before_id > 0") 
+        icon(name="ic-load" class="ic-load-more__state" v-if="isLoadingMore")
+        span Load More
+      li(class="qcw-load-more qcw-top-page" v-else)
+        span You've reached first page 
       li(v-for="(comment, index) in core.selected.comments" :key="comment.id")
         comment(
           :comment="comment"
@@ -15,21 +20,83 @@
           :userData="core.userData"
           :showAvatar="core.options.avatar"
         )
+      //- component for uploader progress
+      li(v-if="uploadedFiles.length > 0")
+        div(v-for="file in uploadedFiles" class="qcw-upload-progress") Uploading {{ `${file.name}` }}
 </template>
 
 <script>
+import Icon from './Icon';
 import Loader from './Loader';
 import Comment from './Comment';
 
 export default {
   name: 'Comments',
-  components: { Loader, Comment },
+  components: { Icon, Loader, Comment },
   props: ['core', 'onClickImage', 'onupdate', 'replyHandler'],
+  computed: {
+    uploadedFiles() {
+      return this.core.uploadedFiles
+        .filter(f => f.room_id === this.core.selected.id);
+    },
+  },
+  data() {
+    return {
+      isLoadingMore: false,
+    };
+  },
+  methods: {
+    loadMore() {
+      this.isLoadingMore = true;
+      this.core.loadComments(this.core.selected.id,
+        this.core.selected.comments[0].id,
+        null,
+        'false').then(() => {
+          this.isLoadingMore = false;
+        });
+    },
+  },
 };
 </script>
 
 <style lang="stylus">
   @import '../assets/stylus/_variables.styl'
+  .qcw-load-more
+    font-size 9px
+    text-align center
+    margin 12px auto 12px auto
+    font-weight bold
+    &.qcw-top-page
+      width 100%
+      color $mediumGrey
+    &.qcw-load-more-btn
+      width 82px
+      border-radius 10px
+      flex: 1 100%;
+      color $white
+      background-color $green
+      text-transform uppercase
+      cursor pointer
+      transition transform .32s ease
+      display flex
+      align-items center
+      justify-content center
+      &:hover
+        transform translatey(-2px)
+  .qc-icon
+    &.ic-load__state,
+    &.ic-check__state,
+    &.ic-double-check__state
+      fill $green
+      margin-right 8px
+    &.ic-load__state
+      animation spin 1s ease-in-out infinite
+    &.ic-load-more__state
+      fill: #fff;
+      margin: 0 4px 0 0;
+      height: 12px;
+      width: 12px;
+      animation spin 1s ease-in-out infinite
   .qcw-load-comment-indicator
     position absolute
     width 100%
@@ -40,9 +107,6 @@ export default {
     justify-content center
     align-items center
     background rgba(0,0,0,.5)
-
-  .comment-text
-    width 100%
 
   .qcw-comments
     background $darkWhite
@@ -63,6 +127,20 @@ export default {
     margin 0
     padding 0
 
+  .qcw-comment-date
+    margin-bottom 24px
+
+  .qcw-group.parent--container
+    margin-top 20px
+    &.contain-date
+      margin-top 0
+      .qcw-comment
+        margin-top 20px
+    &.my--container
+      margin-top 0
+      .qcw-comment
+        margin-top 0
+    
   i.reply-btn
     position absolute
     overflow hidden
@@ -113,10 +191,12 @@ export default {
     text-align center
     font-weight bold
     font-size 9px
-    margin 24px auto 12px auto
+    margin-top 4px
     flex: 1 100%;
     color $darkGrey
     text-transform uppercase
+    &.extra-margin
+      margin-top 24px
     div
       width: 170px;
       margin: auto;
@@ -166,7 +246,19 @@ export default {
         min-width 50px
         top 8px
         right -58px
+    .qcw-comment__username
+        position  absolute
+        font-size  11px
+        width  128px
+        top -20px
+        left  0
+        text-align  left
+        white-space nowrap
     &.comment--me
+      .qcw-comment__username
+        text-align right
+        right 0
+        left auto
       .qcw-comment__time
         top 2px
         left -58px
@@ -182,11 +274,6 @@ export default {
             width 16px
             height 9px
             margin 0 auto
-      .qcw-comment__state--sending
-        left -19px
-        -webkit-animation:spin 1s ease-in-out infinite;
-        -moz-animation:spin 1s ease-in-out infinite;
-        animation:spin 1s ease-in-out infinite;
       .qcw-comment__state--failed
         color $red
         text-transform capitalize
@@ -198,7 +285,7 @@ export default {
     margin-top -3px
     font-size 11px
     margin-bottom 4px
-    margin-right 64px
+    width: calc(100% - 27px);
     color $red
     span
       color $green
@@ -209,8 +296,6 @@ export default {
       margin-bottom 24px
       margin-top -27px
   
-
-
   .qcw-comment--system-event
     text-align: center;
     align-self: center !important;
@@ -230,11 +315,12 @@ export default {
     margin-bottom 4px
     position relative
     display flex
+    min-width 80px
     max-width 210px
-    min-width 56px
     align-items flex-end
+    border-radius 8px
     .comment--parent &
-      margin-left 12px
+      margin-left 60px
       flex-wrap wrap
     .comment--me &
       margin-left 0px
@@ -242,16 +328,18 @@ export default {
       background $white
     .comment--parent &, .comment--mid &
       margin-left 12px
-      border-radius: 8px
     .comment--mid &
       margin-left 12px
-      border-radius: 8px
     .comment--last &
       margin-left 12px
-      border-radius 8px
+      margin-right 60px
+    .comment--parent.comment--me &
+      margin-left 60px
+    .comment--last.comment--me &
+      margin-left 60px
+      margin-right 12px
     .comment--parent.comment--last &
       margin-left 12px
-      border-radius 8px
     .comment--parent &:before
       position absolute
       top 15px
@@ -269,10 +357,25 @@ export default {
       left auto
       right -8px
 
+  @media only screen and (min-width: 640px)
+    .qcw-container--wide
+      .qcw-comment__message
+        max-width 400px
+  @media only screen and (min-width: 1024px)
+    .qcw-container--wide
+      .qcw-comment__message
+        max-width 800px
+
   .comment--last
     margin-bottom 24px
-  .qcw-comment__content 
-    font-size 14px
+  .comment-text
+    width 100%
+    .qcw-comment__content 
+      margin 0
+      word-break break-word
+      word-wrap break-word
+      white-space pre-line
+  .qcw-comment__content
     img.emojione
       display inline-block
       vertical-align middle
