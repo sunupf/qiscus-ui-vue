@@ -52,7 +52,6 @@ export default {
   },
   computed: {
     myReactiveColor() {
-      console.log(this.core.chatmateStatus);
       if (!this.core.isTypingStatus && this.core.chatmateStatus === 'Online') {
         return this.core.UI.colors.statusOnlineColor;
       } else if (!this.core.isTypingStatus && this.core.chatmateStatus !== 'Online') {
