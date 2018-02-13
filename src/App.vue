@@ -103,10 +103,34 @@ export default {
 </script>
 
 <style lang="stylus">
-.qcw-container 
+@import './assets/stylus/_variables.styl'
+
+body
   font-family 'Open Sans', sans-serif
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
+  letter-spacing 0.5px
+  line-height 130%
+
+.toasted-container.bottom-right
+  position: fixed
+  bottom: 20px
+  right: 42px
+  border-radius 30px
+  .toasted
+    margin-top 8px
+    padding: 10px 15px
+    &.bubble
+      line-height 130%
+      font-size 16px
+      &.error
+        background-color $darkGrey
+      &.success
+        background-color $green
+      &.info
+        background-color $blue
+
+.qcw-container 
   color #444
   position: fixed
   bottom: 20px
