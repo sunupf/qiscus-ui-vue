@@ -274,6 +274,8 @@ export default {
             width 16px
             height 9px
             margin 0 auto
+      .qcw-comment__state--delivered svg.qc-icon
+        fill grey
       .qcw-comment__state--failed
         color $red
         text-transform capitalize

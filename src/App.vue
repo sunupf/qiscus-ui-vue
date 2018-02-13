@@ -76,7 +76,7 @@ export default {
           window.setTimeout(() => scrollIntoElement(self.core), 0);
           return Promise.resolve(res);
         }, (err) => {
-          self.$toasted.error(err);
+          self.$toasted.error(`Error opening chatroom: ${err}`);
           return Promise.reject(err);
         });
       },

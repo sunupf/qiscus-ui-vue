@@ -93,7 +93,7 @@
               icon(name="ic-check" class="ic-check__state")
             div(@click="resend(comment)" class="qcw-comment__state qcw-comment__state--failed" v-if="comment.isFailed") !!!
             div(class="qcw-comment__state qcw-comment__state--delivered" v-if="comment.isDelivered && !comment.isRead")
-              icon(name="ic-check" class="ic-check__state")
+              icon(name="ic-double-check" class="ic-double-check__state")
             div(class="qcw-comment__state qcw-comment__state--read" v-if="comment.isRead")
               icon(name="ic-double-check" class="ic-double-check__state")
 
