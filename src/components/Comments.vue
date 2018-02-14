@@ -198,7 +198,7 @@ export default {
     &.extra-margin
       margin-top 24px
     div
-      width: 170px;
+      width: 190px;
       margin: auto;
       padding: 2px 8px;
       background-color: $lightGrey;
