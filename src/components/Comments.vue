@@ -181,7 +181,7 @@ export default {
     .qcw-comment__time
       display none
   
-  .qcw-comment__time, .qcw-comment__state
+  .qcw-comment__state
     animation:fadeInDown 0.3s ease-out;
 
   .qcw-comment-container

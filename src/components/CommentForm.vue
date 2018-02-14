@@ -68,7 +68,6 @@ export default {
     submitComment(topicId, comment) {
       if (this.repliedComment === null) {
         this.core.sendComment(topicId, comment).then(() => {
-          scrollIntoElement(this.core);
         });
       } else {
         const payload = {
@@ -82,9 +81,7 @@ export default {
         };
         this.closeReplyHandler();
         this.core.sendComment(topicId, comment, null, 'reply', JSON.stringify(payload))
-          .then(() => {
-            scrollIntoElement(this.core);
-          });
+          .then(() => {});
       }
     },
     publishTyping() {
