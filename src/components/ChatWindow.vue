@@ -13,7 +13,7 @@
       div.qcw-header-info
         div
           div.qcw-user-display-name(:style="{color: core.UI.colors.headerTitleColor}") {{ core.selected.name }}
-          div.qcw-user-status.qcw-user-status--group(v-if="this.core.selected.room_type == 'group'"
+          div.qcw-user-status.qcw-user-status--group(v-if="core.selected.room_type == 'group'"
             :style="{color: myReactiveColor}") {{ participants }}
           div.qcw-user-status.status--istyping(v-if="core.isTypingStatus && this.core.selected.room_type !== 'group'"
             :style="{color: myReactiveColor}") {{ core.isTypingStatus }}
@@ -28,7 +28,7 @@
       :replyHandler="setReply" :onupdate="scrollToBottom")
 
     comment-form(:core="core" 
-      v-if="core.UI.config.showCommentForm" 
+      v-if="core.UI.config.showCommentForm"
       :repliedComment="repliedComment" :closeReplyHandler="closeReply")
 </template>
 
@@ -54,15 +54,24 @@ export default {
   },
   computed: {
     myReactiveColor() {
-      if (!this.core.isTypingStatus && this.core.chatmateStatus === 'Online') {
+      console.log(this.core.isTypingStatus);
+      console.log(this.core.chatmateStatus);
+      if (this.core.isTypingStatus) {
+        return this.core.UI.colors.statusTypingColor;
+      } else if (this.core.chatmateStatus === 'Online' && this.core.selected.room_type !== 'group') {
         return this.core.UI.colors.statusOnlineColor;
-      } else if (!this.core.isTypingStatus && this.core.chatmateStatus !== 'Online') {
-        return this.core.UI.colors.statusOfflineColor;
       }
-      return this.core.UI.colors.statusTypingColor;
+      return this.core.UI.colors.statusOfflineColor;
     },
     participants() {
-      return this.core.selected.participants.map(elem => elem.username).join(',');
+      const limit = 3;
+      const overflowCount = this.core.selected.participants.length - limit;
+      const participants = this.core.selected.participants
+          .slice(0, limit)
+          .map(item => item.username.split(' ')[0]);
+      if (this.core.selected.participants.length <= limit) return participants.join(', ');
+      return participants.concat(`and ${overflowCount} others.`)
+            .join(', ');
     },
   },
   methods: {
@@ -112,6 +121,11 @@ export default {
   
   .qcw-window-toggle-btn
     cursor pointer
+    flex: 0 0 32px;
+    align-items: center;
+    justify-content: flex-end;
+    display: flex;
+
   .qcw-header
     flex 0 0 73px
     background $white
@@ -136,7 +150,6 @@ export default {
       .qcw-user-status
         font-size 13px
         white-space: nowrap;
-        max-width: 220px;
         overflow: hidden;
 
   
