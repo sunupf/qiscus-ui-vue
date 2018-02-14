@@ -83,11 +83,13 @@ export default {
       justify-content center
       &:hover
         transform translatey(-2px)
+  .qcw-comment__state--read
+    .qc-icon.ic-double-check__state
+      fill $green
   .qc-icon
     &.ic-load__state,
     &.ic-check__state,
     &.ic-double-check__state
-      fill $green
       margin-right 8px
     &.ic-load__state
       animation spin 1s ease-in-out infinite
