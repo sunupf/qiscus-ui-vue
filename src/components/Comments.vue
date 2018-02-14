@@ -157,17 +157,21 @@ export default {
     z-index 2
     animation:fadeInLeftBig 0.3s ease-out;
     transition: background 0.3s ease-out
+    & svg.qc-icon
+      display block
+      width 13px
+      height 13px
+      margin 5px auto
+
     &.reply-btn--me
       left -32px
+      & svg.qc-icon
+        width 16px
+        height 14px
     &:hover
       background-color $green
       .qc-icon
         fill $white
-    & svg.qc-icon
-      display block
-      width 12px
-      height 12px
-      margin 6px auto
 
   .qcw-comments li:hover
     i.reply-btn
