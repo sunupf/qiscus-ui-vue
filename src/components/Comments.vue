@@ -83,11 +83,13 @@ export default {
       justify-content center
       &:hover
         transform translatey(-2px)
+  .qcw-comment__state--read
+    .qc-icon.ic-double-check__state
+      fill $green
   .qc-icon
     &.ic-load__state,
     &.ic-check__state,
     &.ic-double-check__state
-      fill $green
       margin-right 8px
     &.ic-load__state
       animation spin 1s ease-in-out infinite
@@ -155,17 +157,21 @@ export default {
     z-index 2
     animation:fadeInLeftBig 0.3s ease-out;
     transition: background 0.3s ease-out
+    & svg.qc-icon
+      display block
+      width 13px
+      height 13px
+      margin 5px auto
+
     &.reply-btn--me
       left -32px
+      & svg.qc-icon
+        width 16px
+        height 14px
     &:hover
       background-color $green
       .qc-icon
         fill $white
-    & svg.qc-icon
-      display block
-      width 12px
-      height 12px
-      margin 6px auto
 
   .qcw-comments li:hover
     i.reply-btn
@@ -175,7 +181,7 @@ export default {
     .qcw-comment__time
       display none
   
-  .qcw-comment__time, .qcw-comment__state
+  .qcw-comment__state
     animation:fadeInDown 0.3s ease-out;
 
   .qcw-comment-container
@@ -198,7 +204,7 @@ export default {
     &.extra-margin
       margin-top 24px
     div
-      width: 170px;
+      width: 190px;
       margin: auto;
       padding: 2px 8px;
       background-color: $lightGrey;
@@ -274,6 +280,8 @@ export default {
             width 16px
             height 9px
             margin 0 auto
+      .qcw-comment__state--delivered svg.qc-icon
+        fill grey
       .qcw-comment__state--failed
         color $red
         text-transform capitalize

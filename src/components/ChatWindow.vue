@@ -13,9 +13,11 @@
       div.qcw-header-info
         div
           div.qcw-user-display-name(:style="{color: core.UI.colors.headerTitleColor}") {{ core.selected.name }}
-          div.qcw-user-status.status--istyping(v-if="core.isTypingStatus"
+          div.qcw-user-status.qcw-user-status--group(v-if="core.selected.room_type == 'group'"
+            :style="{color: myReactiveColor}") {{ participants }}
+          div.qcw-user-status.status--istyping(v-if="core.isTypingStatus && this.core.selected.room_type !== 'group'"
             :style="{color: myReactiveColor}") {{ core.isTypingStatus }}
-          div.qcw-user-status(v-else="!core.isTypingStatus" :class="{'status--online':core.chatmateStatus=='Online', 'status--lastseen':core.chatmateStatus!='Online'}"
+          div.qcw-user-status(v-if="!core.isTypingStatus && this.core.selected.room_type !== 'group'" :class="{'status--online':core.chatmateStatus=='Online', 'status--lastseen':core.chatmateStatus!='Online'}"
             :style="{color: myReactiveColor}") {{ core.chatmateStatus }}
 
       i(@click="toggleWindowStatus" class="qcw-window-toggle-btn")
@@ -26,7 +28,7 @@
       :replyHandler="setReply" :onupdate="scrollToBottom")
 
     comment-form(:core="core" 
-      v-if="core.UI.config.showCommentForm" 
+      v-if="core.UI.config.showCommentForm"
       :repliedComment="repliedComment" :closeReplyHandler="closeReply")
 </template>
 
@@ -52,13 +54,24 @@ export default {
   },
   computed: {
     myReactiveColor() {
+      console.log(this.core.isTypingStatus);
       console.log(this.core.chatmateStatus);
-      if (!this.core.isTypingStatus && this.core.chatmateStatus === 'Online') {
+      if (this.core.isTypingStatus) {
+        return this.core.UI.colors.statusTypingColor;
+      } else if (this.core.chatmateStatus === 'Online' && this.core.selected.room_type !== 'group') {
         return this.core.UI.colors.statusOnlineColor;
-      } else if (!this.core.isTypingStatus && this.core.chatmateStatus !== 'Online') {
-        return this.core.UI.colors.statusOfflineColor;
       }
-      return this.core.UI.colors.statusTypingColor;
+      return this.core.UI.colors.statusOfflineColor;
+    },
+    participants() {
+      const limit = 3;
+      const overflowCount = this.core.selected.participants.length - limit;
+      const participants = this.core.selected.participants
+          .slice(0, limit)
+          .map(item => item.username.split(' ')[0]);
+      if (this.core.selected.participants.length <= limit) return participants.join(', ');
+      return participants.concat(`and ${overflowCount} others.`)
+            .join(', ');
     },
   },
   methods: {
@@ -71,6 +84,7 @@ export default {
       this.imageModalContent = null;
     },
     setReply(comment) {
+      this.closeReply();
       this.repliedComment = comment;
       // focus the textarea of commentform
       const element = document.querySelector('.qcw-comment-form textarea');
@@ -91,9 +105,6 @@ export default {
   @import '../assets/stylus/_variables.styl'
 
   .qcw-chat-wrapper
-    font "Open Sans",sans-serif
-    letter-spacing 0.5px
-    line-height 130%
     width 360px
     height 0
     display flex
@@ -110,6 +121,11 @@ export default {
   
   .qcw-window-toggle-btn
     cursor pointer
+    flex: 0 0 32px;
+    align-items: center;
+    justify-content: flex-end;
+    display: flex;
+
   .qcw-header
     flex 0 0 73px
     background $white
@@ -133,6 +149,8 @@ export default {
         font-weight 600 
       .qcw-user-status
         font-size 13px
+        white-space: nowrap;
+        overflow: hidden;
 
   
   .qcw-comments

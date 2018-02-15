@@ -21,7 +21,8 @@
 
           //- reply button
           i(@click="replyHandler(comment)" class="reply-btn" :class="{'reply-btn--me': isMe}")
-            icon(name="ic-reply")
+            icon(name="ic-quote" v-if="isMe")
+            icon(name="ic-reply" v-else)
           
           //- CommentType: "contact_person"
           div(v-if="comment.type == 'contact_person'" class="qcw-comment--contact")
