@@ -90,19 +90,20 @@ export default {
       this.publishTyping();
     },
     resizeCommentForm(event) {
+      const treshold = 80;
       const textarea = event.currentTarget;
       const formContainerStyle = window.getComputedStyle(textarea.parentElement);
       const pt = parseInt(formContainerStyle.paddingTop, 10);
       const pb = parseInt(formContainerStyle.paddingBottom, 10);
       textarea.style.height = '26px';
-      if (textarea.scrollHeight < 90) {
+      if (textarea.scrollHeight < treshold) {
         textarea.style.height = `${textarea.scrollHeight}px`;
         textarea.style.overflowY = 'hidden';
         textarea.parentElement.style.flexBasis = `${textarea.scrollHeight + pt + pb + 2}px`;
       } else {
         textarea.style.overflowY = 'scroll';
-        textarea.style.height = '90px';
-        textarea.parentElement.style.flexBasis = `${90 + pt + pb + 2}px`;
+        textarea.style.height = `${treshold}px`;
+        textarea.parentElement.style.flexBasis = `${treshold + pt + pb + 2}px`;
       }
     },
     publishTyping() {
