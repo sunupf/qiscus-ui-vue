@@ -11,7 +11,7 @@
         icon(name="ic-image-attachment")
 
     textarea(placeholder="Type your message" autofocus='autofocus'
-      @keyup="publishTyping"
+      @keyup="typingHandler($event)"
       @keydown.enter="trySubmitComment($event)"
       v-model="commentInput")
     i(@click="trySubmitComment($event)")
@@ -82,6 +82,26 @@ export default {
         this.closeReplyHandler();
         this.core.sendComment(topicId, comment, null, 'reply', JSON.stringify(payload))
           .then(() => {});
+      }
+    },
+    typingHandler(event) {
+      this.resizeCommentForm(event);
+      this.publishTyping();
+    },
+    resizeCommentForm(event) {
+      const textarea = event.currentTarget;
+      const formContainerStyle = window.getComputedStyle(textarea.parentElement);
+      const pt = parseInt(formContainerStyle.paddingTop, 10);
+      const pb = parseInt(formContainerStyle.paddingBottom, 10);
+      textarea.style.height = '26px';
+      if (textarea.scrollHeight < 90) {
+        textarea.style.height = `${textarea.scrollHeight}px`;
+        textarea.style.overflowY = 'hidden';
+        textarea.parentElement.style.flexBasis = `${textarea.scrollHeight + pt + pb + 2}px`;
+      } else {
+        textarea.style.overflowY = 'scroll';
+        textarea.style.height = '90px';
+        textarea.parentElement.style.flexBasis = `${90 + pt + pb + 2}px`;
       }
     },
     publishTyping() {
@@ -158,17 +178,31 @@ export default {
     padding 18px 8px
     position relative
     order 2
+    transition all 0.05s ease-out
 
   .qcw-comment-form textarea
     border 0
     flex 1
     font-size 15px
     font-family "Open Sans", sans-serif
+    line-height 130%
+    letter-spacing 0.5px
     max-height 100%
     height 26px
-    overflow-y auto
+    margin-top 2px
     resize none
     margin-left 8px
+    &::-webkit-scrollbar-track
+      border-radius: 10px;
+      background-color: #fafafa;
+
+    &::-webkit-scrollbar
+      width: 8px;
+      background-color: #fafafa;
+
+    &::-webkit-scrollbar-thumb
+      border-radius: 4px;
+      background-color: #e0e0e0;
     &:focus
       border 0
       outline none
