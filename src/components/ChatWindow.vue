@@ -54,8 +54,6 @@ export default {
   },
   computed: {
     myReactiveColor() {
-      console.log(this.core.isTypingStatus);
-      console.log(this.core.chatmateStatus);
       if (this.core.isTypingStatus) {
         return this.core.UI.colors.statusTypingColor;
       } else if (this.core.chatmateStatus === 'Online' && this.core.selected.room_type !== 'group') {
