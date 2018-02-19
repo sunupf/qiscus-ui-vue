@@ -39,8 +39,9 @@ export default {
   computed: {
     sendBtnStatus() { return (this.commentInput.length > 0 ? '#94ca62' : null); },
     uploadedFiles() {
+      if (!this.core.selected) return [];
       return this.core.uploadedFiles
-        .filter(f => f.room_id === this.core.selected.id);
+        .filter(f => f.roomId === this.core.selected.id);
     },
   },
   methods: {
@@ -133,7 +134,7 @@ export default {
       // all clear, let's upload
       formData.append('file', files[0]);
       formData.append('token', vm.core.userData.token);
-      vm.core.addUploadedFile(files[0].name);
+      vm.core.addUploadedFile(files[0].name, roomId);
       const xhr = new XMLHttpRequest();
       xhr.upload.addEventListener('progress', (uploadEvent) => {
         this.updateProgress(uploadEvent, files[0].name);
