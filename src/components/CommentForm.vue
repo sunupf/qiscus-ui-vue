@@ -125,6 +125,7 @@ export default {
 
       // check allowed file type
       // ambil dulu extensi file nya sebelumnya.
+      // console.log(files);
       let ext = files[0].name.split('.');
       ext = ext[ext.length - 1] || null;
       if (this.core.allowedFileTypes && this.core.allowedFileTypes.indexOf(ext) < 0) {
@@ -160,11 +161,10 @@ export default {
     updateProgress(e, fileName) {
       if (e.lengthComputable) {
         const percentComplete = e.loaded / e.total;
-        // const fileObject = this.uploadedFiles
-        //   .find(f => f.name === fileName);
-        // console.log(fileObject);
-        // if (fileObject) fileObject.progress = percentComplete;
-        console.log('%s - %s', fileName, percentComplete);
+        const fileObject = this.uploadedFiles
+          .find(f => f.name === fileName);
+        if (fileObject) fileObject.progress = Math.round(percentComplete * 100);
+        // console.log('%s', fileObject.progress);
       } else {
         console.log('unkown');
       }
