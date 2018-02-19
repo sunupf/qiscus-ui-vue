@@ -216,43 +216,6 @@ export default {
     svg.qc-icon
       height 12px
       width 12px
-
-  .qcw-upload-file
-    /*position absolute*/
-    animation fadeInUp 0.3s ease-out
-    width calc(100% - 16px)
-    /*bottom 64px;*/
-    order 1
-    z-index 1
-    margin 0 8px 8px
-    background-color #fff
-    padding 8px 12px
-    box-shadow 0px 6px 16px rgba(199, 199, 199, 0.25)
-    .title
-      font-weight 600
-      font-size 14px
-    .meta
-      font-size 11px
-      color #979797
-      .type
-        margin-right 8px
-      .size
-        margin-left 8px
-    .progress-bar
-      height 8px
-      background-color #e8e8e8
-      margin-top 4px
-      border-radius 4px
-      position relative
-      .progress
-        position absolute
-        right 0
-        top -24px
-      .uploaded
-        transition width 0.2s ease-out
-        background #94ca62
-        height 8px
-        border-radius 8px
 </style>
 
 
