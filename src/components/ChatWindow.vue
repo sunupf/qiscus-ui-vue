@@ -15,9 +15,9 @@
       div.qcw-header-info
         div
           div.qcw-user-display-name(:style="{color: core.UI.colors.headerTitleColor}") {{ core.selected.name }}
-          div.qcw-user-status.qcw-user-status--group(v-if="core.selected.room_type == 'group'"
+          div.qcw-user-status.qcw-user-status--group(v-if="core.selected.room_type == 'group' && !core.isTypingStatus"
             :style="{color: myReactiveColor}") {{ participants }}
-          div.qcw-user-status.status--istyping(v-if="core.isTypingStatus && this.core.selected.room_type !== 'group'"
+          div.qcw-user-status.status--istyping(v-if="core.isTypingStatus"
             :style="{color: myReactiveColor}") {{ core.isTypingStatus }}
           div.qcw-user-status(v-if="!core.isTypingStatus && this.core.selected.room_type !== 'group'" :class="{'status--online':core.chatmateStatus=='Online', 'status--lastseen':core.chatmateStatus!='Online'}"
             :style="{color: myReactiveColor}") {{ core.chatmateStatus }}

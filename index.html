@@ -62,17 +62,16 @@
           },
           customTemplate: true,
           templateFunction(comment) {
-            if(comment.type == 'system_event') {
-              if(comment.payload.payload.type == "application/hd.patient_info") 
-                return `<div class="patient-card">
-                  <strong>Patient Info</strong>
-                  <h3>{payload.payload.content.name} <small>{payload.payload.content.gender}</small></h3>
-                  <ul>
-                    <li>{payload.payload.content.weight} <small>Kg</small></li>
-                    <li>{payload.payload.content.height} <small>Cm</small></li>
-                  </ul>
-                </div>`;
-            }
+            // if(comment.type == 'system_event') { if(comment.payload.payload.type == "application/hd.patient_info") 
+            //     return `<div class="patient-card">
+            //       <strong>Patient Info</strong>
+            //       <h3>{payload.payload.content.name} <small>{payload.payload.content.gender}</small></h3>
+            //       <ul>
+            //         <li>{payload.payload.content.weight} <small>Kg</small></li>
+            //         <li>{payload.payload.content.height} <small>Cm</small></li>
+            //       </ul>
+            //     </div>`;
+            // }
             return false;
           }
         });

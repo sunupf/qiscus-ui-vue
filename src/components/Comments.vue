@@ -43,12 +43,9 @@ export default {
   methods: {
     loadMore() {
       this.isLoadingMore = true;
-      this.core.loadComments(this.core.selected.id,
-        this.core.selected.comments[0].id,
-        null,
-        'false').then(() => {
-          this.isLoadingMore = false;
-        });
+      this.core.loadMore(this.core.selected.comments[0].id).then(() => {
+        this.isLoadingMore = false;
+      });
     },
   },
 };
