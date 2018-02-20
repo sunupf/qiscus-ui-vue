@@ -21,8 +21,7 @@
           :showAvatar="core.options.avatar"
         )
       //- component for uploader progress
-      li(v-if="uploadedFiles.length > 0")
-        div(v-for="file in uploadedFiles" class="qcw-upload-progress") Uploading {{ `${file.name}` }}
+    
 </template>
 
 <script>
@@ -35,10 +34,6 @@ export default {
   components: { Icon, Loader, Comment },
   props: ['core', 'onClickImage', 'onupdate', 'replyHandler'],
   computed: {
-    uploadedFiles() {
-      return this.core.uploadedFiles
-        .filter(f => f.room_id === this.core.selected.id);
-    },
   },
   data() {
     return {
@@ -83,6 +78,7 @@ export default {
       justify-content center
       &:hover
         transform translatey(-2px)
+
   .qcw-comment__state--read
     .qc-icon.ic-double-check__state
       fill $green
@@ -125,6 +121,7 @@ export default {
       background-color: #e0e0e0;
 
   .qcw-comments ul
+    position relative
     list-style none
     margin 0
     padding 0

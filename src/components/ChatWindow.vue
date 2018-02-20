@@ -7,6 +7,8 @@
 
     comment-reply-preview(v-if="repliedComment" :comment="repliedComment" :closeReplyHandler="closeReply")
 
+    upload-info(v-if="uploadedFiles.length > 0" :files="uploadedFiles")
+
     div.qcw-header(v-if="core.selected && core.UI.config.showHeader" :style="{background: core.UI.colors.headerBackgroundColor}")
       div.qcw-header-avatar
         img(:src="core.selected.avatar")
@@ -40,11 +42,12 @@ import CommentForm from './CommentForm';
 import CommentReplyPreview from './CommentReplyPreview';
 import { scrollIntoElement } from '../lib/utils';
 import ImageModal from './ImageModal';
+import UploadInfo from './UploadInfo';
 
 export default {
   name: 'ChatWindow',
   props: ['core', 'toggleWindowStatus'],
-  components: { Comments, SvgIcon, Icon, CommentForm, CommentReplyPreview, ImageModal },
+  components: { Comments, SvgIcon, Icon, CommentForm, CommentReplyPreview, ImageModal, UploadInfo },
   data() {
     return {
       repliedComment: null,
@@ -53,6 +56,11 @@ export default {
     };
   },
   computed: {
+    uploadedFiles() {
+      if (!this.core.selected) return [];
+      return this.core.uploadedFiles
+        .filter(f => f.roomId === this.core.selected.id);
+    },
     myReactiveColor() {
       if (this.core.isTypingStatus) {
         return this.core.UI.colors.statusTypingColor;
