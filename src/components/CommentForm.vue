@@ -37,7 +37,11 @@ export default {
     };
   },
   computed: {
-    sendBtnStatus() { return (this.commentInput.length > 0 ? this.core.UI.colors.formMessageIconHoverColor : null); },
+    sendBtnStatus() {
+      return this.commentInput.length > 0
+        ? this.core.UI.colors.formMessageIconHoverColor
+        : null;
+    },
     uploadedFiles() {
       if (!this.core.selected) return [];
       return this.core.uploadedFiles
