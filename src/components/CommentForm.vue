@@ -55,6 +55,10 @@ export default {
       if (!e.shiftKey) {
         e.preventDefault();
         e.stopPropagation();
+        // this code is needed for emoji implementation, dirty, but works, need to refine later
+        const selector = '.qcw-comment-form textarea';
+        const element = document.querySelector(selector);
+        this.commentInput = element.value;
         let message = this.commentInput.trim();
         if (typeof emojione !== 'undefined') message = emojione.shortnameToUnicode(message);
         if (this.commentInput.trim().length < 1) return;
