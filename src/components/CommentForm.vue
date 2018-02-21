@@ -75,9 +75,9 @@ export default {
       }
     },
     submitComment(topicId, comment) {
-      scrollIntoElement(this.core);
       if (this.repliedComment === null) {
         this.core.sendComment(topicId, comment).then(() => {
+          scrollIntoElement(this.core);
         });
       } else {
         const payload = {
@@ -91,7 +91,7 @@ export default {
         };
         this.closeReplyHandler();
         this.core.sendComment(topicId, comment, null, 'reply', JSON.stringify(payload))
-          .then(() => {});
+          .then(() => scrollIntoElement(this.core));
       }
     },
     typingHandler(event) {
@@ -118,9 +118,7 @@ export default {
     publishTyping() {
       const self = this;
       if (self.commentInput.length > 0) {
-        // publish typing, after 3 sec, unpublish
         self.core.realtimeAdapter.publishTyping(1);
-        window.setTimeout(() => self.core.realtimeAdapter.publishTyping(0), 3000);
       } else {
         self.core.realtimeAdapter.publishTyping(0);
       }
