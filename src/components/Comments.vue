@@ -300,13 +300,14 @@ export default {
   
   .qcw-comment--system-event
     text-align: center;
-    align-self: center !important;
-    background $mybubble-color
     padding: 5px 20px;
-    border-radius: 15px;
+    border-radius:8px;
     flex: 0 auto;
-    box-shadow: 0 3px 3px rgba(0,0,0,.15);
-    margin: 0 auto;
+    margin: 0 auto 24px;
+    font-size: 13px;
+    background-color: $white;
+    border: 0.5px solid $lightGrey;
+    color: $darkGrey;
 
   .qcw-comment__message
     flex 0 auto
@@ -381,7 +382,6 @@ export default {
     img.emojione
       display inline-block
       vertical-align middle
-      width 14px
 
 </style>
 
