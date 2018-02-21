@@ -53,7 +53,16 @@ export default {
       repliedComment: null,
       imageModalContent: null,
       imageModalIsActive: false,
+      commentLength: 0,
     };
+  },
+  updated () {
+    if(this.core.selected) {
+      if (this.core.selected.comments.length > this.commentLength) {
+        this.commentLength = this.core.selected.comments.length;
+        this.scrollToBottom();
+      }
+    }
   },
   computed: {
     uploadedFiles() {
