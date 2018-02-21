@@ -56,8 +56,8 @@ export default {
       commentLength: 0,
     };
   },
-  updated () {
-    if(this.core.selected) {
+  updated() {
+    if (this.core.selected) {
       if (this.core.selected.comments.length > this.commentLength) {
         this.commentLength = this.core.selected.comments.length;
         this.scrollToBottom();
