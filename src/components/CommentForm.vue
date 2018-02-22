@@ -194,8 +194,7 @@ export default {
     flex 1
     font-size 15px
     font-family "Open Sans", sans-serif
-    line-height 130%
-    letter-spacing 0.5px
+    line-height 150%
     max-height 100%
     height 26px
     margin-top 2px
