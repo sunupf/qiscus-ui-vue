@@ -109,8 +109,7 @@ body
   font-family 'Open Sans', sans-serif
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
-  letter-spacing 0.5px
-  line-height 130%
+  line-height 150%
 
 .toasted-container.bottom-right
   position: fixed
@@ -121,7 +120,7 @@ body
     margin-top 8px
     padding: 10px 15px
     &.bubble
-      line-height 130%
+      line-height 150%
       font-size 16px
       &.error
         background-color $darkGrey
