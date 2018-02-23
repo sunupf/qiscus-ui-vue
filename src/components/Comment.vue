@@ -56,7 +56,7 @@
 
           //- CommentType: "BUTTON"
           div(v-if="comment.type == 'buttons'" class="button-message")
-            div(class="qcw-comment__content" v-html="comment.payload.text || message")
+            div(class="qcw-comment__content" v-html="comment.payload.text || comment.message")
             comment-buttons(:buttons="comment.payload.buttons" :postbackHandler="postbackSubmit")
 
           //- CommentType: "CARD"
