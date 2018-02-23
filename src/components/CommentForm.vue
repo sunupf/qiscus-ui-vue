@@ -10,7 +10,7 @@
         input(class="uploader__input" name="file_image" type="file" accept="image/*" @change="uploadFile")
         icon(name="ic-image-attachment")
 
-    textarea(placeholder="Type your message" autofocus='autofocus'
+    textarea(placeholder="Type your message"
       @keyup="typingHandler($event)"
       @keydown.enter="trySubmitComment($event)"
       v-model="commentInput")
@@ -197,7 +197,6 @@ export default {
     line-height 150%
     max-height 100%
     height 26px
-    margin-top 2px
     resize none
     margin-left 8px
     &::-webkit-scrollbar-track
