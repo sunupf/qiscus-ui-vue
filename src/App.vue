@@ -9,7 +9,7 @@
 import QiscusCore from './lib/SDKCore';
 import QcwTrigger from './components/QcwTrigger';
 import ChatWindow from './components/ChatWindow';
-import { scrollIntoElement } from './lib/utils';
+import { focusMessageForm, scrollIntoElement } from './lib/utils';
 
 export default {
   name: 'app',
@@ -74,6 +74,7 @@ export default {
         self.core.chatTarget(target).then((res) => {
           if (!self.chatWindowStatus) self.toggleWindowStatus();
           window.setTimeout(() => scrollIntoElement(self.core), 0);
+          focusMessageForm();
           return Promise.resolve(res);
         }, (err) => {
           self.$toasted.error(`Error opening chatroom: ${err}`);
@@ -84,6 +85,7 @@ export default {
         self.core.chatGroup(id).then((res) => {
           if (!self.chatWindowStatus) self.toggleWindowStatus();
           window.setTimeout(() => scrollIntoElement(self.core), 0);
+          focusMessageForm();
           return Promise.resolve(res);
         }, err => Promise.reject(err));
       },

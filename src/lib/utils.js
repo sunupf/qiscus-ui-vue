@@ -1,3 +1,7 @@
+export function focusMessageForm() { 
+  const element = document.querySelector('.qcw-comment-form textarea'); 
+  if(element) element.focus(); 
+} 
 export function scrollIntoElement(core) {
   if(core.selected.comments.length > 0) {
     const latestCommentId = core
