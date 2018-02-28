@@ -41,5 +41,6 @@ module.exports = {
   },
   'globals': {
     emojione: true,
+    QiscusUI: true,
   }
 }

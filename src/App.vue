@@ -2,7 +2,7 @@
   .qcw-container(:class="{'qcw-container--open': chatWindowStatus, 'qcw-container--wide': core.mode=='wide'}")
     chat-window(v-if="core.isInit" :core="core" :toggleWindowStatus="toggleWindowStatus")
     div(v-if="!core.isInit" class="qcw-connecting-indicator") Connecting to chat server ...
-    qcw-trigger(:clickHandler="toggleWindowStatus")
+    qcw-trigger(:clickHandler="toggleWindowStatus" :core="core")
 </template>
 
 <script>
@@ -91,7 +91,7 @@ export default {
       },
       setCustomColors(customColors) {
         self.core.UI.useCustomColors = true;
-        self.core.UI.colors = Object.assign({}, self.core.UI.colors, customColors);
+        self.core.UI.colors = Object.assign(self.core.UI.colors, customColors);
       },
     };
     window.QiscusUI = self.core.UI;

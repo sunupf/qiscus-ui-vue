@@ -1,12 +1,22 @@
 <template lang="pug">
-  .qcw-trigger-btn(@click="clickHandler")
+  .qcw-trigger-btn(@click="clickHandler" :style="buttonStyle")
     | {{ (label) ? label : 'Talk To Us' }}
 </template>
 
 <script>
 export default {
   name: 'QiscusTriggerButton',
-  props: ['label', 'clickHandler'],
+  props: ['label', 'clickHandler', 'core'],
+  data() {
+    return {
+      buttonStyle: {},
+    };
+  },
+  mounted() {
+    this.buttonStyle = {
+      background: QiscusUI.colors.widgetButtonBackgroundColor,
+    };
+  },
 };
 </script>
 

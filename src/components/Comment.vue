@@ -12,12 +12,15 @@
         :class="{ 'comment--me': comment.username_real == userData.email, 'comment--parent': isParent, 'comment--mid': isMid, 'comment--last': isLast }"
       )
         avatar(:src="comment.avatar" :class="{'qcw-avatar--hide': !isParent}")
-        div(class="qcw-comment__message" :class="{'extra-margin': comment.type === 'carousel'}")
+        div(class="qcw-comment__message" 
+          :style="messageStyle"
+          :class="{'extra-margin': comment.type === 'carousel'}")
             
-
           //- Comment User & Time
           span(class="qcw-comment__username" v-if="isParent && isGroupRoom && !isMe") {{comment.username_as}}
-          span(class="qcw-comment__time" :class="{'qcw-comment__time--me': isMe}") {{comment.time}}
+          span(class="qcw-comment__time" 
+            :class="{'qcw-comment__time--me': isMe}"
+            :style="messageTimeStyle") {{comment.time}}
 
           //- reply button
           i(@click="replyHandler(comment)" class="reply-btn" :class="{'reply-btn--me': isMe}")
@@ -89,12 +92,13 @@
 
           div(v-if="isMe")
             div(class="qcw-comment__state qcw-comment__state--sending" v-if="comment.isPending")
-              icon(name="ic-load" class="ic-load__state")
+              icon(name="ic-load" class="ic-load__state" :fill="messageStatusIconStyle")
             div(class="qcw-comment__state" v-if="comment.isSent && !comment.isDelivered")
-              icon(name="ic-check" class="ic-check__state")
-            div(@click="resend(comment)" class="qcw-comment__state qcw-comment__state--failed" v-if="comment.isFailed") !!!
+              icon(name="ic-check" class="ic-check__state" :fill="messageStatusIconStyle")
+            div(@click="resend(comment)" class="qcw-comment__state qcw-comment__state--failed" 
+              v-if="comment.isFailed" :style="messageFailedIconStyle") !!!
             div(class="qcw-comment__state qcw-comment__state--delivered" v-if="comment.isDelivered && !comment.isRead")
-              icon(name="ic-double-check" class="ic-double-check__state")
+              icon(name="ic-double-check" class="ic-double-check__state" :fill="messageStatusIconStyle")
             div(class="qcw-comment__state qcw-comment__state--read" v-if="comment.isRead")
               icon(name="ic-double-check" class="ic-double-check__state")
 
@@ -174,7 +178,21 @@ export default {
         [`qcw-comment--${this.comment.type} comment--me`]: this.comment.username_real === this.userData.email,
         [`qcw-comment--${this.comment.type}`]: !this.comment.username_real === this.userData.email,
       },
+      messageStyle: {},
+      messageStatusIconStyle: { fill: QiscusUI.colors.messageStatusIconColor },
+      messageFailedIconStyle: { fill: QiscusUI.colors.messageFailedIconColor },
+      messageTimeStyle: { color: QiscusUI.colors.messageTimeColor },
       core: QiscusCore,
+    };
+  },
+  mounted() {
+    this.messageStyle = {
+      color: (this.isMe)
+        ? this.core.UI.colors.bubleRightTextColor
+        : this.core.UI.colors.bubleLeftTextColor,
+      background: (this.isMe)
+        ? this.core.UI.colors.bubleRightColor
+        : this.core.UI.colors.bubleLeftColor,
     };
   },
   methods: {

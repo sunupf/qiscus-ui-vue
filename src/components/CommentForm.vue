@@ -4,15 +4,16 @@
     i(class='qcw-icon')
       label
         input(class="uploader__input" name="file_all" type="file" @change="uploadFile")
-        icon(name="ic-file-attachment")
+        icon(name="ic-file-attachment" :fill="core.UI.colors.formMessageIconColor")
     i(class='qcw-icon')
       label
         input(class="uploader__input" name="file_image" type="file" accept="image/*" @change="uploadFile")
-        icon(name="ic-image-attachment")
+        icon(name="ic-image-attachment" :fill="core.UI.colors.formMessageIconColor")
 
     textarea(placeholder="Type your message"
       @keyup="typingHandler($event)"
       @keydown.enter="trySubmitComment($event)"
+      :style="textareaStyle"
       v-model="commentInput")
     i(@click="trySubmitComment($event)")
       icon(name="ic-send-message" :fill="sendBtnStatus")
@@ -33,14 +34,20 @@ export default {
       emojiSize: 16,
       sheetSize: 16,
       toggleEmoji: false,
+      textareaStyle: {},
       emojione: (typeof emojione !== 'undefined') ? emojione : {},
+    };
+  },
+  mounted() {
+    this.textareaStyle = {
+      color: this.core.UI.colors.formMessageTextColor,
     };
   },
   computed: {
     sendBtnStatus() {
       return this.commentInput.length > 0
         ? this.core.UI.colors.formMessageIconHoverColor
-        : null;
+        : this.core.UI.colors.formMessageIconColor;
     },
     uploadedFiles() {
       if (!this.core.selected) return [];
