@@ -174,6 +174,8 @@ export default {
       display none
     .qcw-comment__time
       display none
+    .delete-btn
+      display block
   
   .qcw-comment__state
     animation:fadeInDown 0.3s ease-out;
@@ -382,7 +384,16 @@ export default {
     img.emojione
       display inline-block
       vertical-align middle
-
+  .delete-btn
+    position absolute
+    color $red
+    top 7px
+    left -50px
+    cursor pointer
+    font-size 20px
+    display none
+    animation:fadeInLeftBig 0.3s ease-out;
+    transition: background 0.3s ease-out
 </style>
 
 

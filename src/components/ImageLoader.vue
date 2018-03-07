@@ -6,7 +6,7 @@
       </i>
       Loading Image...
     </div>
-    <div class="qcw-image-container" v-if="isImage && !isLoading && error==''" @click="onClickImage(comment)">
+    <div class="qcw-image-container" v-if="isImage && !isLoading && error==''" @click="clickImageHandler">
       <img :src="imageSrc" :alt="imageSrc" />
     </div>
     <div v-if="error">
@@ -60,6 +60,12 @@
       URL.revokeObjectURL(this.imageSrc);
     },
     methods: {
+      clickImageHandler() {
+        if (this.onClickImage) {
+          return this.onClickImage(this.comment);
+        }
+        return false;
+      },
       loadImage() {
         const self    = this;
         const comment = this.comment;

@@ -1,5 +1,6 @@
 <template lang="pug">
-  div.qcw-image-modal__overlay(@click="closeBtnHandler")
+  div.qcw-image-modal__container
+    div.qcw-image-modal__overlay(@click="closeBtnHandler")
     div.qcw-image-modal__wrapper
       div.qcw-image-modal__actions
         i.qcw-image-modal__action(@click="openImage")
@@ -18,6 +19,14 @@ export default {
   name: 'ImageModal',
   components: { ImageLoader, Icon },
   props: ['uri', 'closeBtnHandler', 'comment'],
+  data() {
+    return {
+      imageSrc: '',
+    };
+  },
+  mounted() {
+    this.imageSrc = this.comment.message.substring(6, this.comment.message.length - 7).trim();
+  },
   methods: {
     openImage() {
       // get url
@@ -32,19 +41,25 @@ export default {
 
 <style lang="stylus">
 @import '../assets/stylus/_variables.styl'
+.qcw-image-modal__container
+  position fixed
+  top 0
+  left 0
+  width 100%
+  height 100%
+  z-index 8888
+  display flex
+  justify-content center
+  align-items center
+  overflow-y scroll
+  padding 20px
+  background rgba(0,0,0,.5)
 .qcw-image-modal__overlay
   position fixed
   top 0
   left 0
   width 100%
   height 100%
-  background rgba(0,0,0,.5)
-  display flex
-  justify-content center
-  align-items center
-  z-index 9999
-  overflow-y scroll
-  padding 20px
 .qcw-image-modal__wrapper
   min-width 240px
   position relative

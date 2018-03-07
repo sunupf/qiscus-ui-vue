@@ -27,6 +27,10 @@
             icon(name="ic-quote" v-if="isMe")
             icon(name="ic-reply" v-else)
           
+          //- delete button
+          div(class="delete-btn" @click="confirmDeleteComment(comment)" v-if="isMe")
+            i &times;
+          
           //- CommentType: "contact_person"
           div(v-if="comment.type == 'contact_person'" class="qcw-comment--contact")
             i
@@ -112,6 +116,7 @@
     //-     </div>
     div(class="failed-info" v-if="comment.isFailed" :class="{ 'failed--last': isLast }") Message failed to send. 
       span(@click="resend(comment)" class="" v-if="comment.isFailed") Resend
+
 </template>
 
 <script>
@@ -205,6 +210,27 @@ export default {
       return this.core.resendComment(comment)
         .then(() => this.$toasted.success('Resending comment successful'),
         () => this.$toasted.error('Resending comment failed'));
+    },
+    confirmDeleteComment(comment) {
+      return this.$toasted.show('Delete this comment???', {
+        duration: 5000,
+        action: [
+          {
+            text: 'Delete',
+            onClick: (e, toastObject) =>
+              this.deleteComment(comment)
+                .then(() => this.$toasted.success('Comment deleted'),
+                (err) => {
+                  toastObject.goAway(0);
+                  this.$toasted.error(`Failed deleting comment: ${err}`);
+                }),
+          },
+          { text: 'Cancel', onClick: (e, toastObject) => toastObject.goAway(0) },
+        ],
+      });
+    },
+    deleteComment(comment) {
+      return this.core.deleteComment(comment.room_id, [comment.unique_id]);
     },
     haveTemplate(comment) {
       if (!this.core.customTemplate) return false;
