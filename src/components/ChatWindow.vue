@@ -189,11 +189,15 @@ export default {
     background-color $darkWhite
     margin-bottom 8px
     border-radius 2px
+    &.reply-wrapper--me
+      background-color $darkerWhite;
     .reply-sender
       font-size 13px
       font-weight 600
+      color $darkGrey
     .qcw-comment__content
       font-size 13px
+      color $mediumGrey
 
   .reply-wrapper:before
     content ""
