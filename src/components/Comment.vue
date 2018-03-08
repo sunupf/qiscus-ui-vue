@@ -219,8 +219,10 @@ export default {
             text: 'Delete',
             onClick: (e, toastObject) =>
               this.deleteComment(comment)
-                .then(() => this.$toasted.success('Comment deleted'),
-                (err) => {
+                .then(() => {
+                  toastObject.goAway(0);
+                  this.$toasted.success('Comment deleted');
+                }, (err) => {
                   toastObject.goAway(0);
                   this.$toasted.error(`Failed deleting comment: ${err}`);
                 }),
@@ -230,7 +232,7 @@ export default {
       });
     },
     deleteComment(comment) {
-      return this.core.deleteComment(comment.room_id, [comment.unique_id]);
+      return this.core.deleteComment(this.core.selected.id, [comment.unique_id]);
     },
     haveTemplate(comment) {
       if (!this.core.customTemplate) return false;
