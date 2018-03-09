@@ -216,9 +216,21 @@ export default {
         duration: 5000,
         action: [
           {
-            text: 'Delete',
+            text: 'Delete for me',
             onClick: (e, toastObject) =>
-              this.deleteComment(comment)
+              this.deleteComment(comment, false)
+                .then(() => {
+                  toastObject.goAway(0);
+                  this.$toasted.success('Comment deleted');
+                }, (err) => {
+                  toastObject.goAway(0);
+                  this.$toasted.error(`Failed deleting comment: ${err}`);
+                }),
+          },
+          {
+            text: 'Delete for everyone',
+            onClick: (e, toastObject) =>
+              this.deleteComment(comment, true)
                 .then(() => {
                   toastObject.goAway(0);
                   this.$toasted.success('Comment deleted');
@@ -231,8 +243,9 @@ export default {
         ],
       });
     },
-    deleteComment(comment) {
-      return this.core.deleteComment(this.core.selected.id, [comment.unique_id]);
+    deleteComment(comment, isForEveryone) {
+      return this.core
+        .deleteComment(this.core.selected.id, [comment.unique_id], isForEveryone, true);
     },
     haveTemplate(comment) {
       if (!this.core.customTemplate) return false;
