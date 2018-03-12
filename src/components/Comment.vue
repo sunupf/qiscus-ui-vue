@@ -72,6 +72,12 @@
           //- CommentType: "CARD"
           div(v-if="comment.type=='button_postback_response'" class="comment-text") 
             comment-render(:text="comment.message" v-if="!comment.isAttachment(comment.message)")
+
+          //- CommentType: "ACCOUNT_LINKING"
+          div(v-if="comment.type == 'account_linking'")
+            comment-render(:text="comment.payload.text || message")
+            div(class="action_buttons")
+              button(@click="openAccountBox") {{ comment.payload.params.button_text }} &rang;
           
           //- CommentType: "TEXT"
           div(class="comment-text" v-if="comment.type == 'text' || comment.type == 'reply'")
@@ -106,14 +112,6 @@
             div(class="qcw-comment__state qcw-comment__state--read" v-if="comment.isRead")
               icon(name="ic-double-check" class="ic-double-check__state")
 
-    //-       <!-- CommentType: "ACCOUNT_LINKING" -->
-    //-       <div v-if="comment.type == 'account_linking'">
-    //-         <comment-render :text="comment.payload.text || message"></comment-render>
-    //-         <div class="action_buttons">
-    //-           <button @click="openAccountBox">{{ comment.payload.params.button_text }} &rang;</button>
-    //-         </div>
-    //-       </div>
-    //-     </div>
     div(class="failed-info" v-if="comment.isFailed" :class="{ 'failed--last': isLast }") Message failed to send. 
       span(@click="resend(comment)" class="" v-if="comment.isFailed") Resend
 
@@ -255,6 +253,9 @@ export default {
       const roomId = this.core.selected.id;
       const labelToSend = button.postback_text ? button.postback_text : button.label;
       this.core.sendComment(roomId, labelToSend, null, 'button_postback_response', JSON.stringify(button.payload));
+    },
+    openAccountBox() {
+      window.open(this.comment.payload.url, 'AccountLinkingPopup', 'width=500,height=400,location=no,menubar=no,resizable=1,status=no,toolbar=no');
     },
   },
 };
