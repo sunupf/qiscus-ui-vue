@@ -1,5 +1,5 @@
 <template lang="pug">
-  div(:class="{'parent--container':isParent, 'my--container': isMe, 'qcw-group': isGroupRoom, 'contain-date': showDate}")
+  div(:class="{'parent--container':isParent, 'my--container': isMe, 'qcw-group': isGroupRoom, 'contain-date': showDate, 'deleted': comment.is_deleted == true}")
     div(class="qcw-comment-container" :id="comment.id" :class="commentClass")
       div(v-if="showDate" class="qcw-comment-date" :class="{'extra-margin': addExtraMargin}") 
         div {{ dateToday }}
@@ -14,7 +14,7 @@
         avatar(:src="comment.avatar" :class="{'qcw-avatar--hide': !isParent}")
         div(class="qcw-comment__message" 
           :style="messageStyle"
-          :class="{'extra-margin': comment.type === 'carousel'}")
+          :class="{'extra-margin card': comment.type === 'carousel','card':comment.type === 'card'}")
             
           //- Comment User & Time
           span(class="qcw-comment__username" v-if="isParent && isGroupRoom && !isMe") {{comment.username_as}}
@@ -28,8 +28,8 @@
             icon(name="ic-reply" v-else)
           
           //- delete button
-          div(class="delete-btn" @click="confirmDeleteComment(comment)" v-if="isMe")
-            i &times;
+          i(class="delete-btn" @click="confirmDeleteComment(comment)" v-if="isMe")
+            icon(name="ic-close")
           
           //- CommentType: "contact_person"
           div(v-if="comment.type == 'contact_person'" class="qcw-comment--contact")
