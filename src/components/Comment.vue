@@ -218,7 +218,7 @@ export default {
         duration: 5000,
         action: [
           {
-            text: 'Delete for me',
+            text: 'For me',
             onClick: (e, toastObject) =>
               this.deleteComment(comment, false)
                 .then(() => {
@@ -230,7 +230,7 @@ export default {
                 }),
           },
           {
-            text: 'Delete for everyone',
+            text: 'For everyone',
             onClick: (e, toastObject) =>
               this.deleteComment(comment, true)
                 .then(() => {

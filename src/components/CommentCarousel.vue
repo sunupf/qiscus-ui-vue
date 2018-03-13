@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     startRotation() {
-      this.timer = setInterval(this.next, 3000000);
+      this.timer = setInterval(this.next, 10000);
     },
     stopRotation() {
       clearTimeout(this.timer);
