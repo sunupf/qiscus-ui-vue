@@ -134,6 +134,13 @@ export default {
     background-color $darkWhite
     .qcw-container.qcw-container--open &
       height 480px
+
+      @media screen and (max-width: 600px)
+        right 0
+        bottom 0
+        width 100vw
+        height 100vh
+        z-index 8888
   
   .qcw-window-toggle-btn
     cursor pointer

@@ -35,6 +35,10 @@ export default {
   transition all .3s ease
   box-shadow 0 7px 16px rgba(46,46,46,.15)
   margin-top: 15px
+
+  @media screen and (max-width: 600px)
+    position relative
+    z-index 7777
   
   &:hover
     transform translateY(-3px)

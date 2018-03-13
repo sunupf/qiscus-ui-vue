@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>qiscus-sdk-vue</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/lib/js/emojione.min.js"></script>
     <style>
@@ -38,10 +39,10 @@
             },
             newMessagesCallback(comments) {
               console.info('vue isi comments', comments[0].message);
-	      setTimeout(function(){
-                        lastCommentId = QiscusSDK.core.selected.comments[QiscusSDK.core.selected.comments.length - 1].id;
-                        theElement = document.getElementById(lastCommentId);
-                        theElement.scrollIntoView({ block: 'end', behaviour: 'smooth' })}, 200);
+	            setTimeout(function(){
+                lastCommentId = QiscusSDK.core.selected.comments[QiscusSDK.core.selected.comments.length - 1].id;
+                theElement = document.getElementById(lastCommentId);
+                theElement.scrollIntoView({ block: 'end', behaviour: 'smooth' })}, 200);
             },
             commentReadCallback(data) {
               // console.log('comment di read', data);
@@ -98,9 +99,9 @@
         // render the widget
         QiscusSDK.render();
         QiscusUI.setCustomColors({
-          headerBackgroundColor: '#1abc9c',
-          headerTitleColor: '#ecf0f1',
-          headerIconColor: '#ecf0f1',
+          // headerBackgroundColor: '#1abc9c',
+          // headerTitleColor: '#ecf0f1',
+          // headerIconColor: '#ecf0f1',
 
           // statusOnlineColor: '#fff',
           // statusOfflineColor: '#fff',
