@@ -11,13 +11,15 @@
 <style>
   .loader {
     border-radius: 50%;
-    width: 20px; height: 20px;
-    border: 3px solid rgba(255,255,255,.3);
-    border-top-color: rgba(255,255,255,.7);
+    width: 70px;
+    height: 70px;
+    border-width: 5px;
+    margin-top: 120px;
+    position: fixed;
+    border: 5px solid rgba(148, 202, 98,.4);
+    border-top-color: #94ca62;
     display: inline-block;
-    animation: rotate .9s linear infinite;
-    vertical-align: middle;
-    margin-right: 10px;
+    animation: rotate .9s ease-out infinite;
   }
   @keyframes rotate {
     from { transform: rotate(0deg); }

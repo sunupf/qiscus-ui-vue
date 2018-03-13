@@ -4,9 +4,9 @@
     div.qcw-image-modal__wrapper
       div.qcw-image-modal__actions
         i.qcw-image-modal__action(@click="openImage")
-          icon(name="ic-link-out" fill="#FFFFFF")
+          icon(name="ic-link-out")
         i.qcw-image-modal__action(@click="closeBtnHandler" style="font-size: 13px")
-          icon(name="ic-close" fill="#FFFFFF")
+          icon(name="ic-close")
       image-loader(:comment="comment"
         :message="comment.message")
 </template>
