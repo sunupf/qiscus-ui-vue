@@ -1,26 +1,27 @@
 <template lang="pug">
   div.qcw-comments
-    div.qcw-load-comment-indicator(v-if="core.isLoading")
-      loader(width="70px" height="70px" borderWidth="5px")
+    div.inner
+      div.qcw-load-comment-indicator(v-if="core.isLoading")
+        loader()
 
-    ul(v-if="core.selected")
-      li(class="qcw-load-more qcw-load-more-btn" @click="loadMore" v-if="core.selected.comments.length > 0 && core.selected.comments[0].before_id > 0") 
-        icon(name="ic-load" class="ic-load-more__state" v-if="isLoadingMore")
-        span Load More
-      li(class="qcw-load-more qcw-top-page" v-else)
-        span You've reached first page 
-      li(v-for="(comment, index) in core.selected.comments" :key="comment.id")
-        comment(
-          :comment="comment"
-          :comment-before="(index-1 < 0) ? null : core.selected.comments[index-1]"
-          :comment-after="(index+1 <= core.selected.comments.length-1) ? core.selected.comments[index+1] : null"
-          :on-click-image="onClickImage"
-          :replyHandler="replyHandler"
-          :onupdate="onupdate"
-          :userData="core.userData"
-          :showAvatar="core.options.avatar"
-        )
-      //- component for uploader progress
+      ul(v-if="core.selected")
+        li(class="qcw-load-more qcw-load-more-btn" @click="loadMore" v-if="core.selected.comments.length > 0 && core.selected.comments[0].before_id > 0") 
+          icon(name="ic-load" class="ic-load-more__state" v-if="isLoadingMore")
+          span Load More
+        li(class="qcw-load-more qcw-top-page" v-else)
+          span You've reached first page 
+        li(v-for="(comment, index) in core.selected.comments" :key="comment.id")
+          comment(
+            :comment="comment"
+            :comment-before="(index-1 < 0) ? null : core.selected.comments[index-1]"
+            :comment-after="(index+1 <= core.selected.comments.length-1) ? core.selected.comments[index+1] : null"
+            :on-click-image="onClickImage"
+            :replyHandler="replyHandler"
+            :onupdate="onupdate"
+            :userData="core.userData"
+            :showAvatar="core.options.avatar"
+          )
+        //- com`ponent for uploader progress
     
 </template>
 
@@ -92,16 +93,20 @@ export default {
       height: 12px;
       width: 12px;
       animation spin 1s ease-in-out infinite
+
+  .inner 
+    position relative
+    padding-top 1px
+  
   .qcw-load-comment-indicator
     position absolute
     width 100%
     height 100%
     top 0
-    left 0
     display flex
     justify-content center
-    align-items center
-    background rgba(0,0,0,.5)
+    background rgba(255,255,255,0.95)
+    z-index : 1
 
   .qcw-comments
     background $darkWhite
@@ -136,27 +141,41 @@ export default {
       margin-top 0
       .qcw-comment
         margin-top 0
-    
+
+  i.delete-btn,
   i.reply-btn
     position absolute
     overflow hidden
-    right -32px
-    top 6px
     height 24px
     cursor pointer
+    top 6px
     width 24px
     border-radius 50%
-    background: $lightGrey
-    display: none;
+    background $lightGrey
+    display none
     z-index 2
-    animation:fadeInLeftBig 0.3s ease-out;
-    transition: background 0.3s ease-out
+    animation fadeInLeftBig 0.3s ease-out
+    transition background 0.3s ease-out
+
+  i.delete-btn
+    left -64px
+    & svg.qc-icon
+      display block
+      width 12px
+      height 12px
+      margin 6px auto
+    &:hover
+      background-color $red
+      .qc-icon
+        fill $white
+    
+  i.reply-btn
+    right -32px
     & svg.qc-icon
       display block
       width 13px
       height 13px
       margin 5px auto
-
     &.reply-btn--me
       left -32px
       & svg.qc-icon
@@ -175,7 +194,7 @@ export default {
     .qcw-comment__time
       display none
     .delete-btn
-      display block
+      display inline-block
   
   .qcw-comment__state
     animation:fadeInDown 0.3s ease-out;
@@ -361,6 +380,8 @@ export default {
       box-shadow 0 7px 16px rgba(199,199,199,.25)
       left auto
       right -8px
+    &.card 
+      max-width 210px !important
 
   @media only screen and (min-width: 640px)
     .qcw-container--wide
@@ -373,6 +394,11 @@ export default {
 
   .comment--last
     margin-bottom 24px
+
+  .deleted
+    .qcw-comment__content 
+      font-size 13px
+      color $red
   .comment-text
     width 100%
     .qcw-comment__content 
@@ -384,16 +410,6 @@ export default {
     img.emojione
       display inline-block
       vertical-align middle
-  .delete-btn
-    position absolute
-    color $red
-    top 7px
-    left -50px
-    cursor pointer
-    font-size 20px
-    display none
-    animation:fadeInLeftBig 0.3s ease-out;
-    transition: background 0.3s ease-out
 </style>
 
 

@@ -77,7 +77,7 @@ export default {
 .comment__carousel 
   position relative
 .extra-margin
-  margin-bottom 24px
+  margin-bottom 36px
 ul.carousel__bullets
   position: absolute;
   width: 100%;
