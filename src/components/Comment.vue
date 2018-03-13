@@ -76,8 +76,9 @@
           //- CommentType: "ACCOUNT_LINKING"
           div(v-if="comment.type == 'account_linking'")
             comment-render(:text="comment.payload.text || message")
-            div(class="action_buttons")
-              button(@click="openAccountBox") {{ comment.payload.params.button_text }} &rang;
+            div(class="qcw-comment__buttons")
+              div(class="action_buttons")
+                button(@click="openAccountBox") {{ comment.payload.params.button_text }} &rang;
           
           //- CommentType: "TEXT"
           div(class="comment-text" v-if="comment.type == 'text' || comment.type == 'reply'")
