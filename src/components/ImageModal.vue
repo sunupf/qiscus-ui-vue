@@ -53,7 +53,7 @@ export default {
   align-items center
   overflow-y scroll
   padding 20px
-  background rgba(0,0,0,.5)
+  background rgba(255,255,255,.90)
 .qcw-image-modal__overlay
   position fixed
   top 0
