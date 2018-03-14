@@ -2,7 +2,7 @@
   .qcw-container(:class="{'qcw-container--open': chatWindowStatus, 'qcw-container--wide': core.mode=='wide'}")
     chat-window(v-if="core.isInit" :core="core" :toggleWindowStatus="toggleWindowStatus")
     div(v-if="!core.isInit" class="qcw-connecting-indicator") Connecting to chat server ...
-    qcw-trigger(:clickHandler="toggleWindowStatus" :core="core")
+    qcw-trigger(:clickHandler="toggleWindowStatus" :core="core" :label="widgetButtonText")
 </template>
 
 <script>
@@ -16,6 +16,9 @@ export default {
   components: {
     QcwTrigger,
     ChatWindow,
+  },
+  computed: {
+    widgetButtonText: () => QiscusCore.UI.widgetButtonText,
   },
   data() {
     return {
@@ -70,6 +73,7 @@ export default {
       useCustomColors: false,
       colors: colorConfig,
       config: uiConfig,
+      widgetButtonText: 'Talk to Us',
       chatTarget(target) {
         self.core.chatTarget(target).then((res) => {
           if (!self.chatWindowStatus) self.toggleWindowStatus();
