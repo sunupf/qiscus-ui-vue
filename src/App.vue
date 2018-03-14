@@ -113,23 +113,37 @@ body
   -moz-osx-font-smoothing grayscale
   line-height 150%
 
-.toasted-container.bottom-right
-  position: fixed
-  bottom: 20px
-  right: 42px
-  border-radius 30px
-  .toasted
-    margin-top 8px
-    padding: 10px 15px
-    &.bubble
-      line-height 150%
-      font-size 16px
-      &.error
-        background-color $darkGrey
-      &.success
-        background-color $green
-      &.info
-        background-color $blue
+.toasted-container
+  &.bottom-right
+    position: fixed
+    bottom: 20px
+    right: 42px
+    border-radius 30px
+    .toasted
+      margin-top 8px
+      padding: 10px 15px
+      background-color $yellow
+      color $darkGrey
+      .action
+        margin 0 8px
+        padding 0
+        color $darkGrey
+        &:first-child
+          margin-left 16px;
+        &:last-child
+          color $blue
+        &:hover
+          color $red
+          text-decoration none;
+      &.bubble
+        line-height 150%
+        font-size 16px
+        &.error
+          background-color $darkGrey
+        &.success
+          background-color $green
+        &.info
+          background-color $blue
 
 .qcw-container 
   color #444

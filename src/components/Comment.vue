@@ -1,5 +1,5 @@
 <template lang="pug">
-  div(:class="{'parent--container':isParent, 'my--container': isMe, 'qcw-group': isGroupRoom, 'contain-date': showDate, 'deleted': comment.is_deleted == true}")
+  div(:class="{'parent--container':isParent, 'my--container': isMe, 'qcw-group': isGroupRoom, 'contain-date': showDate, 'deleted': isDeleted}")
     div(class="qcw-comment-container" :id="comment.id" :class="commentClass")
       div(v-if="showDate" class="qcw-comment-date" :class="{'extra-margin': addExtraMargin}") 
         div {{ dateToday }}
@@ -14,7 +14,7 @@
         avatar(:src="comment.avatar" :class="{'qcw-avatar--hide': !isParent}")
         div(class="qcw-comment__message" 
           :style="messageStyle"
-          :class="{'extra-margin card': comment.type === 'carousel','card':comment.type === 'card'}")
+          :class="{'extra-margin card': comment.type === 'carousel','card':comment.type === 'card','hover-effect':!isDeleted}")
             
           //- Comment User & Time
           span(class="qcw-comment__username" v-if="isParent && isGroupRoom && !isMe") {{comment.username_as}}
@@ -23,12 +23,12 @@
             :style="messageTimeStyle") {{comment.time}}
 
           //- reply button
-          i(@click="replyHandler(comment)" class="reply-btn" :class="{'reply-btn--me': isMe}")
+          i(@click="replyHandler(comment)" class="reply-btn" :class="{'reply-btn--me': isMe}" v-if="!isDeleted")
             icon(name="ic-quote" v-if="isMe")
             icon(name="ic-reply" v-else)
           
           //- delete button
-          i(class="delete-btn" @click="confirmDeleteComment(comment)" v-if="isMe")
+          i(class="delete-btn" @click="confirmDeleteComment(comment)" v-if="isMe && !isDeleted")
             icon(name="ic-close")
           
           //- CommentType: "contact_person"
@@ -149,6 +149,9 @@ export default {
   },
   props: ['comment', 'commentBefore', 'commentAfter', 'userData', 'onClickImage', 'onupdate', 'replyHandler', 'showAvatar'],
   computed: {
+    isDeleted() {
+      return this.comment.is_deleted === true;
+    },
     showDate() {
       return this.commentBefore === null || (this.commentBefore.date !== this.comment.date);
     },
@@ -215,7 +218,7 @@ export default {
         duration: 5000,
         action: [
           {
-            text: 'Delete for me',
+            text: 'For me',
             onClick: (e, toastObject) =>
               this.deleteComment(comment, false)
                 .then(() => {
@@ -227,7 +230,7 @@ export default {
                 }),
           },
           {
-            text: 'Delete for everyone',
+            text: 'For everyone',
             onClick: (e, toastObject) =>
               this.deleteComment(comment, true)
                 .then(() => {
