@@ -187,14 +187,15 @@ export default {
         fill $white
 
   .qcw-comments li:hover
-    i.reply-btn
-      display inline-block
-    .qcw-comment__state
-      display none
-    .qcw-comment__time
-      display none
-    .delete-btn
-      display inline-block
+    .hover-effect
+      i.reply-btn
+        display inline-block
+      .qcw-comment__state
+        display none
+      .qcw-comment__time
+        display none
+      .delete-btn
+        display inline-block
   
   .qcw-comment__state
     animation:fadeInDown 0.3s ease-out;
