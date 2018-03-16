@@ -140,7 +140,7 @@ export default {
         bottom 0
         width 100vw
         height 100vh
-        z-index 8888
+        z-index 1
   
   .qcw-window-toggle-btn
     cursor pointer
@@ -224,7 +224,7 @@ export default {
     padding 8px 8px 8px 12px
     animation fadeInUp 0.3s ease-out
     box-shadow 0 -8px 16px rgba(199,199,199,0.2)
-    z-index 500
+    // z-index 1
     &:before
       border-radius 0
 

@@ -4,11 +4,10 @@
     @mouseout="startRotation")
 
     //- <!-- cards -->
-    div(class="qcw-carousel__item")
-      transition-group(name="slide-y")
-        comment-card(:data="cards[currentNumber]" 
-          v-for="number in [currentNumber]"
-          :key="currentNumber")
+    div.carousel-container
+      div(class="qcw-carousel__item" v-for="(card, index) in cards")
+          comment-card(:data="card" 
+            :key="index")
 
     ul(class="qcw-carousel__nav")
       li(@click="pref")
@@ -74,6 +73,23 @@ export default {
 
 <style lang="stylus">
 @import '../assets/stylus/_variables.styl'
+.qcw-comment-container.qcw-comment--carousel.comment--me
+  justify-content flex-start
+  margin-left 36px
+.carousel-container
+  display flex
+.qcw-carousel__item:last-child
+  .comment__card--container
+    margin-right 0
+.qcw-comment--carousel .comment__card--container
+  margin-right 24px
+  width 210px
+  background-color white
+  border-radius 0 0 8px 8px
+  box-shadow 0 7px 16px rgba(199,199,199,0.25)
+.qcw-comment .qcw-comment__message.carousel
+  background-color transparent
+  box-shadow none 
 .comment__carousel 
   position relative
 .extra-margin

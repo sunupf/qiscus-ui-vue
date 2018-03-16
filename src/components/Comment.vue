@@ -13,8 +13,8 @@
       )
         avatar(:src="comment.avatar" :class="{'qcw-avatar--hide': !isParent}")
         div(class="qcw-comment__message" 
-          :style="messageStyle"
-          :class="{'extra-margin card': comment.type === 'carousel','card':comment.type === 'card','hover-effect':!isDeleted}")
+          :style="{messageStyle:!isCustomBuble}"
+          :class="{'extra-margin carousel': comment.type === 'carousel','card':comment.type === 'card','hover-effect':!isDeleted && !isCustomBuble}")
             
           //- Comment User & Time
           span(class="qcw-comment__username" v-if="isParent && isGroupRoom && !isMe") {{comment.username_as}}
@@ -151,6 +151,9 @@ export default {
   computed: {
     isDeleted() {
       return this.comment.is_deleted === true;
+    },
+    isCustomBuble() {
+      return this.comment.type === 'card' || this.comment.type === 'carousel';
     },
     showDate() {
       return this.commentBefore === null || (this.commentBefore.date !== this.comment.date);
