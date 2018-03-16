@@ -74,11 +74,13 @@ export default {
       colors: colorConfig,
       config: uiConfig,
       widgetButtonText: 'Talk to Us',
+      isReading: false,
       chatTarget(target) {
         self.core.chatTarget(target).then((res) => {
           if (!self.chatWindowStatus) self.toggleWindowStatus();
           window.setTimeout(() => scrollIntoElement(self.core), 0);
           focusMessageForm();
+          self.core.UI.isReading = false;
           return Promise.resolve(res);
         }, (err) => {
           self.$toasted.error(`Error opening chatroom: ${err}`);
@@ -89,6 +91,7 @@ export default {
         self.core.chatGroup(id).then((res) => {
           if (!self.chatWindowStatus) self.toggleWindowStatus();
           window.setTimeout(() => scrollIntoElement(self.core), 0);
+          self.core.UI.isReading = false;
           focusMessageForm();
           return Promise.resolve(res);
         }, err => Promise.reject(err));

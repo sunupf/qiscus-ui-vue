@@ -41,6 +41,22 @@ export default {
       isLoadingMore: false,
     };
   },
+  mounted() {
+    const self = this;
+    // attach scroll listener
+    const scrollContainer = document.querySelector('.qcw-comments');
+    scrollContainer.onscroll = () => {
+      const scrollHeight =  scrollContainer.scrollHeight;
+      const clientHeight = scrollContainer.clientHeight;
+      const scrollTop = scrollContainer.scrollTop;
+      const scrollTreshold = 1.5 * clientHeight;
+      if (scrollHeight - scrollTop > scrollTreshold) {
+        self.core.UI.isReading = true;
+      } else {
+        self.core.UI.isReading = false;
+      }
+    };
+  },
   methods: {
     loadMore() {
       this.isLoadingMore = true;

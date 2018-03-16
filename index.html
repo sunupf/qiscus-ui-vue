@@ -38,11 +38,18 @@
               // console.info('presence data', data);
             },
             newMessagesCallback(comments) {
-              console.info('vue isi comments', comments[0].message);
-	            setTimeout(function(){
-                lastCommentId = QiscusSDK.core.selected.comments[QiscusSDK.core.selected.comments.length - 1].id;
-                theElement = document.getElementById(lastCommentId);
-                theElement.scrollIntoView({ block: 'end', behaviour: 'smooth' })}, 200);
+              // if (comments[0].room_id == QiscusSDK.core.selected.id) {
+              //   setTimeout(function(){
+              //     const lastCommentId = QiscusSDK.core.selected.comments[QiscusSDK.core.selected.comments.length - 1].id;
+              //     const theElement = document.getElementById(lastCommentId);
+              //     console.info('isi reading', QiscusUI.isReading);
+              //     const isReading = QiscusUI.isReading;
+              //     if(!isReading) theElement.scrollIntoView({ block: 'end', behaviour: 'smooth' })}, 200);
+              // }
+	            // setTimeout(function(){
+              //   lastCommentId = QiscusSDK.core.selected.comments[QiscusSDK.core.selected.comments.length - 1].id;
+              //   theElement = document.getElementById(lastCommentId);
+              //   theElement.scrollIntoView({ block: 'end', behaviour: 'smooth' })}, 200);
             },
             commentReadCallback(data) {
               // console.log('comment di read', data);

@@ -61,7 +61,7 @@ export default {
     if (this.core.selected) {
       if (this.core.selected.comments.length > this.commentLength) {
         this.commentLength = this.core.selected.comments.length;
-        this.scrollToBottom();
+        if (!this.core.UI.isReading) this.scrollToBottom();
       }
     }
   },
