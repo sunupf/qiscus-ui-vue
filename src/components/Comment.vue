@@ -57,7 +57,7 @@
             :callback="onupdate")
           
           //- CommentType: "CAROUSEL"
-          comment-carousel(:cards="comment.payload.cards" v-if="comment.type === 'carousel'")
+          comment-carousel(:cards="comment.payload.cards" :mode="this.core.mode" v-if="comment.type === 'carousel'")
 
           //- CommentType: "CUSTOM"
           comment-custom(v-if="comment.type === 'custom'" :data="comment")

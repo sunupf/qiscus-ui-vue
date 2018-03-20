@@ -26,11 +26,13 @@ import Icon from './Icon';
 
 export default {
   name: 'QiscusCommentCarousel',
-  props: ['cards'],
+  props: ['cards', 'mode'],
   components: { CommentCard, Icon },
   data() {
     return {
-      currentNumber: 0,
+      cardLastIndex: this.cards.length - 1,
+      slideTranslate: 272,
+      currentIndex: 0,
       timer: null,
     };
   },
@@ -41,8 +43,14 @@ export default {
       if (!currentPosition) {
         currentPosition = 0;
       }
-      console.log(currentPosition);
-      this.$refs.carousel.style.transform = `translateX(${(currentPosition - 170)}px)`;
+      if (this.currentIndex + 1 <= this.cardLastIndex) {
+        if (this.mode === 'widget') {
+          this.$refs.carousel.style.transform = `translateX(${(currentPosition - this.slideTranslate)}px)`;
+          this.currentIndex = this.currentIndex + 1;
+        } else {
+          console.log('Next');
+        }
+      }
     },
     prev() {
       const transformStyle = this.$refs.carousel.style.transform;
@@ -50,11 +58,14 @@ export default {
       if (!currentPosition) {
         currentPosition = 0;
       }
-      console.log(currentPosition);
-      this.$refs.carousel.style.transform = `translateX(${(currentPosition + 170)}px)`;
-    },
-    gotoCard(index) {
-      this.currentNumber = index;
+      if (this.currentIndex > 0) {
+        if (this.mode === 'widget') {
+          this.$refs.carousel.style.transform = `translateX(${(currentPosition + this.slideTranslate)}px)`;
+          this.currentIndex = this.currentIndex - 1;
+        } else {
+          console.log('Previous');
+        }
+      }
     },
   },
 };
@@ -90,43 +101,43 @@ export default {
     z-index 1
     opacity 0
     transition opacity 0.3s ease-out
+    background $lightGrey
     &:first-child
-      margin-left 8px
-      margin-right 16px
-    &:last-child
-      margin-left 16px
+      padding 0 8px 0 4px
       margin-right 8px
+    &:last-child
+      padding 0 4px 0 8px
+      margin-left 8px
       right 0
 .carousel-container
   display flex
-  padding 8px
-  overflow-x scroll
+  padding 24px 48px
+  overflow-x hidden
   & > div
     display flex
     position relative
     transition all 0.3s ease-out
-  &::-webkit-scrollbar-track
-    display none
-  &::-webkit-scrollbar
-    display none
-  &::-webkit-scrollbar-thumb
-    display none
-
-.qcw-carousel__item
-  &:first-child
+  .qcw-carousel__item
+    margin-right 16px
     .comment__card--container
-      margin-left 8px
-  &:last-child
-    .comment__card--container
-      margin-right 16px
+      margin-right 0px
+      margin-left 0px
+      width 256px
+      background-color white
+      border-radius 0 0 8px 8px
+      box-shadow 0 7px 16px rgba(199,199,199,0.25)
+      .comment__card--image
+        margin-top 0
+        width 256px
+    &:last-child
+      margin-right 0px
+  // &::-webkit-scrollbar-track
+  //   display none
+  // &::-webkit-scrollbar
+  //   display none
+  // &::-webkit-scrollbar-thumb
+  //   display none
 
-  
-.qcw-comment--carousel .comment__card--container
-  margin-right 24px
-  width 210px
-  background-color white
-  border-radius 0 0 8px 8px
-  box-shadow 0 7px 16px rgba(199,199,199,0.25)
 .qcw-comment .qcw-comment__message.carousel
   background-color transparent
   box-shadow none 
