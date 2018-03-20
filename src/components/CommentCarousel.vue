@@ -3,9 +3,9 @@
     //- <!-- cards -->
     i(@click='prev')
       icon(name="ic-chevron-left")
-    div.carousel-container
+    div.carousel-container(ref="carouselContainer")
       div(ref="carousel")
-        div(class="qcw-carousel__item" v-for="(card, index) in cards")
+        div(class="qcw-carousel__item" ref="carouselItem" v-for="(card, index) in cards")
             comment-card(:data="card" 
               :key="index")
     i(@click='next')
@@ -31,41 +31,89 @@ export default {
   data() {
     return {
       cardLastIndex: this.cards.length - 1,
-      slideTranslate: 272,
+      slideTranslate: 0,
       currentIndex: 0,
       timer: null,
     };
   },
   methods: {
+    cardLength() {
+      return this.$refs.carouselItem[0].offsetWidth
+        + parseInt(window.getComputedStyle(this.$refs.carouselItem[0])
+        .marginLeft, 10) + parseInt(window.getComputedStyle(this.$refs.carouselItem[0])
+        .marginRight, 10);
+    },
     next() {
       const transformStyle = this.$refs.carousel.style.transform;
       let currentPosition = parseInt(transformStyle.replace(/[^-\d.]/g, ''), 10);
       if (!currentPosition) {
         currentPosition = 0;
       }
+
+      this.slideTranslate = this.cardLength();
+
+      const containerWidth = this.$refs.carouselContainer.offsetWidth;
+      const paddingLeftContainer  = parseInt(window.getComputedStyle(this.$refs.carouselContainer)
+        .paddingLeft, 10);
+      const paddingRightContainer  = parseInt(window.getComputedStyle(this.$refs.carouselContainer)
+        .paddingRight, 10);
+      const paddingContainer =  paddingLeftContainer + paddingRightContainer;
+      const innerContainer = containerWidth - paddingContainer;
+
+      const carouselWidth = this.$refs.carousel.offsetWidth;
+      const cardsInViewPort = Math.floor(innerContainer / this.slideTranslate);
+      const carouselMod = carouselWidth % innerContainer;
+
+      this.cardLastIndex = Math.floor(carouselWidth / innerContainer);
+
       if (this.currentIndex + 1 <= this.cardLastIndex) {
-        if (this.mode === 'widget') {
-          this.$refs.carousel.style.transform = `translateX(${(currentPosition - this.slideTranslate)}px)`;
-          this.currentIndex = this.currentIndex + 1;
+        if ((this.currentIndex + 1 === this.cardLastIndex && carouselMod === 0)
+          || (this.cardLastIndex === 1)) {
+          this.$refs.carousel.style.transform = `translateX(${(currentPosition - (carouselMod))}px)`;
+        } else if (this.currentIndex + 1 === this.cardLastIndex && carouselMod !== 0) {
+          this.$refs.carousel.style.transform = `translateX(${(currentPosition - (carouselMod + paddingLeftContainer))}px)`;
         } else {
-          console.log('Next');
+          this.$refs.carousel.style.transform = `translateX(${currentPosition - (cardsInViewPort * this.slideTranslate)}px)`;
         }
+        this.currentIndex = this.currentIndex + 1;
       }
     },
     prev() {
-      const transformStyle = this.$refs.carousel.style.transform;
-      let currentPosition = parseInt(transformStyle.replace(/[^-\d.]/g, ''), 10);
-      if (!currentPosition) {
-        currentPosition = 0;
-      }
-      if (this.currentIndex > 0) {
-        if (this.mode === 'widget') {
-          this.$refs.carousel.style.transform = `translateX(${(currentPosition + this.slideTranslate)}px)`;
-          this.currentIndex = this.currentIndex - 1;
-        } else {
-          console.log('Previous');
-        }
-      }
+      // const transformStyle = this.$refs.carousel.style.transform;
+      // let currentPosition = parseInt(transformStyle.replace(/[^-\d.]/g, ''), 10);
+      // if (!currentPosition) {
+      //   currentPosition = 0;
+      // }
+
+      // this.slideTranslate = this.cardLength();
+
+      // const containerWidth = this.$refs.carouselContainer.offsetWidth;
+      // const paddingLeftContainer  = parseInt(window.
+      //    getComputedStyle(this.$refs.carouselContainer)
+      //   .paddingLeft, 10);
+      // const paddingRightContainer  = parseInt(window
+      //   .getComputedStyle(this.$refs.carouselContainer)
+      //   .paddingRight, 10);
+      // const paddingContainer =  paddingLeftContainer + paddingRightContainer;
+      // const innerContainer = containerWidth - paddingContainer;
+
+      // const carouselWidth = this.$refs.carousel.offsetWidth;
+      // // const cardsInViewPort = Math.floor(innerContainer / this.slideTranslate);
+      // const carouselMod = carouselWidth % innerContainer;
+
+      // this.cardLastIndex = Math.floor(carouselWidth / innerContainer);
+      // if (this.currentIndex > 0) {
+      //   if ((this.currentIndex === 1 && carouselMod !== 0) && this.cardLastIndex !== 1) {
+      //     this.$refs.carousel.style.transform = `translateX(${(currentPosition
+      //     + (carouselMod + paddingLeftContainer))}px)`;
+      //   } else if ((this.currentIndex === 1 && carouselMod !== 0) && this.cardLastIndex === 1) {
+      //     console.log(3);
+      //     this.$refs.carousel.style.transform = `translateX(${(currentPosition
+      //     + (carouselMod))}px)`;
+      //   }
+      //   this.currentIndex = this.currentIndex + 1;
+      // }
+      console.log('ok');
     },
   },
 };
@@ -101,7 +149,7 @@ export default {
     z-index 1
     opacity 0
     transition opacity 0.3s ease-out
-    background $lightGrey
+    background rgba(255,255,255,0.8)
     &:first-child
       padding 0 8px 0 4px
       margin-right 8px
@@ -111,14 +159,15 @@ export default {
       right 0
 .carousel-container
   display flex
-  padding 24px 48px
+  padding 24px 40px
   overflow-x hidden
   & > div
     display flex
     position relative
     transition all 0.3s ease-out
   .qcw-carousel__item
-    margin-right 16px
+    margin-left 8px
+    margin-right 8px
     .comment__card--container
       margin-right 0px
       margin-left 0px
@@ -130,7 +179,7 @@ export default {
         margin-top 0
         width 256px
     &:last-child
-      margin-right 0px
+      // margin-right 0px
   // &::-webkit-scrollbar-track
   //   display none
   // &::-webkit-scrollbar
