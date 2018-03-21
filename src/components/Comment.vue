@@ -13,14 +13,15 @@
       )
         avatar(:src="comment.avatar" :class="{'qcw-avatar--hide': !isParent}")
         div(class="qcw-comment__message" 
-          :style="messageStyle"
-          :class="{'extra-margin card': comment.type === 'carousel','card':comment.type === 'card','hover-effect':!isDeleted}")
+          :style="{messageStyle:!isCustomBuble}"
+          :class="{'extra-margin carousel': comment.type === 'carousel','card':comment.type === 'card','hover-effect':!isDeleted && !isCustomBuble}")
             
           //- Comment User & Time
           span(class="qcw-comment__username" v-if="isParent && isGroupRoom && !isMe") {{comment.username_as}}
           span(class="qcw-comment__time" 
             :class="{'qcw-comment__time--me': isMe}"
-            :style="messageTimeStyle") {{comment.time}}
+            :style="messageTimeStyle"
+            v-if="comment.type != 'carousel'") {{comment.time}}
 
           //- reply button
           i(@click="replyHandler(comment)" class="reply-btn" :class="{'reply-btn--me': isMe}" v-if="!isDeleted")
@@ -56,7 +57,7 @@
             :callback="onupdate")
           
           //- CommentType: "CAROUSEL"
-          comment-carousel(:cards="comment.payload.cards" v-if="comment.type === 'carousel'")
+          comment-carousel(:cards="comment.payload.cards" :mode="this.core.mode" v-if="comment.type === 'carousel'")
 
           //- CommentType: "CUSTOM"
           comment-custom(v-if="comment.type === 'custom'" :data="comment")
@@ -101,7 +102,7 @@
             v-if="!isParent"
             :class="{'qcw-comment__time--attachment': comment.isAttachment(comment.message)}") {{comment.time}}
 
-          div(v-if="isMe")
+          div(v-if="isMe && comment.type != 'carousel'")
             div(class="qcw-comment__state qcw-comment__state--sending" v-if="comment.isPending")
               icon(name="ic-load" class="ic-load__state" :fill="messageStatusIconStyle")
             div(class="qcw-comment__state" v-if="comment.isSent && !comment.isDelivered")
@@ -152,6 +153,9 @@ export default {
     isDeleted() {
       return this.comment.is_deleted === true;
     },
+    isCustomBuble() {
+      return this.comment.type === 'card' || this.comment.type === 'carousel';
+    },
     showDate() {
       return this.commentBefore === null || (this.commentBefore.date !== this.comment.date);
     },
@@ -182,8 +186,8 @@ export default {
         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
       }),
       commentClass: {
+        [`qcw-comment--${this.comment.type}`]: this.comment.username_real !== this.userData.email,
         [`qcw-comment--${this.comment.type} comment--me`]: this.comment.username_real === this.userData.email,
-        [`qcw-comment--${this.comment.type}`]: !this.comment.username_real === this.userData.email,
       },
       messageStyle: {},
       messageStatusIconStyle: { fill: QiscusUI.colors.messageStatusIconColor },

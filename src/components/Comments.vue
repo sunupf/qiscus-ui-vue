@@ -137,7 +137,7 @@ export default {
     &::-webkit-scrollbar-thumb
       border-radius: 4px;
       background-color: #e0e0e0;
-
+  
   .qcw-comments ul
     position relative
     list-style none
@@ -169,7 +169,7 @@ export default {
     border-radius 50%
     background $lightGrey
     display none
-    z-index 2
+    z-index 1
     animation fadeInLeftBig 0.3s ease-out
     transition background 0.3s ease-out
 
