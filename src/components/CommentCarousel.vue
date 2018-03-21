@@ -30,90 +30,99 @@ export default {
   components: { CommentCard, Icon },
   data() {
     return {
-      cardLastIndex: this.cards.length - 1,
-      slideTranslate: 0,
+      cardLength: this.cards.length,
       currentIndex: 0,
       timer: null,
     };
   },
   methods: {
-    cardLength() {
+    getViewport() {
+      const containerWidth = this.$refs.carouselContainer.offsetWidth;
+      const paddingLeftContainer = parseInt(window
+        .getComputedStyle(this.$refs.carouselContainer).paddingLeft, 10);
+      const paddingRightContainer = parseInt(window
+        .getComputedStyle(this.$refs.carouselContainer).paddingRight, 10);
+      const paddingContainer =  paddingLeftContainer + paddingRightContainer;
+      const innerContainer = containerWidth - paddingContainer;
+      return {
+        containerWidth,
+        paddingLeftContainer,
+        paddingRightContainer,
+        paddingContainer,
+        innerContainer,
+      };
+    },
+    getCurrentPosition(el) {
+      const transformStyle = el.style.transform;
+      let currentPosition = parseInt(transformStyle.replace(/[^-\d.]/g, ''), 10);
+      if (!currentPosition) {
+        currentPosition = 0;
+      }
+      return currentPosition;
+    },
+    cardWidth() {
       return this.$refs.carouselItem[0].offsetWidth
         + parseInt(window.getComputedStyle(this.$refs.carouselItem[0])
         .marginLeft, 10) + parseInt(window.getComputedStyle(this.$refs.carouselItem[0])
         .marginRight, 10);
     },
     next() {
-      const transformStyle = this.$refs.carousel.style.transform;
-      let currentPosition = parseInt(transformStyle.replace(/[^-\d.]/g, ''), 10);
-      if (!currentPosition) {
-        currentPosition = 0;
-      }
+      const slideTranslate = this.cardWidth();
 
-      this.slideTranslate = this.cardLength();
+      // count carousel viewport size
+      const viewport = this.getViewport();
 
-      const containerWidth = this.$refs.carouselContainer.offsetWidth;
-      const paddingLeftContainer  = parseInt(window.getComputedStyle(this.$refs.carouselContainer)
-        .paddingLeft, 10);
-      const paddingRightContainer  = parseInt(window.getComputedStyle(this.$refs.carouselContainer)
-        .paddingRight, 10);
-      const paddingContainer =  paddingLeftContainer + paddingRightContainer;
-      const innerContainer = containerWidth - paddingContainer;
+      // card that can viewed on the view port at the same time
+      const cardsOnViewPort = Math.floor(viewport.innerContainer / slideTranslate);
 
+      // count carousel width
       const carouselWidth = this.$refs.carousel.offsetWidth;
-      const cardsInViewPort = Math.floor(innerContainer / this.slideTranslate);
-      const carouselMod = carouselWidth % innerContainer;
+      const cardLastIndex = Math.ceil(this.cardLength / cardsOnViewPort) - 1;
 
-      this.cardLastIndex = Math.floor(carouselWidth / innerContainer);
+      if (cardsOnViewPort === this.cardLength) {
+        console.log('Doing Nothing');
+      } else if (this.currentIndex !== cardLastIndex) {
+        // get current position
+        const currentPosition = this.getCurrentPosition(this.$refs.carousel);
 
-      if (this.currentIndex + 1 <= this.cardLastIndex) {
-        if ((this.currentIndex + 1 === this.cardLastIndex && carouselMod === 0)
-          || (this.cardLastIndex === 1)) {
-          this.$refs.carousel.style.transform = `translateX(${(currentPosition - (carouselMod))}px)`;
-        } else if (this.currentIndex + 1 === this.cardLastIndex && carouselMod !== 0) {
-          this.$refs.carousel.style.transform = `translateX(${(currentPosition - (carouselMod + paddingLeftContainer))}px)`;
+        if (this.currentIndex + 1 === cardLastIndex) {
+          const leftOver = (carouselWidth - viewport.innerContainer) + currentPosition;
+          this.$refs.carousel.style.transform = `translateX(${currentPosition - leftOver}px)`;
         } else {
-          this.$refs.carousel.style.transform = `translateX(${currentPosition - (cardsInViewPort * this.slideTranslate)}px)`;
+          this.$refs.carousel.style.transform = `translateX(${(currentPosition) - (cardsOnViewPort * slideTranslate)}px)`;
         }
         this.currentIndex = this.currentIndex + 1;
       }
     },
     prev() {
-      // const transformStyle = this.$refs.carousel.style.transform;
-      // let currentPosition = parseInt(transformStyle.replace(/[^-\d.]/g, ''), 10);
-      // if (!currentPosition) {
-      //   currentPosition = 0;
-      // }
+      const slideTranslate = this.cardWidth();
 
-      // this.slideTranslate = this.cardLength();
+      // count carousel viewport size
+      const viewport = this.getViewport();
 
-      // const containerWidth = this.$refs.carouselContainer.offsetWidth;
-      // const paddingLeftContainer  = parseInt(window.
-      //    getComputedStyle(this.$refs.carouselContainer)
-      //   .paddingLeft, 10);
-      // const paddingRightContainer  = parseInt(window
-      //   .getComputedStyle(this.$refs.carouselContainer)
-      //   .paddingRight, 10);
-      // const paddingContainer =  paddingLeftContainer + paddingRightContainer;
-      // const innerContainer = containerWidth - paddingContainer;
+      // card that can viewed on the view port at the same time
+      const cardsOnViewPort = Math.floor(viewport.innerContainer / slideTranslate);
 
+      // count carousel width
       // const carouselWidth = this.$refs.carousel.offsetWidth;
-      // // const cardsInViewPort = Math.floor(innerContainer / this.slideTranslate);
-      // const carouselMod = carouselWidth % innerContainer;
+      // this.cardLastIndex = Math.floor(this.cardLength / cardsOnViewPort) - 1;
 
-      // this.cardLastIndex = Math.floor(carouselWidth / innerContainer);
-      // if (this.currentIndex > 0) {
-      //   if ((this.currentIndex === 1 && carouselMod !== 0) && this.cardLastIndex !== 1) {
-      //     this.$refs.carousel.style.transform = `translateX(${(currentPosition
-      //     + (carouselMod + paddingLeftContainer))}px)`;
-      //   } else if ((this.currentIndex === 1 && carouselMod !== 0) && this.cardLastIndex === 1) {
-      //     console.log(3);
-      //     this.$refs.carousel.style.transform = `translateX(${(currentPosition
-      //     + (carouselMod))}px)`;
-      //   }
-      //   this.currentIndex = this.currentIndex + 1;
-      // }
-      console.log('ok');
+      if (cardsOnViewPort === this.cardLength) {
+        console.log('Doing Nothing');
+      } else if (this.currentIndex !== 0) {
+        // get current position
+        const currentPosition = this.getCurrentPosition(this.$refs.carousel);
+
+        // width of the overflowed element
+        // const carouselMod = carouselWidth % viewport.innerContainer;
+
+        if (this.currentIndex === 1) {
+          this.$refs.carousel.style.transform = 'translateX(0px)';
+        } else {
+          this.$refs.carousel.style.transform = `translateX(${(currentPosition) + (cardsOnViewPort * slideTranslate)}px)`;
+        }
+        this.currentIndex = this.currentIndex - 1;
+      }
     },
   },
 };
