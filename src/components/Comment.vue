@@ -186,7 +186,7 @@ export default {
         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
       }),
       commentClass: {
-        [`qcw-comment--${this.comment.type}`]: !this.comment.username_real === this.userData.email,
+        [`qcw-comment--${this.comment.type}`]: this.comment.username_real !== this.userData.email,
         [`qcw-comment--${this.comment.type} comment--me`]: this.comment.username_real === this.userData.email,
       },
       messageStyle: {},

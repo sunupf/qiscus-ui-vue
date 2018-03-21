@@ -133,6 +133,7 @@ export default {
 .qcw-comment-container.qcw-comment--carousel
   margin-bottom 24px
   padding 0
+  flex-direction column
   &.comment--me
     justify-content flex-start
   .qcw-comment__message
@@ -144,6 +145,8 @@ export default {
   .qcw-comment
     flex 1
     overflow-x: hidden
+  .qcw-avatar
+    display none
 .comment__carousel 
   position relative
   overflow hidden
