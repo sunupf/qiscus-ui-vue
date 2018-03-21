@@ -145,6 +145,7 @@ export default {
   .qcw-comment
     flex 1
     overflow-x: hidden
+    width 100%
   .qcw-avatar
     display none
 .comment__carousel 
