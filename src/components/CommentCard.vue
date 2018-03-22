@@ -38,7 +38,6 @@ export default {
       if (this.isError) {
         return 'https://s3-ap-southeast-1.amazonaws.com/qiscus-sdk/public/image_placeholder.png';
       }
-      console.log(this.data);
       return this.data.image;
     },
   },
