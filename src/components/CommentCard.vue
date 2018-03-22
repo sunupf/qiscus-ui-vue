@@ -36,7 +36,7 @@ export default {
   computed: {
     imageSource() {
       if (this.isError) {
-        return 'https://d1edrlpyc25xu0.cloudfront.net/kiwari-prod/image/upload/3eUzu0uxOz/1521704792-image_placeholder.png';
+        return 'https://s3-ap-southeast-1.amazonaws.com/qiscus-sdk/public/image_placeholder.png';
       }
       console.log(this.data);
       return this.data.image;

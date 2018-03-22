@@ -221,7 +221,7 @@ export default {
         () => this.$toasted.error('Resending comment failed'));
     },
     confirmDeleteComment(comment) {
-      return this.$toasted.show('Delete this comment???', {
+      return this.$toasted.show('Are you sure to delete this message?', {
         duration: 5000,
         action: [
           {
