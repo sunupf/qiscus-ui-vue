@@ -17,7 +17,8 @@
           :class="{'extra-margin carousel': comment.type === 'carousel','card':comment.type === 'card','hover-effect':!isDeleted && !isCustomBuble}")
             
           //- Comment User
-          span(class="qcw-comment__username" v-if="isParent && isGroupRoom && !isMe") {{comment.username_as}}
+          //- span(class="qcw-comment__username" v-if="isParent && isGroupRoom && !isMe") {{comment.username_as}}
+          span(class="qcw-comment__username" v-if="isParent && !isMe") {{comment.username_as}}
 
           //- reply button
           i(@click="replyHandler(comment)" class="reply-btn" :class="{'reply-btn--me': isMe}" v-if="!isDeleted")
@@ -101,11 +102,10 @@
           //- Time
           span(class="qcw-comment__time" 
             :class="{'qcw-comment__time--me': isMe}"
-            :style="messageTimeStyle"
-            v-if="comment.type !== 'carousel'") {{comment.time}}
+            :style="messageTimeStyle") {{comment.time}}
             
           //- State
-          div(v-if="isMe && comment.type != 'carousel'")
+          div(v-if="isMe")
             div(class="qcw-comment__state qcw-comment__state--sending" v-if="comment.isPending")
               icon(name="ic-load" class="ic-load__state" :fill="messageStatusIconStyle")
             div(class="qcw-comment__state" v-if="comment.isSent && !comment.isDelivered")
