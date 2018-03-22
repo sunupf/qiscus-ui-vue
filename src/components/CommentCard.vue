@@ -1,20 +1,70 @@
 <template lang="pug">
   div(class="comment__card--container")
-    div(class="comment__card--image" :style="{'background-image': 'url('+data.image+')'}")
+    <div class="comment__card--image image-loader">
+      <div class="loading-image-container"  v-if="isLoading"> 
+        <i class="">
+          <icon name="ic-load"></icon>
+        </i> Loading Image...
+      </div>
+      <div class="qcw-image-container" v-if="!isLoading" :style="{'background-image':'url('+imageSource+')'}">
+      </div>
+    </div>
     strong(class="comment__card--title") {{ data.title }}
     div(class="comment__card--description") {{ data.description }}
     comment-buttons(:buttons="data.buttons" :postbackHandler="postbackSubmit")
 </template>
 
 <script>
+import Icon from './Icon';
 import QiscusCore from '../lib/SDKCore';
 import CommentButtons from './CommentButtons';
 
 export default {
   name: 'QiscusCardComment',
-  components: { CommentButtons },
+  components: { Icon, CommentButtons },
   props: ['data'],
+  data() {
+    return {
+      isLoading: true,
+      isImage: false,
+      isError: false,
+    };
+  },
+  created() {
+    this.loadImage();
+  },
+  computed: {
+    imageSource() {
+      if (this.isError) {
+        return 'https://d1edrlpyc25xu0.cloudfront.net/kiwari-prod/image/upload/3eUzu0uxOz/1521704792-image_placeholder.png';
+      }
+      console.log(this.data);
+      return this.data.image;
+    },
+  },
   methods: {
+    loadImage() {
+      const self    = this;
+      const payload = this.data;
+      const xhr = new XMLHttpRequest();
+
+      xhr.onreadystatechange = function attachImage() {
+        if (this.readyState === 4 && this.status === 200) {
+          self.isError  = false;
+          self.isLoading = false;
+          // setTimeout( () => self.callback(), 0 );
+        }
+      };
+
+      xhr.open('GET', payload.image, true);
+      xhr.onerror = function throwLoadingError() {
+        self.isLoading = false;
+        self.isError = true;
+      };
+      // xhr.setRequestHeader('Authorization', 'Token token='+window.doctortoken);
+      xhr.send();
+      return true;
+    },
     postbackSubmit(button) {
       const topicId = QiscusCore.selected.id;
       const labelToSend = button.postback_text ? button.postback_text : button.label;
@@ -27,26 +77,41 @@ export default {
 
 <style lang="stylus">
   @import '../assets/stylus/_variables.styl'
-  /*.comment--me
-    .comment__card--container
-      .comment__card--image
-        background-color $lightGrey
-  */
+  .qcw-comment__message.card:before
+    display none
+  // .comment--me
+  //   .comment__card--container
+  //     .comment__card--image .loading-image-container
+  //       background-color $white
   .comment__card--container
     margin-left -8px
     margin-right -8px
+    border-radius 8px
+    background-color $white
+    border-radius 8px
     .comment__card--description
       padding 0 8px
       font-size 11px
     .comment__card--image
       border-bottom 1px solid $lightGrey
-      background-size cover
-      background-position center
-      background-color $mediumGrey
       height 160px
-      width 210px
       margin-top -8px
-      border-radius 8px 8px 0 0
+      .loading-image-container.loading-image-container
+        height 100%
+        background-color $lightGrey
+        border-radius 8px 8px 0 0
+        i
+          margin-top 40px
+      .qcw-image-container
+        max-height 160px
+        height 160px
+        margin 0
+        width 210px
+        background-size cover
+        background-position center
+        background-color transparent
+        background-position center center
+        border-radius 8px 8px 0 0
     .comment__card--title
       text-transform capitalize
       font-size 12px
