@@ -230,10 +230,10 @@ export default {
               this.deleteComment(comment, false)
                 .then(() => {
                   toastObject.goAway(0);
-                  this.$toasted.success('Comment deleted');
+                  this.$toasted.success('Message deleted');
                 }, (err) => {
                   toastObject.goAway(0);
-                  this.$toasted.error(`Failed deleting comment: ${err}`);
+                  this.$toasted.error(`Failed deleting message: ${err}`);
                 }),
           },
           {
@@ -242,10 +242,10 @@ export default {
               this.deleteComment(comment, true)
                 .then(() => {
                   toastObject.goAway(0);
-                  this.$toasted.success('Comment deleted');
+                  this.$toasted.success('Message deleted');
                 }, (err) => {
                   toastObject.goAway(0);
-                  this.$toasted.error(`Failed deleting comment: ${err}`);
+                  this.$toasted.error(`Failed deleting message: ${err}`);
                 }),
           },
           { text: 'Cancel', onClick: (e, toastObject) => toastObject.goAway(0) },
