@@ -89,7 +89,7 @@ export default {
           const leftOver = (carouselWidth - viewport.innerContainer) + currentPosition;
           this.$refs.carousel.style.transform = `translateX(${currentPosition - leftOver}px)`;
         } else {
-          this.$refs.carousel.style.transform = `translateX(${(currentPosition) - (cardsOnViewPort * slideTranslate)}px)`;
+          this.$refs.carousel.style.transform = `translateX(${((currentPosition) - (cardsOnViewPort * slideTranslate))}px)`;
         }
         this.currentIndex = this.currentIndex + 1;
       }
@@ -119,7 +119,7 @@ export default {
         if (this.currentIndex === 1) {
           this.$refs.carousel.style.transform = 'translateX(0px)';
         } else {
-          this.$refs.carousel.style.transform = `translateX(${(currentPosition) + (cardsOnViewPort * slideTranslate)}px)`;
+          this.$refs.carousel.style.transform = `translateX(${(currentPosition + (cardsOnViewPort * slideTranslate))}px)`;
         }
         this.currentIndex = this.currentIndex - 1;
       }
@@ -134,8 +134,6 @@ export default {
   margin-bottom 24px
   padding 0
   flex-direction column
-  &.comment--me
-    justify-content flex-start
   .qcw-comment__message
     margin 0
     padding 0
@@ -146,16 +144,23 @@ export default {
     flex 1
     overflow-x: hidden
     width 100%
+    &.comment--me
+      justify-content flex-end
   .qcw-avatar
     display none
+  .qcw-comment__time
+    position relative
 .comment__carousel 
   position relative
   overflow hidden
   display flex
   &:hover 
-    i
+    & > i
       opacity 1
-  i
+      &:hover
+        .qc-icon
+          fill $green
+  & > i
     align-self: center
     cursor: pointer
     position absolute
@@ -172,7 +177,7 @@ export default {
       right 0
 .carousel-container
   display flex
-  padding 24px 40px
+  padding 24px 20px
   overflow-x hidden
   & > div
     display flex
@@ -186,11 +191,13 @@ export default {
       margin-left 0px
       width 256px
       background-color white
-      border-radius 0 0 8px 8px
+      border-radius 8px
       box-shadow 0 7px 16px rgba(199,199,199,0.25)
       .comment__card--image
         margin-top 0
         width 256px
+        .qcw-image-container
+          width 256px;
     &:last-child
       // margin-right 0px
   // &::-webkit-scrollbar-track
@@ -203,6 +210,7 @@ export default {
 .qcw-comment .qcw-comment__message.carousel
   background-color transparent
   box-shadow none 
+  overflow hidden
 .extra-margin
   margin-bottom 36px
 ul.carousel__bullets
