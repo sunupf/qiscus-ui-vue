@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     imageSource() {
-      if (this.isError) {
+      if (this.isError || this.data.image === '') {
         return 'https://s3-ap-southeast-1.amazonaws.com/qiscus-sdk/public/image_placeholder.png';
       }
       return this.data.image;
