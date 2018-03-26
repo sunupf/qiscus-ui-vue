@@ -41,7 +41,7 @@ import Icon from './Icon';
 import Comments from './Comments';
 import CommentForm from './CommentForm';
 import CommentReplyPreview from './CommentReplyPreview';
-import { scrollIntoElement } from '../lib/utils';
+import { scrollIntoLastElement } from '../lib/utils';
 import ImageModal from './ImageModal';
 import UploadInfo from './UploadInfo';
 
@@ -101,7 +101,7 @@ export default {
       this.repliedComment = null;
     },
     scrollToBottom() {
-      scrollIntoElement(this.core);
+      scrollIntoLastElement(this.core);
     },
   },
 };

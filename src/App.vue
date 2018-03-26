@@ -9,7 +9,7 @@
 import QiscusCore from './lib/SDKCore';
 import QcwTrigger from './components/QcwTrigger';
 import ChatWindow from './components/ChatWindow';
-import { focusMessageForm, scrollIntoElement } from './lib/utils';
+import { focusMessageForm, scrollIntoElement, scrollIntoLastElement } from './lib/utils';
 
 export default {
   name: 'app',
@@ -78,7 +78,7 @@ export default {
       chatTarget(target) {
         self.core.chatTarget(target).then((res) => {
           if (!self.chatWindowStatus) self.toggleWindowStatus();
-          window.setTimeout(() => scrollIntoElement(self.core), 0);
+          window.setTimeout(() => scrollIntoLastElement(self.core), 0);
           focusMessageForm();
           self.core.UI.isReading = false;
           return Promise.resolve(res);
@@ -90,8 +90,17 @@ export default {
       chatGroup(id) {
         self.core.chatGroup(id).then((res) => {
           if (!self.chatWindowStatus) self.toggleWindowStatus();
-          window.setTimeout(() => scrollIntoElement(self.core), 0);
+          window.setTimeout(() => scrollIntoLastElement(self.core), 0);
           self.core.UI.isReading = false;
+          focusMessageForm();
+          return Promise.resolve(res);
+        }, err => Promise.reject(err));
+      },
+      gotoComment(comment) {
+        if (!self.core.isInit) return;
+        return self.core.chatGroup(comment.room_id).then(res => {
+          self.core.UI.isReading = false;
+          window.setTimeout(() => scrollIntoElement(comment.id), 0);
           focusMessageForm();
           return Promise.resolve(res);
         }, err => Promise.reject(err));

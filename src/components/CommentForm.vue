@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { scrollIntoElement } from '../lib/utils';
+import { scrollIntoLastElement } from '../lib/utils';
 import Icon from './Icon';
 
 export default {
@@ -84,7 +84,7 @@ export default {
     submitComment(topicId, comment) {
       if (this.repliedComment === null) {
         this.core.sendComment(topicId, comment).then(() => {
-          scrollIntoElement(this.core);
+          scrollIntoLastElement(this.core);
         });
       } else {
         const payload = {
@@ -98,7 +98,7 @@ export default {
         };
         this.closeReplyHandler();
         this.core.sendComment(topicId, comment, null, 'reply', JSON.stringify(payload))
-          .then(() => scrollIntoElement(this.core));
+          .then(() => scrollIntoLastElement(this.core));
       }
     },
     typingHandler(event) {
@@ -161,7 +161,7 @@ export default {
           vm.core.sendComment(roomId, `[file] ${url} [/file]`)
             .then(() => {
               vm.core.removeUploadedFile(files[0].name, roomId);
-              window.setTimeout(() => scrollIntoElement(vm.core), 0);
+              window.setTimeout(() => scrollIntoLastElement(vm.core), 0);
             });
         } else {
           vm.$toasted.error('File uploading failed');

@@ -29,7 +29,7 @@
 import Icon from './Icon';
 import Loader from './Loader';
 import Comment from './Comment';
-import { scrollIntoElement } from '../lib/utils';
+import { scrollIntoLastElement } from '../lib/utils';
 
 export default {
   name: 'Comments',
@@ -47,7 +47,7 @@ export default {
     if (this.core.selected) {
       if (this.core.selected.comments.length > this.commentLength) {
         this.commentLength = this.core.selected.comments.length;
-        if (!this.core.UI.isReading) scrollIntoElement(this.core);
+        if (!this.core.UI.isReading) scrollIntoLastElement(this.core);
       }
     }
   },
