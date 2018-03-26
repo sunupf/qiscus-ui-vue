@@ -1,25 +1,19 @@
 <template lang="pug">
-  div(class="comment__carousel"
-    @mouseover="stopRotation"
-    @mouseout="startRotation")
-
+  div(class="comment__carousel")
     //- <!-- cards -->
-    div(class="qcw-carousel__item")
-      transition-group(name="slide-y")
-        comment-card(:data="cards[currentNumber]" 
-          v-for="number in [currentNumber]"
-          :key="currentNumber")
+    i(@click='prev')
+      icon(name="ic-chevron-left")
+    div.carousel-container(ref="carouselContainer")
+      div(ref="carousel")
+        div(class="qcw-carousel__item" ref="carouselItem" v-for="(card, index) in cards")
+            comment-card(:data="card" 
+              :key="index")
+    i(@click='next')
+      icon(name="ic-chevron-right")
 
-    ul(class="qcw-carousel__nav")
-      li(@click="pref")
-        i
-          icon(name="ic-chevron-left")
-      li(@click="next")
-        i
-          icon(name="ic-chevron-right")
 
     //- <!-- bullets -->
-    ul(class="carousel__bullets")
+    //- ul(class="carousel__bullets")
       li(v-for="(card, index) in cards"
           @click="gotoCard(index)"
           :class="{'active': index == currentNumber}") 
@@ -32,41 +26,103 @@ import Icon from './Icon';
 
 export default {
   name: 'QiscusCommentCarousel',
-  props: ['cards'],
+  props: ['cards', 'mode'],
   components: { CommentCard, Icon },
   data() {
     return {
-      currentNumber: 0,
+      cardLength: this.cards.length,
+      currentIndex: 0,
       timer: null,
     };
   },
-  mounted() {
-    this.startRotation();
-  },
   methods: {
-    startRotation() {
-      this.timer = setInterval(this.next, 10000);
+    getViewport() {
+      const containerWidth = this.$refs.carouselContainer.offsetWidth;
+      const paddingLeftContainer = parseInt(window
+        .getComputedStyle(this.$refs.carouselContainer).paddingLeft, 10);
+      const paddingRightContainer = parseInt(window
+        .getComputedStyle(this.$refs.carouselContainer).paddingRight, 10);
+      const paddingContainer =  paddingLeftContainer + paddingRightContainer;
+      const innerContainer = containerWidth - paddingContainer;
+      return {
+        containerWidth,
+        paddingLeftContainer,
+        paddingRightContainer,
+        paddingContainer,
+        innerContainer,
+      };
     },
-    stopRotation() {
-      clearTimeout(this.timer);
-      this.timer = null;
+    getCurrentPosition(el) {
+      const transformStyle = el.style.transform;
+      let currentPosition = parseInt(transformStyle.replace(/[^-\d.]/g, ''), 10);
+      if (!currentPosition) {
+        currentPosition = 0;
+      }
+      return currentPosition;
+    },
+    cardWidth() {
+      return this.$refs.carouselItem[0].offsetWidth
+        + parseInt(window.getComputedStyle(this.$refs.carouselItem[0])
+        .marginLeft, 10) + parseInt(window.getComputedStyle(this.$refs.carouselItem[0])
+        .marginRight, 10);
     },
     next() {
-      if (this.currentNumber !== this.cards.length - 1) {
-        this.currentNumber += 1;
-      } else {
-        this.currentNumber = 0;
+      const slideTranslate = this.cardWidth();
+
+      // count carousel viewport size
+      const viewport = this.getViewport();
+
+      // card that can viewed on the view port at the same time
+      const cardsOnViewPort = Math.floor(viewport.innerContainer / slideTranslate);
+
+      // count carousel width
+      const carouselWidth = this.$refs.carousel.offsetWidth;
+      const cardLastIndex = Math.ceil(this.cardLength / cardsOnViewPort) - 1;
+
+      if (cardsOnViewPort === this.cardLength) {
+        console.log('Doing Nothing');
+      } else if (this.currentIndex !== cardLastIndex) {
+        // get current position
+        const currentPosition = this.getCurrentPosition(this.$refs.carousel);
+
+        if (this.currentIndex + 1 === cardLastIndex) {
+          const leftOver = (carouselWidth - viewport.innerContainer) + currentPosition;
+          this.$refs.carousel.style.transform = `translateX(${currentPosition - leftOver}px)`;
+        } else {
+          this.$refs.carousel.style.transform = `translateX(${((currentPosition) - (cardsOnViewPort * slideTranslate))}px)`;
+        }
+        this.currentIndex = this.currentIndex + 1;
       }
     },
-    pref() {
-      if (this.currentNumber === 0) {
-        this.currentNumber = 0;
-      } else {
-        this.currentNumber -= 1;
+    prev() {
+      const slideTranslate = this.cardWidth();
+
+      // count carousel viewport size
+      const viewport = this.getViewport();
+
+      // card that can viewed on the view port at the same time
+      const cardsOnViewPort = Math.floor(viewport.innerContainer / slideTranslate);
+
+      // count carousel width
+      // const carouselWidth = this.$refs.carousel.offsetWidth;
+      // this.cardLastIndex = Math.floor(this.cardLength / cardsOnViewPort) - 1;
+
+      if (cardsOnViewPort === this.cardLength) {
+        console.log('Doing Nothing');
+      } else if (this.currentIndex !== 0) {
+        // get current position
+        const currentPosition = this.getCurrentPosition(this.$refs.carousel);
+
+        // width of the overflowed element
+        // const carouselMod = carouselWidth % viewport.innerContainer;
+
+        if (this.currentIndex === 1) {
+          this.$refs.carousel.style.transform = 'translateX(0px)';
+        } else {
+          this.$refs.carousel.style.transform = `translateX(${(currentPosition + (cardsOnViewPort * slideTranslate))}px)`;
+        }
+        this.currentIndex = this.currentIndex - 1;
       }
-    },
-    gotoCard(index) {
-      this.currentNumber = index;
     },
   },
 };
@@ -74,8 +130,102 @@ export default {
 
 <style lang="stylus">
 @import '../assets/stylus/_variables.styl'
+.qcw-comment-container.qcw-comment--carousel
+  margin-bottom 24px
+  padding 0
+  flex-direction column
+  .qcw-comment__time
+    position absolute
+    top 28px
+    right 32px
+  .qcw-comment__message
+    margin 0
+    padding 0
+    max-width none; 
+    &:before
+      display none
+  .qcw-comment
+    flex 1
+    overflow: visible
+    width 100%
+    position: relative;
+    &.comment--me
+      justify-content flex-end
+      .qcw-comment__time
+        position absolute
+        top 28px
+        left 32px
+      .qcw-comment__state
+        left 32px
+        margin-top 28px
+    .qcw-comment__username
+      top 28px
+      left 64px
+  .qcw-avatar
+    position absolute
+    top 24px
+    left 16px
 .comment__carousel 
   position relative
+  overflow hidden
+  display flex
+  &:hover 
+    & > i
+      opacity 1
+      &:hover
+        .qc-icon
+          fill $green
+  & > i
+    align-self: center
+    cursor: pointer
+    position absolute
+    z-index 1
+    opacity 0
+    transition opacity 0.3s ease-out
+    background rgba(255,255,255,0.8)
+    &:first-child
+      padding 0 8px 0 4px
+      margin-right 8px
+    &:last-child
+      padding 0 4px 0 8px
+      margin-left 8px
+      right 0
+.carousel-container
+  display flex
+  padding 72px 20px 24px 20px
+  overflow-x hidden
+  & > div
+    display flex
+    position relative
+    transition all 0.75s ease-out
+  .qcw-carousel__item
+    margin-left 8px
+    margin-right 8px
+    .comment__card--container
+      margin-right 0px
+      margin-left 0px
+      width 256px
+      background-color white
+      border-radius 8px
+      box-shadow 0 7px 16px rgba(199,199,199,0.25)
+      .comment__card--image
+        margin-top 0
+        width 256px
+        .qcw-image-container
+          width 256px;
+    &:last-child
+      // margin-right 0px
+  // &::-webkit-scrollbar-track
+  //   display none
+  // &::-webkit-scrollbar
+  //   display none
+  // &::-webkit-scrollbar-thumb
+  //   display none
+
+.qcw-comment .qcw-comment__message.carousel
+  background-color transparent
+  box-shadow none 
+  overflow hidden
 .extra-margin
   margin-bottom 36px
 ul.carousel__bullets
@@ -92,25 +242,11 @@ ul.carousel__bullets li
   cursor: pointer; 
   margin: 4px 8px; 
   color: #999; 
-  vertical-align: middle; 
-
+  vertical-align: middle;
 ul.carousel__bullets li.active
   font-size: 24px; 
   font-weight: bold; 
-  color: #3498db;
-
-ul.qcw-carousel__nav li 
-  position: absolute; 
-  top: 50%; 
-  transform: translateY(-50%);
-  fill:$lightGrey;
-  border-radius: 50%; 
-  padding: 0 5px; 
-  cursor: pointer
-ul.qcw-carousel__nav li:nth-child(1)
-  left: -42px;
-ul.qcw-carousel__nav li:nth-child(2)
-  right: -42px  
+  color: #3498db;  
 .ic-bullet
   border: 2px solid $green;
   height: 8px;

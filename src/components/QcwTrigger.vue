@@ -38,7 +38,7 @@ export default {
 
   @media screen and (max-width: 600px)
     position relative
-    z-index 7777
+    z-index 1
   
   &:hover
     transform translateY(-3px)

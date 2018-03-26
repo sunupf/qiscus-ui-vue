@@ -18,7 +18,7 @@ export default {
 @import '../assets/stylus/_variables.styl'
 .qc-icon 
   display: inline-block;
-  margin-top 4px;
+  margin-top 6px;
   width: 20px;
   height: 20px;
   fill: $mediumGrey;

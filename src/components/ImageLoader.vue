@@ -111,20 +111,6 @@
 
 <style lang="stylus">
   @import '../assets/stylus/_variables.styl'
-  .loading-image-container
-    width 100%
-    height auto
-    background-color $darkWhite
-    padding 8px
-    border-radius 2px
-    text-align center
-    i
-      display block 
-      margin 0px auto 8px auto
-      .qc-icon
-        fill $green
-      svg
-        animation spin 1s ease-in-out infinite
   .reply-wrapper .image-loader
     margin-top 4px
     padding-bottom 4px

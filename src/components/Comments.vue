@@ -55,17 +55,19 @@ export default {
     const self = this;
     // attach scroll listener
     const scrollContainer = document.querySelector('.qcw-comments');
-    scrollContainer.onscroll = () => {
-      const scrollHeight =  scrollContainer.scrollHeight;
-      const clientHeight = scrollContainer.clientHeight;
-      const scrollTop = scrollContainer.scrollTop;
-      const scrollTreshold = 2.3 * clientHeight;
-      if (scrollHeight - scrollTop > scrollTreshold) {
-        self.core.UI.isReading = true;
-      } else {
-        self.core.UI.isReading = false;
-      }
-    };
+    if (scrollContainer != null) {
+      scrollContainer.onscroll = () => {
+        const scrollHeight =  scrollContainer.scrollHeight;
+        const clientHeight = scrollContainer.clientHeight;
+        const scrollTop = scrollContainer.scrollTop;
+        const scrollTreshold = 2.3 * clientHeight;
+        if (scrollHeight - scrollTop > scrollTreshold) {
+          self.core.UI.isReading = true;
+        } else {
+          self.core.UI.isReading = false;
+        }
+      };
+    }
   },
   methods: {
     loadMore() {
@@ -80,6 +82,20 @@ export default {
 
 <style lang="stylus">
   @import '../assets/stylus/_variables.styl'
+  .loading-image-container
+    width 100%
+    height auto
+    background-color $darkWhite
+    padding 8px
+    border-radius 2px
+    text-align center
+    i
+      display block 
+      margin 0px auto 8px auto
+      .qc-icon
+        fill $green
+      svg
+        animation spin 1s ease-in-out infinite
   .qcw-load-more
     font-size 9px
     text-align center
@@ -147,7 +163,7 @@ export default {
     &::-webkit-scrollbar-thumb
       border-radius: 4px;
       background-color: #e0e0e0;
-
+  
   .qcw-comments ul
     position relative
     list-style none
@@ -179,7 +195,7 @@ export default {
     border-radius 50%
     background $lightGrey
     display none
-    z-index 2
+    z-index 1
     animation fadeInLeftBig 0.3s ease-out
     transition background 0.3s ease-out
 
