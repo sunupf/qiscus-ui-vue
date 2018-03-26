@@ -29,6 +29,7 @@
 import Icon from './Icon';
 import Loader from './Loader';
 import Comment from './Comment';
+import { scrollIntoElement } from '../lib/utils';
 
 export default {
   name: 'Comments',
@@ -39,7 +40,16 @@ export default {
   data() {
     return {
       isLoadingMore: false,
+      commentLength: 0,
     };
+  },
+  updated() {
+    if (this.core.selected) {
+      if (this.core.selected.comments.length > this.commentLength) {
+        this.commentLength = this.core.selected.comments.length;
+        if (!this.core.UI.isReading) scrollIntoElement(this.core);
+      }
+    }
   },
   mounted() {
     const self = this;
@@ -49,7 +59,7 @@ export default {
       const scrollHeight =  scrollContainer.scrollHeight;
       const clientHeight = scrollContainer.clientHeight;
       const scrollTop = scrollContainer.scrollTop;
-      const scrollTreshold = 1.5 * clientHeight;
+      const scrollTreshold = 2.3 * clientHeight;
       if (scrollHeight - scrollTop > scrollTreshold) {
         self.core.UI.isReading = true;
       } else {
