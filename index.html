@@ -52,7 +52,7 @@
               //   theElement.scrollIntoView({ block: 'end', behaviour: 'smooth' })}, 200);
             },
             commentReadCallback(data) {
-              // console.log('comment di read', data);
+              console.log('comment di read', data);
             },
             // When we're success login into qiscus SDK we'll have a 1-on-1 chat to guest2@qiscus.com
             // You can change this to any user you have on your AppId, e.g: contact@your_company.com, etc
@@ -61,7 +61,8 @@
               if(altUser) {
                 QiscusUI.chatTarget('guest@qiscus.com')
               } else {
-                QiscusUI.chatTarget('sunupf@gmail.com')
+                QiscusUI.chatTarget('fikri@qiscus.com')
+                // QiscusUI.chatTarget('sunupf@gmail.com')
               }
               // QiscusUI.config.showHeader = false;
               // QiscusUI.config.showCommentForm = false;

@@ -98,7 +98,7 @@ export default {
       },
       gotoComment(comment) {
         if (!self.core.isInit) return;
-        return self.core.chatGroup(comment.room_id).then(res => {
+        self.core.chatGroup(comment.room_id).then((res) => {
           self.core.UI.isReading = false;
           window.setTimeout(() => scrollIntoElement(comment.id), 0);
           focusMessageForm();

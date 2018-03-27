@@ -16,11 +16,11 @@
       div.qcw-header-info
         div
           div.qcw-user-display-name(:style="{color: core.UI.colors.headerTitleColor}") {{ core.selected.name }}
-          div.qcw-user-status.qcw-user-status--group(v-if="core.selected.room_type == 'group' && !core.isTypingStatus"
+          div.qcw-user-status.qcw-user-status--group(v-if="core.selected.room_type == 'group' && !showIsTypingStatus"
             :style="{color: myReactiveColor}") {{ participants }}
-          div.qcw-user-status.status--istyping(v-if="core.isTypingStatus"
+          div.qcw-user-status.status--istyping(v-if="showIsTypingStatus"
             :style="{color: myReactiveColor}") {{ core.isTypingStatus }}
-          div.qcw-user-status(v-if="!core.isTypingStatus && this.core.selected.room_type !== 'group'" :class="{'status--online':core.chatmateStatus=='Online', 'status--lastseen':core.chatmateStatus!='Online'}"
+          div.qcw-user-status(v-if="!showIsTypingStatus && this.core.selected.room_type !== 'group'" :class="{'status--online':core.chatmateStatus=='Online', 'status--lastseen':core.chatmateStatus!='Online'}"
             :style="{color: myReactiveColor}") {{ core.chatmateStatus }}
 
       i(@click="toggleWindowStatus" class="qcw-window-toggle-btn")
@@ -57,6 +57,16 @@ export default {
     };
   },
   computed: {
+    showIsTypingStatus() {
+      const self = this;
+      if (this.core.isTypingStatus) {
+        window.setTimeout(() => {
+          self.core.isTypingStatus = '';
+        }, 3000);
+        return true;
+      }
+      return false;
+    },
     uploadedFiles() {
       if (!this.core.selected) return [];
       return this.core.uploadedFiles
