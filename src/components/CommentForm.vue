@@ -154,6 +154,9 @@ export default {
         this.updateProgress(uploadEvent, files[0].name);
       });
       xhr.open('POST', `${vm.core.baseURL}/api/v2/sdk/upload`, true);
+      xhr.setRequestHeader('qiscus_sdk_app_id', `${vm.core.AppId}`);
+      xhr.setRequestHeader('qiscus_sdk_user_id', `${vm.core.user_id}`);
+      xhr.setRequestHeader('qiscus_sdk_token', `${vm.core.userData.token}`);
       xhr.onload = function responseReceived() {
         if (xhr.status === 200) {
           // file(s) uploaded), let's post to comment
