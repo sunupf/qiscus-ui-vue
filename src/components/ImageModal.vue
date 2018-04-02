@@ -63,7 +63,7 @@ export default {
 .qcw-image-modal__wrapper
   min-width 240px
   position relative
-  max-width 90%
+  max-width 40%
   max-height 90%
   animation fadeInZoom 0.2s ease-out
   .image-loader
