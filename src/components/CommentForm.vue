@@ -161,9 +161,16 @@ export default {
         if (xhr.status === 200) {
           // file(s) uploaded), let's post to comment
           const url = JSON.parse(xhr.response).results.file.url;
-          vm.core.sendComment(roomId, `[file] ${url} [/file]`)
+          const attachmentPayload = {
+            url,
+            caption: '',
+            file_name: files[0].name,
+          };
+          vm.core.sendComment(roomId, `[file] ${url} [/file]`, null,
+          'file_attachment', JSON.stringify(attachmentPayload))
             .then(() => {
               vm.core.removeUploadedFile(files[0].name, roomId);
+              e.target.value = null;
               window.setTimeout(() => scrollIntoLastElement(vm.core), 0);
             });
         } else {

@@ -24,6 +24,7 @@ export default {
     return {
       core: QiscusCore,
       chatWindowStatus: false,
+      roomId: null,
     };
   },
   created() {
@@ -114,6 +115,12 @@ export default {
   },
   methods: {
     toggleWindowStatus() {
+      // cache room id if not null
+      if (this.core.selected) this.roomId = this.core.selected.id;
+      if (this.chatWindowStatus) {
+        this.core.exitChatRoom();
+      }
+      if (!this.chatWindowStatus && this.roomId) QiscusUI.chatGroup(this.roomId);
       this.chatWindowStatus = !this.chatWindowStatus;
     },
   },
