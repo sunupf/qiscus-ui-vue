@@ -9,29 +9,14 @@
 
     upload-info(v-if="uploadedFiles.length > 0" :files="uploadedFiles")
 
-    div.qcw-header(v-if="core.selected && core.UI.config.showHeader"
-      :style="{background: core.UI.colors.headerBackgroundColor}")
-      div.qcw-header-avatar
-        img(v-if="core.selected.avatar != ''" :src="core.selected.avatar")
-        img(:src="'https://qiscuss3.s3.amazonaws.com/uploads/55c0c6ee486be6b686d52e5b9bbedbbf/2.png'" v-else)
-      div.qcw-header-info(@click="headerClickedHandler")
-        div
-          div.qcw-user-display-name(:style="{color: core.UI.colors.headerTitleColor}") {{ core.selected.name }}
-          div.qcw-user-status.qcw-user-status--group(v-if="core.selected.room_type == 'group' && !showIsTypingStatus"
-            :style="{color: myReactiveColor}") {{ participants }}
-          div.qcw-user-status.status--istyping(v-if="showIsTypingStatus"
-            :style="{color: myReactiveColor}") {{ core.isTypingStatus }}
-          div.qcw-user-status(v-if="!showIsTypingStatus && this.core.selected.room_type !== 'group'" :class="{'status--online':core.chatmateStatus=='Online', 'status--lastseen':core.chatmateStatus!='Online'}"
-            :style="{color: myReactiveColor}") {{ core.chatmateStatus }}
+    chat-header(v-if="core.selected && core.UI.config.showHeader"
+      @toggle-window="() => toggleWindowStatus()")
 
-      i(@click="toggleWindowStatus" class="qcw-window-toggle-btn")
-        icon(name="ic-minimize" :fill="core.UI.colors.headerIconColor")
-
-    comments(:core="core" :on-click-image="openImageModal" 
+    comments(:core="core" :on-click-image="openImageModal"
       :repliedComment="repliedComment"
       :replyHandler="setReply" :onupdate="scrollToBottom")
 
-    comment-form(:core="core" 
+    comment-form(:core="core"
       v-if="core.UI.config.showCommentForm"
       :repliedComment="repliedComment" :closeReplyHandler="closeReply")
 </template>
@@ -45,11 +30,21 @@ import CommentReplyPreview from './CommentReplyPreview';
 import { scrollIntoLastElement } from '../lib/utils';
 import ImageModal from './ImageModal';
 import UploadInfo from './UploadInfo';
+import ChatHeader from './ChatHeader';
 
 export default {
   name: 'ChatWindow',
   props: ['core', 'toggleWindowStatus'],
-  components: { Comments, SvgIcon, Icon, CommentForm, CommentReplyPreview, ImageModal, UploadInfo },
+  components: {
+    Comments,
+    SvgIcon,
+    Icon,
+    CommentForm,
+    CommentReplyPreview,
+    ImageModal,
+    UploadInfo,
+    ChatHeader,
+  },
   data() {
     return {
       repliedComment: null,
@@ -146,7 +141,7 @@ export default {
         width 100vw
         height 100vh
         z-index 1
-  
+
   .qcw-window-toggle-btn
     cursor pointer
     flex: 0 0 32px;
@@ -161,7 +156,7 @@ export default {
     align-items center
     padding 13px 16px
     border-bottom 0.5px solid $lightGrey
-    .qcw-header-avatar 
+    .qcw-header-avatar
       flex 0 0 48px
     .qcw-header-avatar img
       width 48px
@@ -174,19 +169,19 @@ export default {
       margin-left 16px
       .qcw-user-display-name
         font-size 15px
-        font-weight 600 
+        font-weight 600
       .qcw-user-status
         font-size 13px
         white-space: nowrap;
         overflow: hidden;
 
-  
+
   .qcw-comments
     flex 1
     overflow hidden
     overflow-y auto
     position relative
-  
+
   .qcw-comment-form
     flex 0 0 64px
     background #FFF
@@ -194,7 +189,7 @@ export default {
 
   .qcw-avatar--hide
     visibility hidden
-  
+
   .reply-wrapper
     position relative
     padding 4px 8px 4px 12px
@@ -220,7 +215,7 @@ export default {
     height calc(100% - 0px)
     background $green
     border-radius 2px 0 0 2px
-  
+
   .reply-wrapper.reply-wrapper--preview
     margin-bottom 0
     order 1
