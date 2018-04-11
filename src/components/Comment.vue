@@ -224,35 +224,38 @@ export default {
         () => this.$toasted.error('Resending comment failed'));
     },
     confirmDeleteComment(comment) {
+      const actions = [];
+      if (!comment.isChannel) {
+        actions.push({
+          text: 'For me',
+          onClick: (e, toastObject) => this.deleteComment(comment, false)
+            .then(() => {
+              toastObject.goAway(0);
+              this.$toasted.success('Message deleted');
+            }, (err) => {
+              toastObject.goAway(0);
+              this.$toasted.error(`Failed deleting message: ${err}`);
+            }),
+        });
+      }
+      actions.push({
+        text: 'For everyone',
+        onClick: (e, toastObject) => this.deleteComment(comment, true)
+          .then(() => {
+            toastObject.goAway(0);
+            this.$toasted.success('Message deleted');
+          }, (err) => {
+            toastObject.goAway(0);
+            this.$toasted.error(`Failed deleting message: ${err}`);
+          }),
+      });
+      actions.push({
+        text: 'Cancel',
+        onClick: (e, toastObject) => toastObject.goAway(0),
+      });
       return this.$toasted.show('Are you sure to delete this message?', {
         duration: 5000,
-        action: [
-          {
-            text: 'For me',
-            onClick: (e, toastObject) =>
-              this.deleteComment(comment, false)
-                .then(() => {
-                  toastObject.goAway(0);
-                  this.$toasted.success('Message deleted');
-                }, (err) => {
-                  toastObject.goAway(0);
-                  this.$toasted.error(`Failed deleting message: ${err}`);
-                }),
-          },
-          {
-            text: 'For everyone',
-            onClick: (e, toastObject) =>
-              this.deleteComment(comment, true)
-                .then(() => {
-                  toastObject.goAway(0);
-                  this.$toasted.success('Message deleted');
-                }, (err) => {
-                  toastObject.goAway(0);
-                  this.$toasted.error(`Failed deleting message: ${err}`);
-                }),
-          },
-          { text: 'Cancel', onClick: (e, toastObject) => toastObject.goAway(0) },
-        ],
+        action: actions,
       });
     },
     deleteComment(comment, isForEveryone) {
