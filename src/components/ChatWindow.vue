@@ -9,11 +9,12 @@
 
     upload-info(v-if="uploadedFiles.length > 0" :files="uploadedFiles")
 
-    div.qcw-header(v-if="core.selected && core.UI.config.showHeader" :style="{background: core.UI.colors.headerBackgroundColor}")
+    div.qcw-header(v-if="core.selected && core.UI.config.showHeader"
+      :style="{background: core.UI.colors.headerBackgroundColor}")
       div.qcw-header-avatar
         img(v-if="core.selected.avatar != ''" :src="core.selected.avatar")
         img(:src="'https://qiscuss3.s3.amazonaws.com/uploads/55c0c6ee486be6b686d52e5b9bbedbbf/2.png'" v-else)
-      div.qcw-header-info
+      div.qcw-header-info(@click="headerClickedHandler")
         div
           div.qcw-user-display-name(:style="{color: core.UI.colors.headerTitleColor}") {{ core.selected.name }}
           div.qcw-user-status.qcw-user-status--group(v-if="core.selected.room_type == 'group' && !showIsTypingStatus"
@@ -92,6 +93,9 @@ export default {
     },
   },
   methods: {
+    headerClickedHandler() {
+      this.core.options.headerClickedCallback();
+    },
     openImageModal(comment) {
       this.imageModalContent = comment;
       this.imageModalIsActive = true;
