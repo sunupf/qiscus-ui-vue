@@ -1,6 +1,6 @@
 {
   "name": "qiscus-ui-vue",
-  "version": "2.6.2",
+  "version": "2.6.3",
   "description": "A UI implementation of qiscus sdk core using Vue.js",
   "author": "Qiscus <contact.us@qiscus.com>",
   "private": true,
@@ -11,8 +11,8 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
-    "vue-toasted": "^1.1.22",
-    "qiscus-sdk-core": "git://github.com/qiscus/qiscus-sdk-web-core.git"
+    "qiscus-sdk-core": "git://github.com/qiscus/qiscus-sdk-web-core.git",
+    "vue-toasted": "^1.1.22"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

@@ -5,16 +5,16 @@
         loader()
 
       ul(v-if="core.selected")
-        li(class="qcw-load-more qcw-load-more-btn" @click="loadMore" v-if="core.selected.comments.length > 0 && core.selected.comments[0].before_id > 0") 
+        li(class="qcw-load-more qcw-load-more-btn" @click="loadMore" v-if="comments.length > 0 && comments[0].before_id > 0")
           icon(name="ic-load" class="ic-load-more__state" v-if="isLoadingMore")
           span Load More
         li(class="qcw-load-more qcw-top-page" v-else)
-          span You've reached first page 
-        li(v-for="(comment, index) in core.selected.comments" :key="comment.id")
+          span You've reached first page
+        li(v-for="(comment, index) in comments" :key="comment.id")
           comment(
             :comment="comment"
-            :comment-before="(index-1 < 0) ? null : core.selected.comments[index-1]"
-            :comment-after="(index+1 <= core.selected.comments.length-1) ? core.selected.comments[index+1] : null"
+            :comment-before="(index-1 < 0) ? null : comments[index-1]"
+            :comment-after="(index+1 <= comments.length-1) ? comments[index+1] : null"
             :on-click-image="onClickImage"
             :replyHandler="replyHandler"
             :onupdate="onupdate"
@@ -22,7 +22,7 @@
             :showAvatar="core.options.avatar"
           )
         //- com`ponent for uploader progress
-    
+
 </template>
 
 <script>
@@ -36,6 +36,9 @@ export default {
   components: { Icon, Loader, Comment },
   props: ['core', 'onClickImage', 'onupdate', 'replyHandler'],
   computed: {
+    comments() {
+      return this.core.selected.comments;
+    },
   },
   data() {
     return {
@@ -45,11 +48,11 @@ export default {
   },
   updated() {
     if (this.core.selected) {
-      if (this.core.selected.comments.length > this.commentLength) {
-        const lastCommentIndex = this.core.selected.comments.length - 1;
-        const lastComment = this.core.selected.comments[lastCommentIndex];
+      if (this.comments.length > this.commentLength) {
+        const lastCommentIndex = this.comments.length - 1;
+        const lastComment = this.comments[lastCommentIndex];
         this.core.readComment(this.core.selected.id, lastComment.id);
-        this.commentLength = this.core.selected.comments.length;
+        this.commentLength = this.comments.length;
         if (!this.core.UI.isReading) scrollIntoLastElement(this.core);
       }
     }
@@ -75,7 +78,7 @@ export default {
   methods: {
     loadMore() {
       this.isLoadingMore = true;
-      this.core.loadMore(this.core.selected.comments[0].id).then(() => {
+      this.core.loadMore(this.comments[0].id).then(() => {
         this.isLoadingMore = false;
       });
     },
@@ -93,7 +96,7 @@ export default {
     border-radius 2px
     text-align center
     i
-      display block 
+      display block
       margin 0px auto 8px auto
       .qc-icon
         fill $green
@@ -139,10 +142,10 @@ export default {
       width: 12px;
       animation spin 1s ease-in-out infinite
 
-  .inner 
+  .inner
     position relative
     padding-top 1px
-  
+
   .qcw-load-comment-indicator
     position absolute
     width 100%
@@ -166,7 +169,7 @@ export default {
     &::-webkit-scrollbar-thumb
       border-radius: 4px;
       background-color: #e0e0e0;
-  
+
   .qcw-comments ul
     position relative
     list-style none
@@ -213,7 +216,7 @@ export default {
       background-color $red
       .qc-icon
         fill $white
-    
+
   i.reply-btn
     right -32px
     & svg.qc-icon
@@ -241,7 +244,7 @@ export default {
         display none
       .delete-btn
         display inline-block
-  
+
   .qcw-comment__state
     animation:fadeInDown 0.3s ease-out;
 
@@ -253,7 +256,7 @@ export default {
       justify-content flex-end
       .qcw-avatar
         display none
-  
+
   .qcw-comment-date
     text-align center
     font-weight bold
@@ -273,7 +276,7 @@ export default {
   .qcw-comment
     display flex
     flex 0 auto
-  
+
   .qcw-avatar
     flex 0 0 36px
     img
@@ -283,7 +286,7 @@ export default {
     .comment--me &
       order 2
       text-align right
-      
+
   .qcw-comment__info
     padding-bottom 7px
     margin-bottom 7px
@@ -300,7 +303,7 @@ export default {
     color $darkGrey;
     position absolute
     top 16px
-    
+
     svg.qc-icon
         margin-top 3px
 
@@ -364,7 +367,7 @@ export default {
     &.failed--last
       margin-bottom 24px
       margin-top -27px
-  
+
   .qcw-comment--system-event
     text-align: center;
     padding: 5px 20px;
@@ -426,7 +429,7 @@ export default {
       box-shadow 0 7px 16px rgba(199,199,199,.25)
       left auto
       right -8px
-    &.card 
+    &.card
       max-width 210px !important
 
   @media only screen and (min-width: 640px)
@@ -442,12 +445,12 @@ export default {
     margin-bottom 24px
 
   .deleted
-    .qcw-comment__content 
+    .qcw-comment__content
       font-size 13px
       color $red
   .comment-text
     width 100%
-    .qcw-comment__content 
+    .qcw-comment__content
       margin 0
       word-break break-word
       word-wrap break-word

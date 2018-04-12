@@ -124,6 +124,7 @@ export default {
     },
     publishTyping() {
       const self = this;
+      if (this.core.selected.isChannel) return;
       if (self.commentInput.length > 0) {
         self.core.realtimeAdapter.publishTyping(1);
       } else {

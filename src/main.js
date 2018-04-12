@@ -11,6 +11,7 @@ Vue.use(Toasted, {
   theme: 'bubble',
 });
 Vue.config.productionTip = false;
+Vue.prototype.$core = QiscusCore;
 
 function renderSDK() {
   /* eslint-disable no-new */
