@@ -4,6 +4,8 @@
       div.qcw-load-comment-indicator(v-if="core.isLoading")
         loader()
 
+      file-drag-drop(:core="core")
+
       ul(v-if="core.selected")
         li(class="qcw-load-more qcw-load-more-btn" @click="loadMore" v-if="comments.length > 0 && comments[0].before_id > 0")
           icon(name="ic-load" class="ic-load-more__state" v-if="isLoadingMore")
@@ -21,7 +23,7 @@
             :userData="core.userData"
             :showAvatar="core.options.avatar"
           )
-        //- com`ponent for uploader progress
+        //- component for uploader progress
 
 </template>
 
@@ -29,11 +31,12 @@
 import Icon from './Icon';
 import Loader from './Loader';
 import Comment from './Comment';
+import FileDragDrop from './FileDragDrop';
 import { scrollIntoLastElement } from '../lib/utils';
 
 export default {
   name: 'Comments',
-  components: { Icon, Loader, Comment },
+  components: { Icon, Loader, Comment, FileDragDrop },
   props: ['core', 'onClickImage', 'onupdate', 'replyHandler'],
   computed: {
     comments() {
