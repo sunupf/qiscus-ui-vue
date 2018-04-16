@@ -74,12 +74,24 @@ $bgContent = $darkerWhite;
   justify-content center
   align-items center
   span
-    display: block
-    font-family: Arial, Helvetica
-    line-height: 1.9
+    display block
+    font-family Arial, Helvetica
+    line-height 1.9
     
 .qcw-dropzone-title
-  font-size: $fontSizeTitle
-  color: $fontColorTitle
-  letter-spacing: 0.4px
+  font-size $fontSizeTitle
+  color $fontColorTitle
+  letter-spacing 0.4px
+
+.qcw-container.qcw-container--wide
+  .qcw-dropzone-area
+    width 100%
+    opacity 0
+    &.qcw-dropzone-over
+      background $bgContent
+      opacity 1
+
+  .qcw-dropzone-text
+    top 50%
+    width 100%
 </style>
