@@ -130,7 +130,7 @@ export default {
 <style lang="stylus">
 @import './assets/stylus/_variables.styl'
 
-body
+.qcw-container
   font-family 'Open Sans', sans-serif
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
@@ -168,7 +168,7 @@ body
         &.info
           background-color $blue
 
-.qcw-container 
+.qcw-container
   color #444
   position: fixed
   bottom: 20px
