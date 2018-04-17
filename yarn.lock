@@ -4346,7 +4346,7 @@ q@^1.1.2:
 
 "qiscus-sdk-core@git://github.com/qiscus/qiscus-sdk-web-core.git":
   version "2.6.3"
-  resolved "git://github.com/qiscus/qiscus-sdk-web-core.git#ab25a44d06385cf68d6a2408c36c4d47fe35dcd9"
+  resolved "git://github.com/qiscus/qiscus-sdk-web-core.git#c54eb6a6a1004efed84334aeb52eed5e3a86c206"
   dependencies:
     date-fns "^1.28.5"
     mqtt "2.15.3"
