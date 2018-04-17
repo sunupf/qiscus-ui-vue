@@ -2,8 +2,8 @@
   .qcw-dropzone-area(
       :class="{ 'qcw-dropzone-over': dragging }",
       drag-over="handleDragOver",
-      @dragenter="dragging=true",
-      @dragleave="dragging=false"
+      @dragenter="onDragging(true)",
+      @dragleave="onDragging(false)"
     )
     .qcw-dropzone-text
       span.qcw-dropzone-title {{ title || 'Drag and Drop file here for upload...' }}
@@ -18,16 +18,14 @@ import { uploadFile } from '../lib/fileUploader';
 export default {
   name: 'FileDragDrop',
   components: { Icon },
-  props: ['title', 'core'],
-  data() {
-    return {
-      dragging: false,
-    };
-  },
+  props: ['title', 'core', 'dragging'],
   methods: {
     changeFile(e) {
-      this.dragging = false;
       uploadFile(e, this.core);
+      this.onDragging(false);
+    },
+    onDragging(status) {
+      this.$emit('onDragging', status);
     },
   },
 };
@@ -45,13 +43,13 @@ $bgContent = $darkerWhite;
   width $width
   height 100%
   position absolute
-  z-index 1
   overflow hidden
   background transparent
   opacity 0
   &.qcw-dropzone-over
     background $bgContent
     opacity 1
+    z-index 1
   input
     position absolute
     cursor pointer
