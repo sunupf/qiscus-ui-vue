@@ -1,6 +1,6 @@
 <template lang="pug">
   div(:class="{'parent--container':isParent, 'my--container': isMe, 'qcw-group': isGroupRoom, 'contain-date': showDate, 'deleted': isDeleted}")
-    div(class="qcw-comment-container" :id="comment.id" :class="commentClass" @click.self="menuMoreClicked(null)")
+    div(class="qcw-comment-container" :id="comment.id" :class="commentClass")
       div(v-if="showDate" class="qcw-comment-date" :class="{'extra-margin': addExtraMargin}")
         div {{ dateToday }}
       div(v-if="comment.type == 'system_event'" class="qcw-comment--system-event")
@@ -34,6 +34,7 @@
             ref="`more_${comment.id}`"
             class="qcw-comment__more--menu"
             v-if="isMe && !isDeleted && showMenuMore"
+            v-click-outside="onClickMenuOutside"
             )
             ul
               li
@@ -135,6 +136,7 @@ import CommentCustom from './CommentCustom';
 import CommentCarousel from './CommentCarousel';
 import CommentCard from './CommentCard';
 import CommentButtons from './CommentButtons';
+import clickOutside from '../lib/clickOutside';
 
 export default {
   name: 'Comment',
@@ -152,6 +154,7 @@ export default {
     CommentButtons,
   },
   props: ['comment', 'commentBefore', 'commentAfter', 'userData', 'onClickImage', 'onupdate', 'replyHandler', 'showAvatar', 'currentMenuId'],
+  directives: { clickOutside },
   computed: {
     isChannel() {
       return this.comment.isChannel;
@@ -217,6 +220,10 @@ export default {
     };
   },
   methods: {
+    onClickMenuOutside() {
+      if (!this.currentMenuId) return;
+      this.menuMoreClicked(null);
+    },
     gotoComment() {
       const element = document.getElementById(this.comment.payload.replied_comment_id);
       if (!element) return;
