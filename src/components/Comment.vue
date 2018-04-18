@@ -286,7 +286,7 @@ export default {
       window.open(this.comment.payload.url, 'AccountLinkingPopup', 'width=500,height=400,location=no,menubar=no,resizable=1,status=no,toolbar=no');
     },
     messageInfoHandler(comment) {
-      console.log('handler message info here.', comment);
+      this.core.options.messageInfoCallback(comment);
     },
     menuMoreClicked(id) {
       const commentId = (this.currentMenuId === id) ? null : id;
