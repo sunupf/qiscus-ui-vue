@@ -20,6 +20,8 @@
             :onupdate="onupdate"
             :userData="core.userData"
             :showAvatar="core.options.avatar"
+            :currentMenuId="currentMenuId"
+            @onChangeMenu="onChangeMenu"
           )
         //- com`ponent for uploader progress
 
@@ -44,6 +46,7 @@ export default {
     return {
       isLoadingMore: false,
       commentLength: 0,
+      currentMenuId: null,
     };
   },
   updated() {
@@ -81,6 +84,9 @@ export default {
       this.core.loadMore(this.comments[0].id).then(() => {
         this.isLoadingMore = false;
       });
+    },
+    onChangeMenu(id) {
+      this.currentMenuId = id;
     },
   },
 };
@@ -126,12 +132,16 @@ export default {
         transform translatey(-2px)
 
   .qcw-comment__state--read
-    .qc-icon.ic-double-check__state
+    .qc-icon
+      &.ic-double-check__state
       fill $green
+      &.ic-option-menu__state
+          fill $darkGrey
   .qc-icon
     &.ic-load__state,
     &.ic-check__state,
-    &.ic-double-check__state
+    &.ic-double-check__state,
+    &.ic-option-menu__state
       margin-right 8px
     &.ic-load__state
       animation spin 1s ease-in-out infinite
@@ -287,6 +297,42 @@ export default {
       order 2
       text-align right
 
+  .qcw-comment__more--menu
+    position absolute
+    padding 16px
+    margin auto
+    top 0
+    left auto
+    z-index 1
+    height 100%
+    width 100%
+    transition opacity .4s
+    display block
+    ul
+      display block
+      width 145px
+      padding 5px 0
+      background $white
+      font-size 14px
+      list-style none
+      top 25px
+      left -61px
+      right auto
+      border-radius 8px
+      box-shadow 0 7px 16px rgba(199,199,199,.25)
+      margin-bottom 10px
+      border-radius 7px
+      li
+        line-height 35px
+        height 35px
+        color $darkGrey
+        cursor pointer
+        display inline-block
+        width 100%
+        padding 0 10px
+        &:hover
+          color $green
+
   .qcw-comment__info
     padding-bottom 7px
     margin-bottom 7px
@@ -294,6 +340,7 @@ export default {
     display flex
     justify-content: space-between;
     align-items: center;
+
   .qcw-comment__username
     font-weight bold
 
@@ -317,13 +364,36 @@ export default {
         top 8px
         right -58px
     .qcw-comment__username
-        position  absolute
-        font-size  11px
-        width  128px
-        top -20px
-        left  0
-        text-align  left
-        white-space nowrap
+      position absolute
+      font-size 11px
+      width 128px
+      top -20px
+      left 0
+      text-align left
+      white-space nowrap
+    .qcw-comment__more
+      position absolute
+      overflow hidden
+      padding 5px 0
+      height 24px
+      width 24px
+      cursor pointer
+      top 8px
+      left -35px
+      border-radius 50%
+      background $lightGrey
+      animation fadeInLeftBig 0.3s ease-out
+      transition background 0.3s ease-out
+      & svg.qc-icon
+        display block
+        width 12px
+        height 12px
+        margin 6px auto
+      &:hover
+        background-color $green
+        .qc-icon
+          fill $white
+
     &.comment--me
       .qcw-comment__username
         text-align right
@@ -352,6 +422,12 @@ export default {
         left -17px
         cursor pointer
 
+  .qcw-container.qcw-container--wide
+    .qcw-comment__more--menu
+      ul
+        top 25px
+        left -175px
+  
   .failed-info
     text-align right
     margin-top -3px
