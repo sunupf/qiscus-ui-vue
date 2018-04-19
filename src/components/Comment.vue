@@ -115,8 +115,22 @@
             :class="{'qcw-comment__time--attachment': comment.isAttachment(comment.message)}") {{comment.time}}
 
           span(class="qcw-comment__time"
+            :class="{'qcw-comment__time--me': isMe}"
             v-if="!isMe"
             :style="messageTimeStyle") {{comment.time}}
+
+          //- State
+          div(v-if="isMe")
+            div(class="qcw-comment__state qcw-comment__state--sending" v-if="comment.isPending")
+              icon(name="ic-load" class="ic-load__state" :fill="messageStatusIconStyle")
+            div(class="qcw-comment__state" v-if="!comment.isChannel && comment.isSent && !comment.isDelivered")
+              icon(name="ic-check" class="ic-check__state" :fill="messageStatusIconStyle")
+            div(@click="resend(comment)" class="qcw-comment__state qcw-comment__state--failed"
+              v-if="comment.isFailed" :style="messageFailedIconStyle") !!!
+            div(class="qcw-comment__state qcw-comment__state--delivered" v-if="!comment.isChannel && comment.isDelivered && !comment.isRead")
+              icon(name="ic-double-check" class="ic-double-check__state" :fill="messageStatusIconStyle")
+            div(class="qcw-comment__state qcw-comment__state--read" v-if="!comment.isChannel && comment.isRead")
+              icon(name="ic-double-check" class="ic-double-check__state")
 
     div(class="failed-info" v-if="comment.isFailed" :class="{ 'failed--last': isLast }") Message failed to send.
       span(@click="resend(comment)" class="" v-if="comment.isFailed") Resend
