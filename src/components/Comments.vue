@@ -254,6 +254,8 @@ export default {
         display none
       .delete-btn
         display inline-block
+      .qcw-comment__more
+        display block
 
   .qcw-comment__state
     animation:fadeInDown 0.3s ease-out;
@@ -378,10 +380,12 @@ export default {
       height 24px
       width 24px
       cursor pointer
-      top 8px
+      top 6px
       left -35px
       border-radius 50%
       background $lightGrey
+      display none
+      z-index 1
       animation fadeInLeftBig 0.3s ease-out
       transition background 0.3s ease-out
       & svg.qc-icon

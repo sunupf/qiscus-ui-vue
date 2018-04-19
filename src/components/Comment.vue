@@ -110,9 +110,9 @@
 
             comment-render(:text="comment.message" v-if="!comment.isAttachment(comment.message) && comment.type=='text'")
 
-          //- span(class="qcw-comment__time qcw-comment__time--children"
-          //-   v-if="!isParent"
-          //-   :class="{'qcw-comment__time--attachment': comment.isAttachment(comment.message)}") {{comment.time}}
+          span(class="qcw-comment__time qcw-comment__time--children"
+            v-if="!isParent"
+            :class="{'qcw-comment__time--attachment': comment.isAttachment(comment.message)}") {{comment.time}}
 
           span(class="qcw-comment__time"
             v-if="!isMe"

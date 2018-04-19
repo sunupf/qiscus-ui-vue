@@ -24,8 +24,8 @@
     <!-- built files will be auto injected -->
     <script>
       $(function(){
-        var url_string = window.location.href;
-        var url = new URL(url_string);
+        var urlLocation = window.location.href;
+        var url = new URL(urlLocation);
         var altUser = url.searchParams.get("altUser");
         var targetUser = url.searchParams.get("target") || 'guest@qiscus.com';
         // let's setup options for our widget
