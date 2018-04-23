@@ -21,12 +21,12 @@
           span(class="qcw-comment__username" v-if="isParent && !isMe") {{comment.username_as}}
 
           //- reply button
-          i(@click="replyHandler(comment)" class="reply-btn" :class="{'reply-btn--me': isMe}" v-if="!isDeleted")
+          i(@click="replyHandler(comment)" class="qcw-action reply-btn" :class="{'reply-btn--me': isMe}" v-if="!isDeleted")
             icon(name="ic-quote" v-if="isMe")
             icon(name="ic-reply" v-else)
 
           //- delete button
-          i(class="delete-btn" @click="confirmDeleteComment(comment)" v-if="isMe && !isDeleted")
+          i(class="qcw-action delete-btn" @click="confirmDeleteComment(comment)" v-if="isMe && !isDeleted")
             icon(name="ic-close")
 
           //- CommentType: "contact_person"

@@ -4,11 +4,20 @@
       div.qcw-load-comment-indicator(v-if="core.isLoading")
         loader()
 
-      ul(v-if="core.selected")
-        li(class="qcw-load-more qcw-load-more-btn" @click="loadMore" v-if="comments.length > 0 && comments[0].before_id > 0")
+      file-drag-drop(
+        :core="core"
+        :dragging="dragging"
+        @onDragging="onDragging"
+      )
+
+      ul(
+        v-if="core.selected"
+        @dragenter="dragging=true"
+      )
+        li(class="qcw-action qcw-load-more qcw-load-more-btn" @click="loadMore" v-if="comments.length > 0 && comments[0].before_id > 0")
           icon(name="ic-load" class="ic-load-more__state" v-if="isLoadingMore")
           span Load More
-        li(class="qcw-load-more qcw-top-page" v-else)
+        li(class="qcw-action qcw-load-more qcw-top-page" v-else)
           span You've reached first page
         li(v-for="(comment, index) in comments" :key="comment.id")
           comment(
@@ -21,7 +30,7 @@
             :userData="core.userData"
             :showAvatar="core.options.avatar"
           )
-        //- com`ponent for uploader progress
+        //- component for uploader progress
 
 </template>
 
@@ -29,11 +38,12 @@
 import Icon from './Icon';
 import Loader from './Loader';
 import Comment from './Comment';
+import FileDragDrop from './FileDragDrop';
 import { scrollIntoLastElement } from '../lib/utils';
 
 export default {
   name: 'Comments',
-  components: { Icon, Loader, Comment },
+  components: { Icon, Loader, Comment, FileDragDrop },
   props: ['core', 'onClickImage', 'onupdate', 'replyHandler'],
   computed: {
     comments() {
@@ -44,6 +54,7 @@ export default {
     return {
       isLoadingMore: false,
       commentLength: 0,
+      dragging: false,
     };
   },
   updated() {
@@ -81,6 +92,9 @@ export default {
       this.core.loadMore(this.comments[0].id).then(() => {
         this.isLoadingMore = false;
       });
+    },
+    onDragging(status) {
+      this.dragging = status;
     },
   },
 };
@@ -175,6 +189,8 @@ export default {
     list-style none
     margin 0
     padding 0
+    .qcw-action
+      z-index 2
 
   .qcw-comment-date
     margin-bottom 24px
