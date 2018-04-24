@@ -228,24 +228,20 @@ export default {
       if (!comment.isChannel) {
         actions.push({
           text: 'For me',
-          onClick: (e, toastObject) => this.deleteComment(comment, false)
+          onClick: () => this.deleteComment(comment, false)
             .then(() => {
-              toastObject.goAway(0);
               this.$toasted.success('Message deleted');
             }, (err) => {
-              toastObject.goAway(0);
               this.$toasted.error(`Failed deleting message: ${err}`);
             }),
         });
       }
       actions.push({
         text: 'For everyone',
-        onClick: (e, toastObject) => this.deleteComment(comment, true)
+        onClick: () => this.deleteComment(comment, true)
           .then(() => {
-            toastObject.goAway(0);
             this.$toasted.success('Message deleted');
           }, (err) => {
-            toastObject.goAway(0);
             this.$toasted.error(`Failed deleting message: ${err}`);
           }),
       });
@@ -259,6 +255,7 @@ export default {
       });
     },
     deleteComment(comment, isForEveryone) {
+      this.$toasted.clear();
       return this.core
         .deleteComment(this.core.selected.id, [comment.unique_id], isForEveryone, true);
     },
