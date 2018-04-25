@@ -22,7 +22,7 @@
           span(class="qcw-comment__username" v-if="isParent && !isMe") {{comment.username_as}}
 
           //- reply button
-          i(@click="replyHandler(comment)" class="qcw-action reply-btn" :class="{'reply-btn--me': isMe}" v-if="!isDeleted && !isMe")
+          i(@click="replyHandler(comment)" class="reply-btn" :class="{'reply-btn--me': isMe}" v-if="!isDeleted && !isMe")
             icon(name="ic-reply")
 
           //- more vertical button 
@@ -43,16 +43,6 @@
                 span(@click="confirmDeleteComment(comment)") Delete
               li
                 span(@click="messageInfoHandler(comment)") Message Info
-
-          //- //- CommentType: "contact_person"
-          //- div(v-if="comment.type == 'contact_person'" class="qcw-comment--contact")
-          //-   i
-          //-     icon(name="ic-user")
-          //-     strong {{ comment.payload.name }}
-          //-     br
-          //-   i
-          //-     icon(:name="(comment.payload.type=='phone') ? 'ic-phone' : 'ic-envelope'")
-          //-     span {{ comment.payload.value }}
 
           //- CommentType: "location"
           static-map(:lat="comment.payload.latitude"

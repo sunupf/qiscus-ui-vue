@@ -2,7 +2,7 @@
 div.qcw-header(:style="headerStyle")
   div.qcw-header-avatar
     img(:src="avatar")
-  div.qcw-header-info
+  div.qcw-header-info(@click="$emit('header-click')")
     div
       div.qcw-user-display-name(:style="displayNameStyle") {{ displayName }}
       div.qcw-user-status.qcw-user-status--group(v-if="isGroup && !showTypingStatus" :style="userStatusStyle") {{ participants }}

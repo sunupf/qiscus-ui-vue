@@ -10,7 +10,8 @@
     upload-info(v-if="uploadedFiles.length > 0" :files="uploadedFiles")
 
     chat-header(v-if="core.selected && core.UI.config.showHeader"
-      @toggle-window="() => toggleWindowStatus()")
+      @toggle-window="() => toggleWindowStatus()"
+      @header-click="() => headerClickedHandler()")
 
     comments(:core="core" :on-click-image="openImageModal"
       :repliedComment="repliedComment"

@@ -4,7 +4,16 @@
       div.qcw-load-comment-indicator(v-if="core.isLoading")
         loader()
 
-      ul(v-if="core.selected")
+      file-drag-drop(
+        :core="core"
+        :dragging="dragging"
+        @onDragging="onDragging"
+      )
+
+      ul(
+        v-if="core.selected"
+        @dragenter="dragging=true"
+      )
         li(class="qcw-load-more qcw-load-more-btn" @click="loadMore" v-if="comments.length > 0 && comments[0].before_id > 0")
           icon(name="ic-load" class="ic-load-more__state" v-if="isLoadingMore")
           span Load More
@@ -23,7 +32,7 @@
             :currentMenuId="currentMenuId"
             @onChangeMenu="onChangeMenu"
           )
-        //- com`ponent for uploader progress
+        //- component for uploader progress
 
 </template>
 
@@ -31,11 +40,12 @@
 import Icon from './Icon';
 import Loader from './Loader';
 import Comment from './Comment';
+import FileDragDrop from './FileDragDrop';
 import { scrollIntoLastElement } from '../lib/utils';
 
 export default {
   name: 'Comments',
-  components: { Icon, Loader, Comment },
+  components: { Icon, Loader, Comment, FileDragDrop },
   props: ['core', 'onClickImage', 'onupdate', 'replyHandler'],
   computed: {
     comments() {
@@ -47,6 +57,7 @@ export default {
       isLoadingMore: false,
       commentLength: 0,
       currentMenuId: null,
+      dragging: false,
     };
   },
   updated() {
@@ -87,6 +98,9 @@ export default {
     },
     onChangeMenu(id) {
       this.currentMenuId = id;
+    },
+    onDragging(status) {
+      this.dragging = status;
     },
   },
 };
@@ -305,7 +319,7 @@ export default {
     margin auto
     top 0
     left auto
-    z-index 1
+    z-index 2
     height 100%
     width 100%
     transition opacity .4s
