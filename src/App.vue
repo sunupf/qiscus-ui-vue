@@ -163,7 +163,10 @@ export default {
         line-height 150%
         font-size 16px
         &.error
-          background-color $darkGrey
+          background-color $red
+          color $white
+          .action:hover
+            color $white
         &.success
           background-color $green
         &.info
