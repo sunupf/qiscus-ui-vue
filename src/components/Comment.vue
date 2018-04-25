@@ -251,8 +251,7 @@ export default {
         onClick: (e, toastObject) => toastObject.goAway(0),
       });
       return this.$toasted.show('Are you sure to delete this message?', {
-        // duration: 5000,
-        duration: 10e10,
+        duration: 5000,
         action: actions,
       });
     },
