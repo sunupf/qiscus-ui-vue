@@ -256,8 +256,15 @@ export default {
     },
     deleteComment(comment, isForEveryone) {
       this.$toasted.clear();
+      if (comment.isFailed) return this.deleteLocalComment(comment);
       return this.core
         .deleteComment(this.core.selected.id, [comment.unique_id], isForEveryone, true);
+    },
+    deleteLocalComment(comment) {
+      const comments = this.core.selected.comments;
+      const commentToBeFound = comments.findIndex(com => com.unique_id === comment.unique_id);
+      if (commentToBeFound > -1) comments.splice(commentToBeFound, 1);
+      return Promise.resolve(comments);
     },
     haveTemplate(comment) {
       if (!this.core.customTemplate) return false;
