@@ -137,6 +137,7 @@ export default {
   line-height 150%
 
 .toasted-container
+  font-family 'Open sans', sans-serif
   &.bottom-right
     position: fixed
     bottom: 20px
