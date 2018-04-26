@@ -117,7 +117,8 @@
             div(class="qcw-comment__state qcw-comment__state--read" v-if="!comment.isChannel && comment.isRead")
               icon(name="ic-double-check" class="ic-double-check__state")
 
-    div(class="failed-info" v-if="comment.isFailed" :class="{ 'failed--last': isLast }") Message failed to send.
+    div(class="failed-info" v-if="comment.isFailed"
+      :class="{ 'failed--last': isLast }") Message failed to send.
       span(@click="resend(comment)" class="" v-if="comment.isFailed") Resend
 
 </template>
