@@ -241,8 +241,8 @@ export default {
         onClick: () => this.deleteComment(comment, true)
           .then(() => {
             this.$toasted.success('Message deleted');
-          }, (err) => {
-            this.$toasted.error(`Failed deleting message: ${err}`);
+          }, () => {
+            this.$toasted.error('Failed deleting message');
           }),
       });
       actions.push({
@@ -257,8 +257,10 @@ export default {
     deleteComment(comment, isForEveryone) {
       this.$toasted.clear();
       if (comment.isFailed) return this.deleteLocalComment(comment);
-      return this.core
-        .deleteComment(this.core.selected.id, [comment.unique_id], isForEveryone, true);
+      const roomId = this.core.selected.id;
+      // const commentIds = [comment.unique_id];
+      // return this.core.deleteComment(roomId, commentIds, isForEveryone, true);
+      return this.core.deleteComment(roomId, [-1], isForEveryone, true);
     },
     deleteLocalComment(comment) {
       const comments = this.core.selected.comments;
