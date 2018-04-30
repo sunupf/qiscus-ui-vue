@@ -12,6 +12,7 @@
         :class="{ 'comment--me': comment.username_real == userData.email, 'comment--parent': isParent, 'comment--mid': isMid, 'comment--last': isLast }"
       )
         avatar(:src="comment.avatar" :class="{'qcw-avatar--hide': !isParent}")
+
         div(class="qcw-comment__message"
           :style="{messageStyle:!isCustomBuble}"
           :class="{'extra-margin carousel': comment.type === 'carousel','card':comment.type === 'card','hover-effect':!isDeleted && !isCustomBuble}")
@@ -21,23 +22,27 @@
           span(class="qcw-comment__username" v-if="isParent && !isMe") {{comment.username_as}}
 
           //- reply button
-          i(@click="replyHandler(comment)" class="qcw-action reply-btn" :class="{'reply-btn--me': isMe}" v-if="!isDeleted")
-            icon(name="ic-quote" v-if="isMe")
-            icon(name="ic-reply" v-else)
+          i(@click="replyHandler(comment)" class="reply-btn" :class="{'reply-btn--me': isMe}" v-if="!isDeleted && !isMe")
+            icon(name="ic-reply")
 
-          //- delete button
-          i(class="qcw-action delete-btn" @click="confirmDeleteComment(comment)" v-if="isMe && !isDeleted")
-            icon(name="ic-close")
-
-          //- CommentType: "contact_person"
-          div(v-if="comment.type == 'contact_person'" class="qcw-comment--contact")
-            i
-              icon(name="ic-user")
-              strong {{ comment.payload.name }}
-              br
-            i
-              icon(:name="(comment.payload.type=='phone') ? 'ic-phone' : 'ic-envelope'")
-              span {{ comment.payload.value }}
+          //- more vertical button 
+          i(class="qcw-comment__more" @click="menuMoreClicked(comment.id)" v-if="isMe && !isDeleted")
+            icon(name="ic-more-horiz")
+            
+          div(
+            :key="`comment_${comment.id}`"
+            ref="`more_${comment.id}`"
+            class="qcw-comment__more--menu"
+            v-if="isMe && !isDeleted && showMenuMore"
+            v-click-outside="onClickMenuOutside"
+            )
+            ul
+              li
+                span(@click="replyHandler(comment)") Reply
+              li
+                span(@click="confirmDeleteComment(comment)") Delete
+              li
+                span(@click="messageInfoHandler(comment)") Message Info
 
           //- CommentType: "location"
           static-map(:lat="comment.payload.latitude"
@@ -68,7 +73,7 @@
           comment-card(:data="comment.payload" v-if="comment.type==='card'")
 
           //- CommentType: "CARD"
-          div(v-if="comment.type=='button_postback_response'" class="comment-text")
+          div(v-if="comment.type=='button_postback_response'" class="comment-text" @click.self="menuMoreClicked(null)")
             comment-render(:text="comment.message" v-if="!comment.isAttachment(comment.message)")
 
           //- CommentType: "ACCOUNT_LINKING"
@@ -95,13 +100,13 @@
 
             comment-render(:text="comment.message" v-if="!comment.isAttachment(comment.message) && comment.type=='text'")
 
-          //- span(class="qcw-comment__time qcw-comment__time--children"
+          span(class="qcw-comment__time qcw-comment__time--children"
             v-if="!isParent"
             :class="{'qcw-comment__time--attachment': comment.isAttachment(comment.message)}") {{comment.time}}
 
-          //- Time
           span(class="qcw-comment__time"
             :class="{'qcw-comment__time--me': isMe}"
+            v-if="!isMe"
             :style="messageTimeStyle") {{comment.time}}
 
           //- State
@@ -136,6 +141,7 @@ import CommentCustom from './CommentCustom';
 import CommentCarousel from './CommentCarousel';
 import CommentCard from './CommentCard';
 import CommentButtons from './CommentButtons';
+import clickOutside from '../lib/clickOutside';
 
 export default {
   name: 'Comment',
@@ -152,7 +158,8 @@ export default {
     CommentCard,
     CommentButtons,
   },
-  props: ['comment', 'commentBefore', 'commentAfter', 'userData', 'onClickImage', 'onupdate', 'replyHandler', 'showAvatar'],
+  props: ['comment', 'commentBefore', 'commentAfter', 'userData', 'onClickImage', 'onupdate', 'replyHandler', 'showAvatar', 'currentMenuId'],
+  directives: { clickOutside },
   computed: {
     isChannel() {
       return this.comment.isChannel;
@@ -186,6 +193,10 @@ export default {
         this.commentAfter.username_real !== this.comment.username_real;
     },
     isMe() { return this.comment.username_real === this.userData.email; },
+    showMenuMore() {
+      if (!this.currentMenuId) return false;
+      return this.comment.id === this.currentMenuId;
+    },
   },
   data() {
     return {
@@ -214,6 +225,10 @@ export default {
     };
   },
   methods: {
+    onClickMenuOutside() {
+      if (!this.currentMenuId) return;
+      this.menuMoreClicked(null);
+    },
     gotoComment() {
       const element = document.getElementById(this.comment.payload.replied_comment_id);
       if (!element) return;
@@ -280,6 +295,13 @@ export default {
     },
     openAccountBox() {
       window.open(this.comment.payload.url, 'AccountLinkingPopup', 'width=500,height=400,location=no,menubar=no,resizable=1,status=no,toolbar=no');
+    },
+    messageInfoHandler(comment) {
+      this.core.options.messageInfoCallback(comment);
+    },
+    menuMoreClicked(id) {
+      const commentId = (this.currentMenuId === id) ? null : id;
+      this.$emit('onChangeMenu', commentId);
     },
   },
 };

@@ -52,7 +52,9 @@ $bgContent = $darkerWhite;
   &.qcw-dropzone-over
     background $bgContent
     opacity 1
-    z-index 1
+    z-index 3
+    position fixed
+    height $height
     .qcw-dropzone-text
       position fixed
   input
@@ -93,6 +95,8 @@ $bgContent = $darkerWhite;
     &.qcw-dropzone-over
       background $bgContent
       opacity 1
+      height calc(100% - 135px)
+      position fixed
 
   .qcw-dropzone-text
     top 50%
