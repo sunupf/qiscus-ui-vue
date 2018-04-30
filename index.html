@@ -24,8 +24,8 @@
     <!-- built files will be auto injected -->
     <script>
       $(function(){
-        var url_string = window.location.href;
-        var url = new URL(url_string);
+        var urlLocation = window.location.href;
+        var url = new URL(urlLocation);
         var altUser = url.searchParams.get("altUser");
         var targetUser = url.searchParams.get("target") || 'guest@qiscus.com';
         // let's setup options for our widget
@@ -55,6 +55,9 @@
             },
             headerClickedCallback() {
               console.info('clicked');
+            },
+            messageInfoCallback(data) {
+              console.info('message info data', data);
             },
             // When we're success login into qiscus SDK we'll have a 1-on-1 chat to guest2@qiscus.com
             // You can change this to any user you have on your AppId, e.g: contact@your_company.com, etc
