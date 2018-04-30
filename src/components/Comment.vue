@@ -122,7 +122,8 @@
             div(class="qcw-comment__state qcw-comment__state--read" v-if="!comment.isChannel && comment.isRead")
               icon(name="ic-double-check" class="ic-double-check__state")
 
-    div(class="failed-info" v-if="comment.isFailed" :class="{ 'failed--last': isLast }") Message failed to send.
+    div(class="failed-info" v-if="comment.isFailed"
+      :class="{ 'failed--last': isLast }") Message failed to send.
       span(@click="resend(comment)" class="" v-if="comment.isFailed") Resend
 
 </template>
@@ -243,25 +244,21 @@ export default {
       if (!comment.isChannel) {
         actions.push({
           text: 'For me',
-          onClick: (e, toastObject) => this.deleteComment(comment, false)
+          onClick: () => this.deleteComment(comment, false)
             .then(() => {
-              toastObject.goAway(0);
               this.$toasted.success('Message deleted');
             }, (err) => {
-              toastObject.goAway(0);
               this.$toasted.error(`Failed deleting message: ${err}`);
             }),
         });
       }
       actions.push({
         text: 'For everyone',
-        onClick: (e, toastObject) => this.deleteComment(comment, true)
+        onClick: () => this.deleteComment(comment, true)
           .then(() => {
-            toastObject.goAway(0);
             this.$toasted.success('Message deleted');
-          }, (err) => {
-            toastObject.goAway(0);
-            this.$toasted.error(`Failed deleting message: ${err}`);
+          }, () => {
+            this.$toasted.error('Failed deleting message');
           }),
       });
       actions.push({
@@ -274,8 +271,18 @@ export default {
       });
     },
     deleteComment(comment, isForEveryone) {
-      return this.core
-        .deleteComment(this.core.selected.id, [comment.unique_id], isForEveryone, true);
+      this.$toasted.clear();
+      if (comment.isFailed) return this.deleteLocalComment(comment);
+      const roomId = this.core.selected.id;
+      // const commentIds = [comment.unique_id];
+      // return this.core.deleteComment(roomId, commentIds, isForEveryone, true);
+      return this.core.deleteComment(roomId, [-1], isForEveryone, true);
+    },
+    deleteLocalComment(comment) {
+      const comments = this.core.selected.comments;
+      const commentToBeFound = comments.findIndex(com => com.unique_id === comment.unique_id);
+      if (commentToBeFound > -1) comments.splice(commentToBeFound, 1);
+      return Promise.resolve(comments);
     },
     haveTemplate(comment) {
       if (!this.core.customTemplate) return false;

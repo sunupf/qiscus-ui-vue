@@ -40,6 +40,9 @@ $fontColorTitle = $darkGrey;
 $bgContent = $darkerWhite;
 
 .qcw-dropzone-area
+  display flex
+  justify-content center
+  align-items center
   width $width
   height 100%
   position absolute
@@ -97,5 +100,4 @@ $bgContent = $darkerWhite;
 
   .qcw-dropzone-text
     top 50%
-    width 100%
 </style>
