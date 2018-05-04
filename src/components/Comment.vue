@@ -274,9 +274,8 @@ export default {
       this.$toasted.clear();
       if (comment.isFailed) return this.deleteLocalComment(comment);
       const roomId = this.core.selected.id;
-      // const commentIds = [comment.unique_id];
-      // return this.core.deleteComment(roomId, commentIds, isForEveryone, true);
-      return this.core.deleteComment(roomId, [-1], isForEveryone, true);
+      const commentIds = [comment.unique_id];
+      return this.core.deleteComment(roomId, commentIds, isForEveryone, true);
     },
     deleteLocalComment(comment) {
       const comments = this.core.selected.comments;
@@ -297,7 +296,9 @@ export default {
       window.open(this.comment.payload.url, 'AccountLinkingPopup', 'width=500,height=400,location=no,menubar=no,resizable=1,status=no,toolbar=no');
     },
     messageInfoHandler(comment) {
-      this.core.options.messageInfoCallback(comment);
+      if (this.core.options.messageInfoCallback) {
+        this.core.options.messageInfoCallback(comment);
+      }
     },
     menuMoreClicked(id) {
       const commentId = (this.currentMenuId === id) ? null : id;
