@@ -55,7 +55,7 @@ $bgContent = $darkerWhite;
   border-bottom-right-radius 20px
   opacity 0
   visibility hidden
-  transition: all 0.3s ease-out;
+  transition all 0.3s ease-out
   &.qcw-dropzone-over
     opacity 1
     visibility visible
