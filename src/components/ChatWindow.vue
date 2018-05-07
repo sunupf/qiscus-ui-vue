@@ -13,9 +13,15 @@
       @toggle-window="() => toggleWindowStatus()"
       @header-click="() => headerClickedHandler()")
 
+    file-drag-drop(
+      :core="core"
+      :dragging="dragging"
+      @onDragging="onDragging")
+
     comments(:core="core" :on-click-image="openImageModal"
       :repliedComment="repliedComment"
-      :replyHandler="setReply" :onupdate="scrollToBottom")
+      :replyHandler="setReply" :onupdate="scrollToBottom"
+      @onDragging="onDragging")
 
     comment-form(:core="core"
       v-if="core.UI.config.showCommentForm"
@@ -32,6 +38,7 @@ import { scrollIntoLastElement } from '../lib/utils';
 import ImageModal from './ImageModal';
 import UploadInfo from './UploadInfo';
 import ChatHeader from './ChatHeader';
+import FileDragDrop from './FileDragDrop';
 
 export default {
   name: 'ChatWindow',
@@ -45,12 +52,14 @@ export default {
     ImageModal,
     UploadInfo,
     ChatHeader,
+    FileDragDrop,
   },
   data() {
     return {
       repliedComment: null,
       imageModalContent: null,
       imageModalIsActive: false,
+      dragging: false,
     };
   },
   computed: {
@@ -112,6 +121,9 @@ export default {
     },
     scrollToBottom() {
       scrollIntoLastElement(this.core);
+    },
+    onDragging(status) {
+      this.dragging = status;
     },
   },
 };
@@ -175,7 +187,6 @@ export default {
         font-size 13px
         white-space: nowrap;
         overflow: hidden;
-
 
   .qcw-comments
     flex 1
