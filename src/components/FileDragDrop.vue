@@ -21,7 +21,7 @@ export default {
   props: ['title', 'core', 'dragging'],
   methods: {
     changeFile(e) {
-      uploadFile(e, this.core);
+      uploadFile(e, this.core, this.$toasted);
       this.onDragging(false);
     },
     onDragging(status) {
