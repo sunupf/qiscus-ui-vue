@@ -1,21 +1,13 @@
 <template lang="pug">
   div.qcw-comments(@scroll="onScroll($event)"
     ref="scrollTarget"
+    @dragenter="onDragging(true)"
     :class="{'isReading': isReading}")
     div.inner
       div.qcw-load-comment-indicator(v-if="core.isLoading")
         loader()
 
-      file-drag-drop(
-        :core="core"
-        :dragging="dragging"
-        @onDragging="onDragging"
-      )
-
-      ul(
-        v-if="core.selected"
-        @dragenter="dragging=true"
-      )
+      ul(v-if="core.selected")
         li(class="qcw-load-more qcw-load-more-btn" @click="loadMore" v-if="comments.length > 0 && comments[0].before_id > 0")
           icon(name="ic-load" class="ic-load-more__state" v-if="isLoadingMore")
           span Load More
@@ -43,12 +35,11 @@
 import Icon from './Icon';
 import Loader from './Loader';
 import Comment from './Comment';
-import FileDragDrop from './FileDragDrop';
 import { scrollIntoLastElement } from '../lib/utils';
 
 export default {
   name: 'CommentList',
-  components: { Icon, Loader, Comment, FileDragDrop },
+  components: { Icon, Loader, Comment },
   props: ['core', 'onClickImage', 'onupdate', 'replyHandler'],
   data() {
     return {
@@ -56,7 +47,6 @@ export default {
       isReading: false,
       commentLength: 0,
       currentMenuId: null,
-      dragging: false,
       timeoutId: -1,
     };
   },
@@ -102,7 +92,7 @@ export default {
       this.currentMenuId = id;
     },
     onDragging(status) {
-      this.dragging = status;
+      this.$emit('onDragging', status);
     },
   },
 };
