@@ -37,12 +37,9 @@
             v-click-outside="onClickMenuOutside"
             )
             ul
-              li
-                span(@click="replyHandler(comment)") Reply
-              li
-                span(@click="confirmDeleteComment(comment)") Delete
-              li
-                span(@click="messageInfoHandler(comment)") Message Info
+              li(@click="replyHandler(comment)") Reply
+              li(@click="confirmDeleteComment(comment)") Delete
+              li(@click="messageInfoHandler(comment)") Message Info
 
           //- CommentType: "location"
           static-map(:lat="comment.payload.latitude"
