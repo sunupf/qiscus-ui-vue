@@ -1,10 +1,6 @@
 {
   "name": "qiscus-ui-vue",
-<<<<<<< HEAD
   "version": "2.6.5-beta1",
-=======
-  "version": "2.6.5-alpha4",
->>>>>>> 4e332aa68a9116ed156d8fa9b50173ac1d3b07f4
   "description": "A UI implementation of qiscus sdk core using Vue.js",
   "author": "Qiscus <contact.us@qiscus.com>",
   "private": true,
