@@ -4,7 +4,6 @@ export const uploadFile = (e, caption, core, toasted) => {
   const files = e.target.files || e.dataTransfer.files;
   const formData = new FormData();
   const roomId = core.selected.id;
-  const commentText = caption || `[file] ${url} [/file]`;
 
   // check allowed file type
   // ambil dulu extensi file nya sebelumnya.
@@ -36,7 +35,8 @@ export const uploadFile = (e, caption, core, toasted) => {
         caption: caption || '',
         file_name: files[0].name,
       };
-      core.sendComment(roomId, `[file] ${url} [/file]`, null,
+      const commentText = caption || `[file] ${url} [/file]`;
+      core.sendComment(roomId, commentText, null,
       'file_attachment', JSON.stringify(attachmentPayload))
         .then(() => {
           core.removeUploadedFile(files[0].name, roomId);
