@@ -5,9 +5,9 @@
       label
         input(class="uploader__input" name="file_all" type="file" @change="changeFile")
         icon(name="ic-file-attachment" :fill="core.UI.colors.formMessageIconColor")
-    i(class='qcw-icon')
+    i(class='qcw-icon' @click="toggleAttachmentForm")
       label
-        input(class="uploader__input" name="file_image" type="file" accept="image/*" @change="changeFile")
+        //- input(class="uploader__input" name="file_image" type="file" accept="image/*" @change="changeFile")
         icon(name="ic-image-attachment" :fill="core.UI.colors.formMessageIconColor")
 
     textarea(placeholder="Type your message"
@@ -17,16 +17,23 @@
       v-model="commentInput")
     i(@click="trySubmitComment($event)")
       icon(name="ic-send-message" :fill="sendBtnStatus")
+
+    attachment-form(
+      :uploadHandler="changeFile"
+      v-if="showAttachmentForm"
+      :closeFormHandler="toggleAttachmentForm"
+    )
 </template>
 
 <script>
 import { uploadFile } from '../lib/fileUploader';
 import { scrollIntoLastElement } from '../lib/utils';
+import AttachmentForm from './AttachmentForm';
 import Icon from './Icon';
 
 export default {
   name: 'CommentForm',
-  components: { Icon },
+  components: { AttachmentForm, Icon },
   props: ['core', 'repliedComment', 'closeReplyHandler'],
   data() {
     return {
@@ -37,6 +44,7 @@ export default {
       toggleEmoji: false,
       textareaStyle: {},
       emojione: (typeof emojione !== 'undefined') ? emojione : {},
+      showAttachmentForm: false,
     };
   },
   mounted() {
@@ -58,6 +66,9 @@ export default {
     // addEmoji(emoji) {
     //   this.commentInput = this.commentInput + emoji.native;
     // },
+    toggleAttachmentForm() {
+      this.showAttachmentForm = !this.showAttachmentForm;
+    },
     trySubmitComment(e) {
       if (!e.shiftKey) {
         e.preventDefault();
@@ -127,8 +138,9 @@ export default {
         self.core.realtimeAdapter.publishTyping(0);
       }
     },
-    changeFile(e) {
-      uploadFile(e, this.core, this.$toasted);
+    changeFile(file, caption) {
+      uploadFile(file, caption, this.core, this.$toasted);
+      this.showAttachmentForm = false;
     },
   },
 };
