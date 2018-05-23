@@ -9,7 +9,7 @@
     div(class="qcw-attachment-form__action")
       input(class="qcw-attachment-form__caption-txt" placeholder="add your caption ..." v-model="caption")
       i(@click="uploadFile")
-        icon(name="ic-send-message" :fill="grey")
+        icon(name="ic-send-message" fill="grey")
 </template>
 
 <script>
@@ -30,7 +30,7 @@
     computed: {
       style() {
         return this.thumbnail
-          ? `background: url(${this.thumbnail}) no-repeat center; background-size: cover`
+          ? `background: #FFF url(${this.thumbnail}) no-repeat center; background-size: cover`
           : 'background: #FFF';
       },
     },

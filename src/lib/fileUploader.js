@@ -35,7 +35,7 @@ export const uploadFile = (e, caption, core, toasted) => {
         caption: caption || '',
         file_name: files[0].name,
       };
-      const commentText = caption || `[file] ${url} [/file]`;
+      const commentText = `[file] ${url} [/file]`;
       core.sendComment(roomId, commentText, null,
       'file_attachment', JSON.stringify(attachmentPayload))
         .then(() => {
