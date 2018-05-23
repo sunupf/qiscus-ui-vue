@@ -21,7 +21,7 @@ export default {
   props: ['title', 'core', 'dragging'],
   methods: {
     changeFile(e) {
-      uploadFile(e, this.core, this.$toasted);
+      uploadFile(e, null, this.core, this.$toasted);
       this.onDragging(false);
     },
     onDragging(status) {
@@ -33,7 +33,7 @@ export default {
 
 <style lang="stylus">
 @import '../assets/stylus/_variables.styl'
-$width = 350px; 
+$width = 350px;
 $height = $width;
 $fontSizeTitle = 16px;
 $fontColorTitle = $darkGrey;
