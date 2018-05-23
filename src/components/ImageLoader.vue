@@ -1,10 +1,10 @@
 <template>
   <div class="image-loader">
-    <div class="loading-image-container" v-if="isLoading"> 
+    <div class="loading-image-container" v-if="isLoading">
       <i class="">
         <icon name="ic-load"></icon>
       </i>
-      Loading Image...
+      <span class="label">Loading Image...</span>
     </div>
     <div class="qcw-image-container" v-if="isImage && !isLoading && error==''" @click="clickImageHandler">
       <img :src="imageSrc" :alt="imageSrc" />
@@ -120,30 +120,38 @@
   .image-loader + .qcw-comment__content
     margin-top 12px
 
-  .reply-wrapper--preview .qcw-image-container, 
-  .qcw-comment__message .qcw-image-container 
+  .image-loader,
+  .loading-image-container
+    max-height 120px
+    min-height 120px
+
+  .loading-image-container
+    display flex
+    flex-direction column
+    justify-content center
+    align-items center
+
+  .reply-wrapper--preview .qcw-image-container,
+  .qcw-comment__message .qcw-image-container
     display flex
     align-items center
     justify-content center
     overflow hidden
+    min-height 120px
     max-height 120px
 
-  .qcw-image-container 
+  .qcw-image-container
     width calc(100%+8px)
     margin -4px
     padding-bottom -4px
     border-radius 3px
     img
-      zoom 2
-      display: block;
+      height 100%
+      width 100%
+      display block
+      object-fit: cover
 
-      height: auto;
-      max-height: 100%;
-
-      width: auto;
-      max-width: 100%;
-
-  .reply-wrapper--preview .qcw-file-container 
+  .reply-wrapper--preview .qcw-file-container
     margin 4px 0 0 0
     a
       justify-content flex-start
