@@ -120,11 +120,6 @@
   .image-loader + .qcw-comment__content
     margin-top 12px
 
-  .image-loader,
-  .loading-image-container
-    max-height 120px
-    min-height 120px
-
   .loading-image-container
     display flex
     flex-direction column

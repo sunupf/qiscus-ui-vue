@@ -140,9 +140,9 @@ export default {
   .qcw-comment__state--read
     .qc-icon
       &.ic-double-check__state
-      fill $green
+        fill $green
       &.ic-option-menu__state
-          fill $darkGrey
+        fill $darkGrey
   .qc-icon
     &.ic-load__state,
     &.ic-check__state,
