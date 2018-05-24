@@ -244,8 +244,8 @@ export default {
           onClick: () => this.deleteComment(comment, false)
             .then(() => {
               this.$toasted.success('Message deleted');
-            }, (err) => {
-              this.$toasted.error(`Failed deleting message: ${err}`);
+            }, () => {
+              this.$toasted.error('Failed deleting message');
             }),
         });
       }
