@@ -76,6 +76,8 @@ You can refer to their respected page for more detail installing them both.
 You can download the sample app directly from our [github](https://github.com/qiscus/qiscus-sdk-web-sample),
 or if you already installed Git you can just clone directly from your command
 line.
+
+
 ```bash
 $ git clone https://github.com/qiscus/qiscus-sdk-web-sample.git
 ```
