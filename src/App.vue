@@ -77,7 +77,7 @@ export default {
       widgetButtonText: 'Talk to Us',
       isReading: false,
       chatTarget(target) {
-        self.core.chatTarget(target).then((res) => {
+        return self.core.chatTarget(target).then((res) => {
           if (!self.chatWindowStatus) self.toggleWindowStatus();
           window.setTimeout(() => scrollIntoLastElement(self.core), 0);
           focusMessageForm();
@@ -89,7 +89,7 @@ export default {
         });
       },
       chatGroup(id) {
-        self.core.chatGroup(id).then((res) => {
+        return self.core.chatGroup(id).then((res) => {
           if (!self.chatWindowStatus) self.toggleWindowStatus();
           window.setTimeout(() => scrollIntoLastElement(self.core), 0);
           self.core.UI.isReading = false;
@@ -99,7 +99,7 @@ export default {
       },
       gotoComment(comment) {
         if (!self.core.isInit) return;
-        self.core.chatGroup(comment.room_id).then((res) => {
+        return self.core.chatGroup(comment.room_id).then((res) => {
           self.core.UI.isReading = false;
           window.setTimeout(() => scrollIntoElement(comment.id), 0);
           focusMessageForm();
