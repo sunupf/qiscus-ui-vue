@@ -5,9 +5,9 @@
       label
         input(class="uploader__input" name="file_all" type="file" @change="changeFile")
         icon(name="ic-file-attachment" :fill="core.UI.colors.formMessageIconColor")
-    i(class='qcw-icon')
+    i(class='qcw-icon' @click="toggleAttachmentForm")
       label
-        input(class="uploader__input" name="file_image" type="file" accept="image/*" @change="changeFile")
+        //- input(class="uploader__input" name="file_image" type="file" accept="image/*" @change="changeFile")
         icon(name="ic-image-attachment" :fill="core.UI.colors.formMessageIconColor")
 
     textarea(placeholder="Type your message"
@@ -27,7 +27,7 @@ import Icon from './Icon';
 export default {
   name: 'CommentForm',
   components: { Icon },
-  props: ['core', 'repliedComment', 'closeReplyHandler'],
+  props: ['core', 'repliedComment', 'closeReplyHandler', 'showAttachmentForm', 'toggleAttachmentForm'],
   data() {
     return {
       commentInput: '',
@@ -127,8 +127,8 @@ export default {
         self.core.realtimeAdapter.publishTyping(0);
       }
     },
-    changeFile(e) {
-      uploadFile(e, this.core, this.$toasted);
+    changeFile(file, caption) {
+      uploadFile(file, caption, this.core, this.$toasted);
     },
   },
 };

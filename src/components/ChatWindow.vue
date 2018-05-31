@@ -18,21 +18,29 @@
       @toggle-window="() => toggleWindowStatus()"
       @header-click="() => headerClickedHandler()")
 
+    attachment-form(
+      :uploadHandler="uploadFile"
+      v-if="showAttachmentForm"
+      :closeFormHandler="toggleAttachmentForm"
+    )
+
     file-drag-drop(
       :core="core"
       :dragging="dragging"
       @onDragging="onDragging")
 
-    comment-list(:core="core" 
+    comment-list(:core="core"
       :on-click-image="openImageModal"
       :repliedComment="repliedComment"
-      :replyHandler="setReply" 
+      :replyHandler="setReply"
       :onupdate="scrollToBottom"
       @onDragging="onDragging")
 
     comment-form(:core="core"
       v-if="core.UI.config.showCommentForm"
       :repliedComment="repliedComment"
+      :showAttachmentForm="showAttachmentForm"
+      :toggleAttachmentForm="toggleAttachmentForm"
       :closeReplyHandler="closeReply")
 </template>
 
@@ -47,6 +55,8 @@ import ImageModal from './ImageModal';
 import UploadInfo from './UploadInfo';
 import ChatHeader from './ChatHeader';
 import FileDragDrop from './FileDragDrop';
+import { uploadFile } from '../lib/fileUploader';
+import AttachmentForm from './AttachmentForm';
 
 export default {
   name: 'ChatWindow',
@@ -61,6 +71,7 @@ export default {
     UploadInfo,
     ChatHeader,
     FileDragDrop,
+    AttachmentForm,
   },
   data() {
     return {
@@ -68,6 +79,7 @@ export default {
       imageModalContent: null,
       imageModalIsActive: false,
       dragging: false,
+      showAttachmentForm: false,
     };
   },
   computed: {
@@ -106,6 +118,9 @@ export default {
     },
   },
   methods: {
+    toggleAttachmentForm() {
+      this.showAttachmentForm = !this.showAttachmentForm;
+    },
     headerClickedHandler() {
       this.core.options.headerClickedCallback();
     },
@@ -132,6 +147,10 @@ export default {
     },
     onDragging(status) {
       this.dragging = status;
+    },
+    uploadFile(file, caption) {
+      uploadFile(file, caption, this.core, this.$toasted);
+      this.showAttachmentForm = false;
     },
   },
 };
@@ -258,5 +277,3 @@ export default {
       height 12px
       width 12px
 </style>
-
-
