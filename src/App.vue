@@ -76,6 +76,8 @@ export default {
       config: uiConfig,
       widgetButtonText: 'Talk to Us',
       isReading: false,
+      isMessageInfoActive: false,
+      messageInfoData: null,
       chatTarget(target) {
         return self.core.chatTarget(target).then((res) => {
           if (!self.chatWindowStatus) self.toggleWindowStatus();
@@ -98,7 +100,7 @@ export default {
         }, err => Promise.reject(err));
       },
       gotoComment(comment) {
-        if (!self.core.isInit) return;
+        if (!self.core.isInit) return Promise.reject('widget is not initiated');
         return self.core.chatGroup(comment.room_id).then((res) => {
           self.core.UI.isReading = false;
           window.setTimeout(() => scrollIntoElement(comment.id), 0);

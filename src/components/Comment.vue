@@ -25,10 +25,10 @@
           i(@click="replyHandler(comment)" class="reply-btn" :class="{'reply-btn--me': isMe}" v-if="!isDeleted && !isMe")
             icon(name="ic-reply")
 
-          //- more vertical button 
+          //- more vertical button
           i(class="qcw-comment__more" @click="menuMoreClicked(comment.id)" v-if="isMe && !isDeleted")
             icon(name="ic-more-horiz")
-            
+
           div(
             :key="`comment_${comment.id}`"
             ref="`more_${comment.id}`"
@@ -293,9 +293,10 @@ export default {
       window.open(this.comment.payload.url, 'AccountLinkingPopup', 'width=500,height=400,location=no,menubar=no,resizable=1,status=no,toolbar=no');
     },
     messageInfoHandler(comment) {
-      if (this.core.options.messageInfoCallback) {
-        this.core.options.messageInfoCallback(comment);
-      }
+      this.core.UI.isMessageInfoActive = true;
+      this.core.UI.messageInfoData = {
+        comment,
+      };
     },
     menuMoreClicked(id) {
       const commentId = (this.currentMenuId === id) ? null : id;
