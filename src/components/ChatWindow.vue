@@ -1,47 +1,50 @@
 <template lang="pug">
   div.qcw-chat-wrapper
+    div.qcw-main
+      svg-icon
 
-    svg-icon
+      image-modal(:comment="imageModalContent"
+        :closeBtnHandler="closeImageModal"
+        v-if="imageModalIsActive")
 
-    image-modal(:comment="imageModalContent"
-      :closeBtnHandler="closeImageModal"
-      v-if="imageModalIsActive")
+      comment-reply-preview(v-if="repliedComment"
+        :comment="repliedComment"
+        :closeReplyHandler="closeReply")
 
-    comment-reply-preview(v-if="repliedComment"
-      :comment="repliedComment"
-      :closeReplyHandler="closeReply")
+      upload-info(v-if="uploadedFiles.length > 0"
+        :files="uploadedFiles")
 
-    upload-info(v-if="uploadedFiles.length > 0"
-      :files="uploadedFiles")
+      chat-header(v-if="core.selected && core.UI.config.showHeader"
+        @toggle-window="() => toggleWindowStatus()"
+        @header-click="() => headerClickedHandler()")
 
-    chat-header(v-if="core.selected && core.UI.config.showHeader"
-      @toggle-window="() => toggleWindowStatus()"
-      @header-click="() => headerClickedHandler()")
+      attachment-form(
+        :uploadHandler="uploadFile"
+        v-if="showAttachmentForm"
+        :closeFormHandler="toggleAttachmentForm"
+      )
 
-    attachment-form(
-      :uploadHandler="uploadFile"
-      v-if="showAttachmentForm"
-      :closeFormHandler="toggleAttachmentForm"
-    )
+      file-drag-drop(
+        :core="core"
+        :dragging="dragging"
+        @onDragging="onDragging")
 
-    file-drag-drop(
-      :core="core"
-      :dragging="dragging"
-      @onDragging="onDragging")
+      comment-list(:core="core"
+        :on-click-image="openImageModal"
+        :repliedComment="repliedComment"
+        :replyHandler="setReply"
+        :onupdate="scrollToBottom"
+        @onDragging="onDragging")
 
-    comment-list(:core="core"
-      :on-click-image="openImageModal"
-      :repliedComment="repliedComment"
-      :replyHandler="setReply"
-      :onupdate="scrollToBottom"
-      @onDragging="onDragging")
+      comment-form(:core="core"
+        v-if="core.UI.config.showCommentForm"
+        :repliedComment="repliedComment"
+        :showAttachmentForm="showAttachmentForm"
+        :toggleAttachmentForm="toggleAttachmentForm"
+        :closeReplyHandler="closeReply")
 
-    comment-form(:core="core"
-      v-if="core.UI.config.showCommentForm"
-      :repliedComment="repliedComment"
-      :showAttachmentForm="showAttachmentForm"
-      :toggleAttachmentForm="toggleAttachmentForm"
-      :closeReplyHandler="closeReply")
+    //- Start of message info
+    message-info(v-if="core.UI.isMessageInfoActive" :core="core")
 </template>
 
 <script>
@@ -57,6 +60,7 @@ import ChatHeader from './ChatHeader';
 import FileDragDrop from './FileDragDrop';
 import { uploadFile } from '../lib/fileUploader';
 import AttachmentForm from './AttachmentForm';
+import MessageInfo from './MessageInfo';
 
 export default {
   name: 'ChatWindow',
@@ -72,6 +76,7 @@ export default {
     ChatHeader,
     FileDragDrop,
     AttachmentForm,
+    MessageInfo,
   },
   data() {
     return {
@@ -164,7 +169,6 @@ export default {
     width 360px
     height 0
     display flex
-    flex-direction column
     box-shadow 0 7px 16px rgba(46,46,46,.15)
     border-radius 19px
     overflow hidden
@@ -181,6 +185,11 @@ export default {
         width 100vw
         height 100vh
         z-index 1
+
+  .qcw-main
+    display flex
+    flex-direction column
+    position relative
 
   .qcw-window-toggle-btn
     cursor pointer
