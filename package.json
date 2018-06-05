@@ -12,7 +12,7 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
-    "qiscus-sdk-core": "git://github.com/qiscus/qiscus-sdk-web-core.git#ddce9c941b52bfe902e2dbfbbb8c589d9828523c",
+    "qiscus-sdk-core": "git://github.com/qiscus/qiscus-sdk-web-core.git#e770573",
     "vue-toasted": "^1.1.22"
   },
   "devDependencies": {
