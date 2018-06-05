@@ -106,6 +106,8 @@
             v-if="!isMe"
             :style="messageTimeStyle") {{comment.time}}
 
+          span(class="qcw-comment__time" v-else) {{comment.time}}
+
           //- State
           div(v-if="isMe")
             div(class="qcw-comment__state qcw-comment__state--sending" v-if="comment.isPending")

@@ -411,7 +411,7 @@ export default {
         left auto
       .qcw-comment__time
         top 2px
-        left -58px
+        left -35px
       .qcw-comment__state
         left -20px
         svg.qc-icon
