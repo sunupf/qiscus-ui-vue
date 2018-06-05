@@ -70,19 +70,21 @@ To meet your expectations, we suggest you try out our sample app. The sample app
 
 To run all of the sample code, you need to install Git and NodeJS. Git will
 be used to clone the repository so you can play around with the code locally.
-NodeJS is needed to install and resolve dependencies to run the Sample App.
+NodeJS is needed to install and resolve dependencies to run the sample App.
 You can refer to their respected page for more detail installing them both.
 
 You can download the sample app directly from our [github](https://github.com/qiscus/qiscus-sdk-web-sample),
 or if you already installed Git you can just clone directly from your command
 line.
+
+
 ```bash
 $ git clone https://github.com/qiscus/qiscus-sdk-web-sample.git
 ```
 
 After cloning finished, you will need to create simple server to run the sample
 app. In the example below, we use `http-server` from nodejs package manager
-to server Sample App locally.
+to server sample app locally.
 ```bash
 # Install http-server from npm globally
 $ npm install http-server -g
