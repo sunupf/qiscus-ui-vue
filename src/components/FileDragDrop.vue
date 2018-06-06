@@ -50,7 +50,7 @@ $bgContent = $darkerWhite;
   height calc(100% - 73px)
   width 100%
   background $darkWhite
-  z-index 5
+  z-index 3
   border-bottom-left-radius 20px
   border-bottom-right-radius 20px
   opacity 0
