@@ -49,6 +49,10 @@
             :mapurl="comment.payload.map_url"
             v-if="comment.type == 'location'")
 
+          //- CommentType: "contact_person"
+          comment-contact(v-if="comment.type == 'contact_person'"
+            :comment="comment")
+
           //- CommentType: "file_attachment"
           file-attachment(v-if="comment.type == 'file_attachment'"
             :comment="comment"
@@ -140,6 +144,7 @@ import CommentCustom from './CommentCustom';
 import CommentCarousel from './CommentCarousel';
 import CommentCard from './CommentCard';
 import CommentButtons from './CommentButtons';
+import CommentContact from './CommentContact';
 import clickOutside from '../lib/clickOutside';
 
 export default {
@@ -156,6 +161,7 @@ export default {
     CommentCarousel,
     CommentCard,
     CommentButtons,
+    CommentContact,
   },
   props: ['comment', 'commentBefore', 'commentAfter', 'userData', 'onClickImage', 'onupdate', 'replyHandler', 'showAvatar', 'currentMenuId'],
   directives: { clickOutside },
