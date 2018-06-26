@@ -27,8 +27,8 @@ export default {
     position absolute
     animation fadeInUp 0.3s ease-out
     width calc(100% - 16px)
-    top 81px;
-    z-index 1
+    top 81px
+    z-index 4
     margin 0 8px 8px
     background-color $white
     padding 8px 12px
