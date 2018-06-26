@@ -9,7 +9,8 @@
     "start": "npm run dev",
     "build": "node build/build.js",
     "build-latest": "node build/build-latest.js",
-    "lint": "eslint --ext .js,.vue src"
+    "lint": "eslint --ext .js,.vue src",
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "qiscus-sdk-core": "git://github.com/qiscus/qiscus-sdk-web-core.git#v2.6.6-alpha1",
