@@ -21,7 +21,7 @@ export default {
   props: ['title', 'core', 'dragging'],
   methods: {
     changeFile(e) {
-      uploadFile(e, this.core, this.$toasted);
+      uploadFile(e, null, this.core, this.$toasted);
       this.onDragging(false);
     },
     onDragging(status) {
@@ -33,7 +33,7 @@ export default {
 
 <style lang="stylus">
 @import '../assets/stylus/_variables.styl'
-$width = 350px; 
+$width = 350px;
 $height = $width;
 $fontSizeTitle = 16px;
 $fontColorTitle = $darkGrey;
@@ -50,7 +50,7 @@ $bgContent = $darkerWhite;
   height calc(100% - 73px)
   width 100%
   background $darkWhite
-  z-index 5
+  z-index 3
   border-bottom-left-radius 20px
   border-bottom-right-radius 20px
   opacity 0

@@ -182,6 +182,11 @@
       .file-name
         font-weight 600
         font-size 12px
+      .file-description
+        font-size 11px
+        font-weight 200
+        line-height 14px
+
   .reload-image-btn {
     display: block;
     width: 100%;

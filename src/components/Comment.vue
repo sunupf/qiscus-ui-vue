@@ -25,10 +25,10 @@
           i(@click="replyHandler(comment)" class="reply-btn" :class="{'reply-btn--me': isMe}" v-if="!isDeleted && !isMe")
             icon(name="ic-reply")
 
-          //- more vertical button 
+          //- more vertical button
           i(class="qcw-comment__more" @click="menuMoreClicked(comment.id)" v-if="isMe && !isDeleted")
             icon(name="ic-more-horiz")
-            
+
           div(
             :key="`comment_${comment.id}`"
             ref="`more_${comment.id}`"
@@ -48,6 +48,10 @@
             :message="comment.message"
             :mapurl="comment.payload.map_url"
             v-if="comment.type == 'location'")
+
+          //- CommentType: "contact_person"
+          comment-contact(v-if="comment.type == 'contact_person'"
+            :comment="comment")
 
           //- CommentType: "file_attachment"
           file-attachment(v-if="comment.type == 'file_attachment'"
@@ -140,6 +144,7 @@ import CommentCustom from './CommentCustom';
 import CommentCarousel from './CommentCarousel';
 import CommentCard from './CommentCard';
 import CommentButtons from './CommentButtons';
+import CommentContact from './CommentContact';
 import clickOutside from '../lib/clickOutside';
 
 export default {
@@ -156,6 +161,7 @@ export default {
     CommentCarousel,
     CommentCard,
     CommentButtons,
+    CommentContact,
   },
   props: ['comment', 'commentBefore', 'commentAfter', 'userData', 'onClickImage', 'onupdate', 'replyHandler', 'showAvatar', 'currentMenuId'],
   directives: { clickOutside },
@@ -295,9 +301,10 @@ export default {
       window.open(this.comment.payload.url, 'AccountLinkingPopup', 'width=500,height=400,location=no,menubar=no,resizable=1,status=no,toolbar=no');
     },
     messageInfoHandler(comment) {
-      if (this.core.options.messageInfoCallback) {
-        this.core.options.messageInfoCallback(comment);
-      }
+      this.core.UI.isMessageInfoActive = true;
+      this.core.UI.messageInfoData = {
+        comment,
+      };
     },
     menuMoreClicked(id) {
       const commentId = (this.currentMenuId === id) ? null : id;

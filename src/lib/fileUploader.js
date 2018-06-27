@@ -1,6 +1,6 @@
 import { scrollIntoLastElement } from './utils';
 
-export const uploadFile = (e, core, toasted) => {
+export const uploadFile = (e, caption, core, toasted) => {
   const files = e.target.files || e.dataTransfer.files;
   const formData = new FormData();
   const roomId = core.selected.id;
@@ -32,10 +32,11 @@ export const uploadFile = (e, core, toasted) => {
       const url = JSON.parse(xhr.response).results.file.url;
       const attachmentPayload = {
         url,
-        caption: '',
+        caption: caption || '',
         file_name: files[0].name,
       };
-      core.sendComment(roomId, `[file] ${url} [/file]`, null,
+      const commentText = `[file] ${url} [/file]`;
+      core.sendComment(roomId, commentText, null,
       'file_attachment', JSON.stringify(attachmentPayload))
         .then(() => {
           core.removeUploadedFile(files[0].name, roomId);
