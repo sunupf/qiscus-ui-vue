@@ -63,8 +63,6 @@ export const updateProgress = (e, fileName, core) => {
       .find(f => f.name === fileName);
     if (fileObject) fileObject.progress = Math.round(percentComplete * 100);
     // console.log('%s', fileObject.progress);
-  } else {
-    console.log('unknown');
   }
 }
 

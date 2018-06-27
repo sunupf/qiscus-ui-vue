@@ -62,7 +62,7 @@
     },
     methods: {
       adjustScrollPosition() {
-        console.log('position maintained');
+        // console.log('position maintained');
         maintainScroll();
       },
       clickImageHandler() {
