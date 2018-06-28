@@ -72,7 +72,7 @@ export default {
   z-index 999
   display flex
   flex-direction column
-  flex 1 auto
+  flex 1 0 320px
   .qcw-container--wide &
     position relative
 
