@@ -542,6 +542,10 @@ export default {
       word-wrap break-word
       white-space pre-line
   .qcw-comment__content
+    iframe
+      width 100%
+      height auto
+      display block
     img.emojione
       display inline-block
       vertical-align middle
