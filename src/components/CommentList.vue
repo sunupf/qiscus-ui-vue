@@ -437,7 +437,7 @@ export default {
       ul
         top 25px
         left -175px
-  
+
   .failed-info
     text-align right
     margin-top -3px
@@ -542,9 +542,10 @@ export default {
       word-wrap break-word
       white-space pre-line
   .qcw-comment__content
+    iframe
+      width 100%
+      height auto
     img.emojione
       display inline-block
       vertical-align middle
 </style>
-
-
