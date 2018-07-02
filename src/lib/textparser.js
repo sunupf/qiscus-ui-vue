@@ -26,7 +26,7 @@ class QiscusTextParser {
   parse(text) {
     let renderedText = this.safeTagsReplace(text);
     renderedText = renderedText.replace(this.googleIframe,'<iframe style="border:1px solid #dedede;" width="455" height="320" src="https$3" frameborder="0"></iframe><br/>')
-    renderedText = renderedText.replace(this.youtubeLink,'<p><iframe style="border:1px solid #dedede;" width="455" height="320" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe></p>')
+    renderedText = renderedText.replace(this.youtubeLink,'<iframe style="border:1px solid #dedede;" width="455" height="320" src="https://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>')
       // .replace(this.imageLink,"<span class='imageloader loaded'><img src='$1' alt='$3$4' /></span>")
     renderedText = this.transformNonHttpUrl(renderedText); 
     renderedText = renderedText.replace(this.linkPattern, '<a href="$1" target="_blank">$1</a>')
