@@ -57,12 +57,16 @@ export default {
   },
   updated() {
     if (this.core.selected) {
+      console.log('this.comments', this.comments.length);
+      console.log('commentLength', this.commentLength);
       if (this.comments.length > this.commentLength) {
         const lastCommentIndex = this.comments.length - 1;
         const lastComment = this.comments[lastCommentIndex];
         this.core.readComment(this.core.selected.id, lastComment.id);
         this.commentLength = this.comments.length;
-        if (!this.isReading) scrollIntoLastElement(this.core);
+      }
+      if (!this.isReading) {
+        scrollIntoLastElement(this.core);
       }
     }
   },
