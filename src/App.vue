@@ -84,6 +84,7 @@ export default {
           window.setTimeout(() => scrollIntoLastElement(self.core), 0);
           focusMessageForm();
           self.core.UI.isReading = false;
+          QiscusUI.isMessageInfoActive = false;
           return Promise.resolve(res);
         }, (err) => {
           self.$toasted.error(`Error opening chatroom: ${err}`);
@@ -96,6 +97,7 @@ export default {
           window.setTimeout(() => scrollIntoLastElement(self.core), 0);
           self.core.UI.isReading = false;
           focusMessageForm();
+          QiscusUI.isMessageInfoActive = false;
           return Promise.resolve(res);
         }, err => Promise.reject(err));
       },

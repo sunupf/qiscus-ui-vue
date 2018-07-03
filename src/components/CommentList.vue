@@ -441,7 +441,7 @@ export default {
       ul
         top 25px
         left -175px
-  
+
   .failed-info
     text-align right
     margin-top -3px
@@ -554,5 +554,3 @@ export default {
       display inline-block
       vertical-align middle
 </style>
-
-
