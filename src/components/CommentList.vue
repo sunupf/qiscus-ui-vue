@@ -57,8 +57,6 @@ export default {
   },
   updated() {
     if (this.core.selected) {
-      console.log('this.comments', this.comments.length);
-      console.log('commentLength', this.commentLength);
       if (this.comments.length > this.commentLength) {
         const lastCommentIndex = this.comments.length - 1;
         const lastComment = this.comments[lastCommentIndex];
