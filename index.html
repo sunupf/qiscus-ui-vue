@@ -61,7 +61,7 @@
             },
             // When we're success login into qiscus SDK we'll have a 1-on-1 chat to guest2@qiscus.com
             // You can change this to any user you have on your AppId, e.g: contact@your_company.com, etc
-            loginSuccessCallback(data) { 
+            loginSuccessCallback(data) {
               // QiscusUI.chatTarget('admin@qiscusbot.com')
               if(altUser) {
                 QiscusUI.chatTarget('guest@qiscus.com')
@@ -80,7 +80,7 @@
           },
           customTemplate: true,
           templateFunction(comment) {
-            // if(comment.type == 'system_event') { if(comment.payload.payload.type == "application/hd.patient_info") 
+            // if(comment.type == 'system_event') { if(comment.payload.payload.type == "application/hd.patient_info")
             //     return `<div class="patient-card">
             //       <strong>Patient Info</strong>
             //       <h3>{payload.payload.content.name} <small>{payload.payload.content.gender}</small></h3>
@@ -120,7 +120,8 @@
           // statusOfflineColor: '#fff',
           // statusTypingColor: '#fff',
 
-          // widgetButtonBackgroundColor: '#fc0',
+          widgetButtonBackgroundColor: '#1abc9c',
+          widgetButtonTextColor: '#fff',
 
           // formMessageIconColor: '#ccc',
           // formMessageIconHoverColor: colors.green,

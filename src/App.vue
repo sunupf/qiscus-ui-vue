@@ -42,6 +42,7 @@ export default {
 
     const colorConfig = {
       widgetButtonBackgroundColor: colors.green,
+      widgetButtonTextColor: colors.white,
 
       headerBackgroundColor: colors.white,
       headerTitleColor: colors.darkGrey,
