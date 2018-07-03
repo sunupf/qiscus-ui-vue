@@ -7,7 +7,10 @@
       div(class="qcw-attachment-form__picker-btn") {{ label }}
       input(class="qcw-attachment-form__input" name="file_image" type="file" accept="image/*" @change="changeFile")
     div(class="qcw-attachment-form__action")
-      input(class="qcw-attachment-form__caption-txt" placeholder="add your caption ..." v-model="caption")
+      input(class="qcw-attachment-form__caption-txt"
+        placeholder="add your caption ..."
+        @keydown.enter="tryUploadFile($event)"
+        v-model="caption")
       i(@click="uploadFile")
         icon(name="ic-send-message" fill="grey")
 </template>
@@ -48,6 +51,13 @@
       },
       uploadFile() {
         this.uploadHandler(this.file, this.caption);
+      },
+      tryUploadFile(e) {
+        if (!e.shiftKey) {
+          e.preventDefault();
+          e.stopPropagation();
+          this.uploadFile();
+        }
       },
     },
   };
