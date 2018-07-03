@@ -2,7 +2,8 @@
   div(class="qcw-message-info")
     div(class="qcw-message-info__header")
       span Message Info
-      span(@click="closeMessageInfo") &times;
+      span(@click="closeMessageInfo") 
+        icon(name="ic-close")
 
     div(class="qcw-message-info__comment")
       div(class="qcw-message-info__comment-text" v-html="data.comment.message")
@@ -81,10 +82,13 @@ export default {
   justify-content space-between
   align-items center
   height 73px
-  padding 0 25px
+  padding 0 16px
   border-bottom 1px solid #e8e8e8
   color #777
   flex 0 auto
+  .qc-icon
+    width 14px
+    height 14px    
 
   & span:nth-child(2)
     cursor pointer
