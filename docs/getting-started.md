@@ -6,12 +6,19 @@ Qiscus Web Chat SDK, for now , supports Chrome 40+, Firefox 48+, and Microsoft E
 You will need to get our Web Chat SDK files from our CDN by including the Js and Css file.
 **Qiscus SDK Js File**
 ```
-https://qiscus-sdk.s3-ap-southeast-1.amazonaws.com/web/v2.5.11/qiscus-sdk.2.5.11.js
+https://qiscus-sdk.s3-ap-southeast-1.amazonaws.com/web/v2.6.5/qiscus-sdk.2.6.5.js
 ```
 **Qiscus SDK Css File**
 ```
-https://qiscus-sdk.s3-ap-southeast-1.amazonaws.com/web/v2.5.11/qiscus-sdk.2.5.11.css
+https://qiscus-sdk.s3-ap-southeast-1.amazonaws.com/web/v2.6.5/qiscus-sdk.2.6.5.css
 ```
+We also provide CDN for production purpose with compression enabled.
+**Qiscus SDK for Production**
+```
+https://d3p8ijl4igpb16.cloudfront.net/web/v2.6.5/qiscus-sdk.2.6.5.js
+https://d3p8ijl4igpb16.cloudfront.net/web/v2.6.5/qiscus-sdk.2.6.5.css
+```
+
 ## Getting Your App ID
 
 To start building app using Qiscus Web Chat SDK you need a key called `APP ID`.
