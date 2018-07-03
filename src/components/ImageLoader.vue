@@ -122,6 +122,9 @@
     margin 0
     width 100%
   .image-loader + .qcw-comment__content
+    width 100%
+    overflow hidden
+    text-overflow ellipsis
     margin-top 12px
 
   .loading-image-container

@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div(class="qcw-comment__attachment")
     image-loader(
       :comment="comment"
       :message="comment.message"
@@ -18,3 +18,8 @@ export default {
   props: ['comment', 'onClickImage', 'callback'],
 };
 </script>
+
+<style lang="stylus">
+.qcw-comment__attachment
+  overflow hidden
+</style>
