@@ -126,6 +126,9 @@
     overflow hidden
     text-overflow ellipsis
     margin-top 12px
+    word-break break-word
+    a
+      word-break break-all
 
   .loading-image-container
     display flex
