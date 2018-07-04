@@ -480,6 +480,7 @@ export default {
     border-radius 8px
 
     audio
+      min-width 250px
       width 100%
     .comment--parent &
       margin-left 60px

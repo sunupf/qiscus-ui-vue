@@ -12,11 +12,17 @@
       :src="comment.payload.url"
       width="100%") Sorry, your browser doesn't support embedded videos.
     image-loader(
-      v-else
+      v-if="fileType == 'image'"
       :comment="comment"
       :message="comment.message"
       :on-click-image="onClickImage"
       :callback="callback")
+    div(v-else class="qcw-file-container")
+      a(:href="comment.payload.url" target="_blank")
+        i
+          icon(:name="fileClassName")
+        div(class='file-meta')
+          div(class="file-name") {{ filename }}
 
     comment-render(:text="comment.payload.caption" v-if="comment.payload.caption != ''")
 </template>
