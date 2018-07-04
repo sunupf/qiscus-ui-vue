@@ -62,7 +62,9 @@ export default {
         const lastComment = this.comments[lastCommentIndex];
         this.core.readComment(this.core.selected.id, lastComment.id);
         this.commentLength = this.comments.length;
-        if (!this.isReading) scrollIntoLastElement(this.core);
+      }
+      if (!this.isReading) {
+        scrollIntoLastElement(this.core);
       }
     }
   },
@@ -549,6 +551,7 @@ export default {
     iframe
       width 100%
       height auto
+      display block
     img.emojione
       display inline-block
       vertical-align middle

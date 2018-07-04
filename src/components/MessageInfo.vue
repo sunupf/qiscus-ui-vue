@@ -9,7 +9,7 @@
       small(class="qcw-message-info__comment-time") {{ data.comment.time }}
 
     div(class="qcw-message-info__info")
-      strong.qcw-message-info__info-header
+      strong.qcw-message-info__info-header.read
         span Read By
         icon(name="ic-double-check")
 
@@ -19,7 +19,7 @@
           div(class="qcw-message-info__user-info")
             strong {{ r.user.username }}
             small {{ new Date(r.time).toLocaleString() }}
-      strong.qcw-message-info__info-header
+      strong.qcw-message-info__info-header.delivered
         span Delivered To
         icon(name="ic-check")
       ul
@@ -55,7 +55,7 @@ export default {
     this.core.userAdapter.getCommentReceiptStatus(this.data.comment.id)
       .then((res) => {
         res.results.delivered_to.forEach(d => this.delivered.push(d));
-        res.results.read_by.forEach(r => this.delivered.push(r));
+        res.results.read_by.forEach(r => this.read.push(r));
       });
   },
 };
@@ -138,8 +138,16 @@ export default {
     display flex
     justify-content space-between
 
+    &.read
+      .qc-icon
+        width 22px
+    &.delivered
+      .qc-icon
+        width 16px
+
     .qc-icon
-      width 16px
+      fill #94ca62
+
 
   ul
     list-style none
