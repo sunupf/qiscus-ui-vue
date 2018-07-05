@@ -13,7 +13,7 @@
     "heroku-postbuild": "npm run build"
   },
   "dependencies": {
-    "qiscus-sdk-core": "git://github.com/qiscus/qiscus-sdk-web-core.git#08d5a6d7aa5c028a4e644ff7fcbbcc8d191c6ade",
+    "qiscus-sdk-core": "git://github.com/qiscus/qiscus-sdk-web-core.git",
     "vue-toasted": "^1.1.22"
   },
   "devDependencies": {

@@ -145,14 +145,10 @@ export default {
     &.read
       .qc-icon
         width 22px
+        fill #94ca62
     &.delivered
       .qc-icon
         width 16px
-
-    .qc-icon
-      fill #94ca62
-
-
   ul
     list-style none
     margin 0
