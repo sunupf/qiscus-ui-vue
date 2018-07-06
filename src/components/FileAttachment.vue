@@ -47,7 +47,7 @@ export default {
     checkfileType(payload) {
       const splittedURL = payload.url.split('.');
       const ext = splittedURL[splittedURL.length - 1].toLowerCase();
-      const imageExts = ['jpg', 'jpeg', 'gif', 'webp'];
+      const imageExts = ['jpg', 'jpeg', 'gif', 'webp','png'];
       const videoExts = ['mov', 'mp4', 'webm'];
       const audioExts = ['mp3'];
       if (imageExts.includes(ext)) return 'image';
