@@ -7,7 +7,7 @@
       <span class="label">Loading Image...</span>
     </div>
     <div class="qcw-image-container" v-if="isImage && !isLoading && error==''" @click="clickImageHandler">
-      <img :src="imageSrc" :alt="imageSrc" :onload="adjustScrollPosition" ref="imageContainer"/>
+      <img :src="imageSrc" :alt="imageSrc" ref="imageContainer"/>
     </div>
     <div v-if="error">
       <p><i style="font-size: 2em; display: inline-block"><icon name="close"></icon></i> {{ error }}</p>
@@ -27,7 +27,7 @@
 
 <script>
   import Icon from './Icon';
-  import { maintainScroll } from '../lib/utils';
+  // import { maintainScroll } from '../lib/utils';
 
   export default {
     name: 'ImageLoader',
@@ -61,10 +61,10 @@
       URL.revokeObjectURL(this.imageSrc);
     },
     methods: {
-      adjustScrollPosition() {
-        // console.log('position maintained');
-        maintainScroll();
-      },
+      // adjustScrollPosition() {
+      //   // console.log('position maintained');
+      //   maintainScroll();
+      // },
       clickImageHandler() {
         if (this.onClickImage) {
           return this.onClickImage(this.comment);
@@ -174,7 +174,7 @@
       margin-right 8px
       svg
         margin 0
-        fill $mediumGreyGrey
+        fill $mediumGrey
         width 36px
         height 36px
     .file-meta

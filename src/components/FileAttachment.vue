@@ -12,17 +12,11 @@
       :src="comment.payload.url"
       width="100%") Sorry, your browser doesn't support embedded videos.
     image-loader(
-      v-if="fileType == 'image'"
+      v-else
       :comment="comment"
       :message="comment.message"
       :on-click-image="onClickImage"
       :callback="callback")
-    div(v-else class="qcw-file-container")
-      a(:href="comment.payload.url" target="_blank")
-        i
-          icon(:name="checkfileType")
-        div(class='file-meta')
-          div(class="file-name") {{ filename }}
 
     comment-render(:text="comment.payload.caption" v-if="comment.payload.caption != ''")
 </template>
@@ -30,10 +24,11 @@
 <script>
 import ImageLoader from './ImageLoader';
 import CommentRender from './CommentRender';
+import Icon from './Icon';
 
 export default {
   name: 'FileAttachment',
-  components: { ImageLoader, CommentRender },
+  components: { ImageLoader, CommentRender, Icon },
   props: ['comment', 'onClickImage', 'callback'],
   data() {
     return {
