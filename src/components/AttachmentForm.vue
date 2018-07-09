@@ -2,14 +2,15 @@
   div(class="qcw-attachment-form" :style="style")
     div(class="qcw-attachment-form__header")
       span Preview
-      span(class="qcw-attachment-form__close-btn" @click="closeFormHandler") &times;
+      span(class="qcw-attachment-form__close-btn" @click="closeFormHandler") 
+        icon(name="ic-close")
     label()
-      div(class="qcw-attachment-form__picker-btn") {{ label }}
+      div(class="qcw-attachment-form__picker-btn" :class="{'populated': populated}") {{ label }}
       input(class="qcw-attachment-form__input" name="file_image" type="file" accept="image/*" @change="changeFile")
     div(class="qcw-attachment-form__action")
-      input(class="qcw-attachment-form__caption-txt" placeholder="add your caption ..." v-model="caption")
-      i(@click="uploadFile")
-        icon(name="ic-send-message" fill="grey")
+      input(class="qcw-attachment-form__caption-txt" placeholder="Add your caption ..." v-model="caption")
+      i(class="send-button" @click="uploadFile")
+        icon(name="ic-send-message")
 </template>
 
 <script>
@@ -22,9 +23,10 @@
     data() {
       return {
         thumbnail: '',
-        label: 'pick a file',
+        label: 'Browse',
         file: null,
         caption: '',
+        populated: false,
       };
     },
     computed: {
@@ -32,6 +34,9 @@
         return this.thumbnail
           ? `background: #FFF url(${this.thumbnail}) no-repeat center; background-size: cover`
           : 'background: #FFF';
+      },
+      populated() {
+        return this.populated;
       },
     },
     methods: {
@@ -41,8 +46,9 @@
         const fileReader = new FileReader();
         fileReader.onload = () => {
           self.thumbnail = fileReader.result;
-          self.label = 'change file';
+          self.label = 'Change';
           self.file = event;
+          self.populated = true;
         };
         fileReader.readAsDataURL(file);
       },
@@ -54,33 +60,36 @@
 </script>
 
 <style lang="stylus">
+  @import '../assets/stylus/_variables.styl'
   .qcw-attachment-form
     position absolute
-    top 70px
+    top 73px
     left 0
     width 100%
-    height calc(100% - 70px)
+    height calc(100% - 73px)
     background #FFF
     display flex
     flex-direction column
     justify-content space-between
     align-content center
-    box-shadow 0 -3px 7px rgba(0,0,0,.15)
     z-index 999
     label + div
       cursor pointer
   .qcw-attachment-form__header
     display flex
     justify-content space-between
-    background linear-gradient(97.59deg, rgba(50, 181, 157, 0.94) 0%, rgba(111, 207, 151, 0.94) 100%);
+    background $darkWhite
+    border-bottom 1px solid $lightGrey
     padding 15px
-    color #FFF
+    color $darkGrey
+    align-items center
   .qcw-attachment-form__action
     display flex
     justify-content space-between
     margin-top 10px
     padding 20px
     background #FFF
+    border-top 1px solid $lightGrey
     color #666
   .qcw-attachment-form__caption-txt
     flex 1
@@ -89,17 +98,28 @@
     outline none
     font-size 15px
   .qcw-attachment-form__picker-btn
-    border 2px solid gray
+    border 1px solid $mediumGrey
     color gray
     background-color white
-    padding 8px 20px
+    padding 8px
     border-radius 8px
-    font-size 20px
+    font-size 16px
     font-weight bold
     flex 0 0 auto
-    max-width 170px
+    max-width 100px
     text-align center
     margin 0 auto
+    cursor pointer 
+    transition all 0.3s ease-out
+    &.populated
+      background-color rgba(148,202,98,0.5)
+      color $white
+      border 1px solid $green
+    &:hover
+      opacity 1
+      background-color $green
+      border 1px solid $green
+      color $white
   .qcw-attachment-form__input
     display none
   .qcw-attachment-form__preview-img
@@ -108,4 +128,10 @@
     margin 10px auto
   .qcw-attachment-form__close-btn
     cursor pointer
+    .qc-icon
+      width 14px
+  .send-button
+    .qc-icon
+      &:hover
+        fill $green
 </style>

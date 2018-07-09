@@ -22,7 +22,7 @@
             small {{ new Date(r.time).toLocaleString() }}
       strong.qcw-message-info__info-header.delivered
         span Delivered To
-        icon(name="ic-check")
+        icon(name="ic-double-check")
       ul
         li(v-for="d in delivered")
           img(class="qcw-message-info__user-avatar")
@@ -63,6 +63,7 @@ export default {
 </script>
 
 <style lang="stylus">
+@import '../assets/stylus/_variables.styl'
 .qcw-message-info
   background #FFF
   position absolute
@@ -74,6 +75,7 @@ export default {
   display flex
   flex-direction column
   flex 1 0 320px
+  border-left 1px solid $lightGrey
   .qcw-container--wide &
     position relative
 
@@ -132,6 +134,7 @@ export default {
   overflow hidden
   overflow-y auto
   padding 25px
+  border-top 1px solid $lightGrey
 
   strong.qcw-message-info__info-header
     color #777
@@ -148,7 +151,7 @@ export default {
         fill #94ca62
     &.delivered
       .qc-icon
-        width 16px
+        width 22px
   ul
     list-style none
     margin 0
