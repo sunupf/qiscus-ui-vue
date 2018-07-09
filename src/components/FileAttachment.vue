@@ -20,7 +20,7 @@
     div(v-else class="qcw-file-container")
       a(:href="comment.payload.url" target="_blank")
         i
-          icon(:name="fileClassName")
+          icon(:name="checkfileType")
         div(class='file-meta')
           div(class="file-name") {{ filename }}
 
@@ -53,7 +53,7 @@ export default {
       if (imageExts.includes(ext)) return 'image';
       if (videoExts.includes(ext)) return 'video';
       if (audioExts.includes(ext)) return 'audio';
-      return 'unavailable';
+      return 'ic-file-attachment';
     },
   },
 };
