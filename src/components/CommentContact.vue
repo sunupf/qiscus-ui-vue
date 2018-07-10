@@ -7,7 +7,7 @@
         .file-meta
           .file-name {{ name }}
           .file-description {{ phone }}
-    comment-render(:text="comment.payload.caption" v-if="comment.payload.caption != ''")
+    //- comment-render(:text="comment.payload.caption" v-if="comment.payload.caption != ''")
 </template>
 
 <script>
