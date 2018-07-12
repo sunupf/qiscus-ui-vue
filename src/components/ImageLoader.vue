@@ -95,7 +95,7 @@
         xhr.onreadystatechange = function attachImage() {
           if (this.readyState === 4 && this.status === 200) {
             self.isLoading = false;
-            self.imageSrc  = URL.createObjectURL(this.response);
+            self.imageSrc  = self.uri;
           }
         };
         xhr.open('GET', self.uri, true);
