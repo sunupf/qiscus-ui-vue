@@ -2,7 +2,7 @@
   div(class="qcw-attachment-form" :style="style")
     div(class="qcw-attachment-form__header")
       span Preview
-      span(class="qcw-attachment-form__close-btn" @click="closeFormHandler") 
+      span(class="qcw-attachment-form__close-btn" @click="closeFormHandler")
         icon(name="ic-close")
     label()
       div(class="qcw-attachment-form__picker-btn" :class="{'populated': populated}") {{ label }}
@@ -38,9 +38,9 @@
           ? `background: #FFF url(${this.thumbnail}) no-repeat center; background-size: cover`
           : 'background: #FFF';
       },
-      populated() {
-        return this.populated;
-      },
+      // populated() {
+      //   return this.populated;
+      // },
     },
     methods: {
       changeFile(event) {
@@ -119,7 +119,7 @@
     max-width 100px
     text-align center
     margin 0 auto
-    cursor pointer 
+    cursor pointer
     transition all 0.3s ease-out
     &.populated
       background-color rgba(148,202,98,0.5)
