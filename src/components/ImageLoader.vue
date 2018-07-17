@@ -108,8 +108,8 @@
       word-break break-all
 
   .loading-image-container
-    width 200px !important
-    height 200px !important
+    width 192px !important
+    height 192px !important
     display flex
     justify-content center
     flex-direction column
@@ -120,8 +120,8 @@
     align-items center
     justify-content center
     overflow hidden
-    height 200px !important
-    width 200px !important
+    height 192px !important
+    width 192px !important
 
   .qcw-image-container
     width calc(100%+8px)
