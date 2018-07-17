@@ -1,19 +1,19 @@
 <template>
   <div class="image-loader">
-    <div class="loading-image-container" v-if="isLoading">
+    <div class="loading-image-container" v-show="isLoading">
       <i class="">
         <icon name="ic-load"></icon>
       </i>
       <span class="label">Loading Image...</span>
     </div>
-    <div class="qcw-image-container" v-if="isImage && !isLoading && error==''" @click="clickImageHandler">
-      <img :src="imageSrc" :alt="imageSrc" ref="imageContainer"/>
+    <div class="qcw-image-container" v-show="isImage && !isLoading && error==''" @click="clickImageHandler">
+      <img :src="imageSrc" :alt="imageSrc" ref="imageContainer" @load="imageLoaded"/>
     </div>
-    <div v-if="error">
+    <div v-show="error">
       <p><i style="font-size: 2em; display: inline-block"><icon name="close"></icon></i> {{ error }}</p>
       <button @click="loadImage" class="reload-image-btn">Reload Image</button>
     </div>
-    <div class="qcw-file-container" v-if="!isImage && !isLoading">
+    <div class="qcw-file-container" v-show="!isImage && !isLoading">
       <a :href="uri" target="_blank">
         <i><icon :name="fileClassName"></icon></i>
         <div class='file-meta'>
@@ -61,10 +61,6 @@
       URL.revokeObjectURL(this.imageSrc);
     },
     methods: {
-      // adjustScrollPosition() {
-      //   // console.log('position maintained');
-      //   maintainScroll();
-      // },
       clickImageHandler() {
         if (this.onClickImage) {
           return this.onClickImage(this.comment);
@@ -73,41 +69,22 @@
       },
       loadImage() {
         const self    = this;
-        const comment = this.comment;
-        const xhr = new XMLHttpRequest();
-        if (comment.type !== 'reply') {
-          self.isImage  = comment.isImageAttachment(this.message);
-          self.uri      = comment.getAttachmentURI(this.message);
-        } else {
-          self.isImage  = comment.isImageAttachment(comment.payload.replied_comment_message);
-          self.uri      = comment.getAttachmentURI(comment.payload.replied_comment_message);
-        }
-        self.filename = self.uri.split('/').pop().split('#')[0].split('?')[0];
-        self.ext      = self.filename.split('.').pop();
+        const comment = self.comment;
+        const isReply = comment.type === 'reply';
         self.isLoading = true;
-        self.error   = '';
-
-        if (!self.isImage) {
-          self.isLoading = false;
-          return false;
-        }
-
-        xhr.onreadystatechange = function attachImage() {
-          if (this.readyState === 4 && this.status === 200) {
-            self.isLoading = false;
-            self.imageSrc  = self.uri;
-          }
-        };
-        xhr.open('GET', self.uri, true);
-        xhr.onerror = function throwLoadingError() {
-          self.isLoading = false;
-          self.error = `Url ${self.uri} loading failed, please try again`;
-          self.callback();
-        };
-        // xhr.setRequestHeader('Authorization', 'Token token='+window.doctortoken);
-        xhr.responseType = 'blob';
-        xhr.send();
-        return true;
+        self.$nextTick(() => {
+          self.isImage  = (!isReply) ? comment.isImageAttachment(this.message)
+                            : comment.isImageAttachment(comment.payload.replied_comment_message);
+          self.uri      = (!isReply) ? comment.getAttachmentURI(this.message)
+                            : comment.getAttachmentURI(comment.payload.replied_comment_message);
+          self.filename = self.uri.split('/').pop().split('#')[0].split('?')[0];
+          self.ext      = self.filename.split('.').pop();
+          self.error    = '';
+          self.imageSrc = self.uri;
+        });
+      },
+      imageLoaded() {
+        this.isLoading = false;
       },
     },
   };

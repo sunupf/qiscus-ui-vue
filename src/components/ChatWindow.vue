@@ -20,6 +20,7 @@
 
       attachment-form(
         :uploadHandler="uploadFile"
+        :displaying="showAttachmentForm"
         v-if="showAttachmentForm"
         :closeFormHandler="toggleAttachmentForm"
       )

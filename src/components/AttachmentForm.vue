@@ -9,6 +9,7 @@
       input(class="qcw-attachment-form__input" name="file_image" type="file" accept="image/*" @change="changeFile")
     div(class="qcw-attachment-form__action")
       input(class="qcw-attachment-form__caption-txt"
+        ref="caption"
         placeholder="Add your caption ..."
         @keydown.enter="tryUploadFile($event)"
         v-model="caption")
@@ -21,7 +22,7 @@
 
   export default {
     name: 'AttachmentForm',
-    props: ['uploadHandler', 'closeFormHandler'],
+    props: ['uploadHandler', 'closeFormHandler', 'displaying'],
     components: { Icon },
     data() {
       return {
@@ -38,9 +39,6 @@
           ? `background: #FFF url(${this.thumbnail}) no-repeat center; background-size: cover`
           : 'background: #FFF';
       },
-      // populated() {
-      //   return this.populated;
-      // },
     },
     methods: {
       changeFile(event) {
@@ -54,6 +52,7 @@
           self.populated = true;
         };
         fileReader.readAsDataURL(file);
+        self.focusInCaption();
       },
       uploadFile() {
         this.uploadHandler(this.file, this.caption);
@@ -65,6 +64,16 @@
           this.uploadFile();
         }
       },
+      focusInCaption() {
+        const self = this;
+        if (!self.displaying) return;
+        self.$nextTick(() => {
+          self.$refs.caption.focus();
+        });
+      },
+    },
+    mounted() {
+      this.focusInCaption();
     },
   };
 </script>
