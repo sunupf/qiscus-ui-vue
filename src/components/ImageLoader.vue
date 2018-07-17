@@ -108,10 +108,11 @@
       word-break break-all
 
   .loading-image-container
+    width 200px !important
+    height 200px !important
     display flex
-    flex-direction column
     justify-content center
-    align-items center
+    flex-direction column
 
   .reply-wrapper--preview .qcw-image-container,
   .qcw-comment__message .qcw-image-container
@@ -119,8 +120,8 @@
     align-items center
     justify-content center
     overflow hidden
-    min-height 120px
-    max-height 120px
+    height 200px !important
+    width 200px !important
 
   .qcw-image-container
     width calc(100%+8px)
