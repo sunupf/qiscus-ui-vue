@@ -10,7 +10,7 @@
       <img :src="imageSrc" :alt="imageSrc" ref="imageContainer" @load="imageLoaded"/>
     </div>
     <div v-show="error">
-      <p><i style="font-size: 2em; display: inline-block"><icon name="close"></icon></i> {{ error }}</p>
+      <p><i style="font-size: 2em; display: inline-block"><icon name="close"></icon></i> {{ error }}</p>    
       <button @click="loadImage" class="reload-image-btn">Reload Image</button>
     </div>
     <div class="qcw-file-container" v-show="!isImage && !isLoading">
@@ -72,16 +72,16 @@
         const comment = self.comment;
         const isReply = comment.type === 'reply';
         self.isLoading = true;
-        // self.$nextTick(() => {
-        self.isImage  = (!isReply) ? comment.isImageAttachment(this.message)
-                          : comment.isImageAttachment(comment.payload.replied_comment_message);
-        self.uri      = (!isReply) ? comment.getAttachmentURI(this.message)
-                          : comment.getAttachmentURI(comment.payload.replied_comment_message);
-        self.filename = self.uri.split('/').pop().split('#')[0].split('?')[0];
-        self.ext      = self.filename.split('.').pop();
-        self.error    = '';
-        self.imageSrc = self.uri;
-        // });
+        self.$nextTick(() => {
+          self.isImage  = (!isReply) ? comment.isImageAttachment(this.message)
+                            : comment.isImageAttachment(comment.payload.replied_comment_message);
+          self.uri      = (!isReply) ? comment.getAttachmentURI(this.message)
+                            : comment.getAttachmentURI(comment.payload.replied_comment_message);
+          self.filename = self.uri.split('/').pop().split('#')[0].split('?')[0];
+          self.ext      = self.filename.split('.').pop();
+          self.error    = '';
+          self.imageSrc = self.uri;
+        });
       },
       imageLoaded() {
         this.isLoading = false;
@@ -98,6 +98,7 @@
   .reply-wrapper .qcw-image-container
     margin 0
     width 100%
+    
   .image-loader + .qcw-comment__content
     width 100%
     overflow hidden
@@ -108,8 +109,8 @@
       word-break break-all
 
   .loading-image-container
-    width 192px !important
-    height 192px !important
+    min-width 194px
+    height 194px !important
     display flex
     justify-content center
     flex-direction column
@@ -120,14 +121,9 @@
     align-items center
     justify-content center
     overflow hidden
-    height 192px !important
-    width 192px !important
+    height 194px !important
 
   .qcw-image-container
-    width calc(100%+8px)
-    margin -4px
-    padding-bottom -4px
-    border-radius 3px
     img
       height 100%
       width 100%

@@ -57,6 +57,7 @@ export default {
 <style lang="stylus">
 .qcw-comment__attachment
   overflow hidden
+  border-radius 4px
   video
     max-height 150px
 </style>
