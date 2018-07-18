@@ -14,7 +14,7 @@
       <button @click="loadImage" class="reload-image-btn">Reload Image</button>
     </div>
     <div class="qcw-file-container" v-show="!isImage && !isLoading">
-      <a href="javascript:void(0)">
+      <a :href="uri" target="_blank">
         <i><icon :name="fileClassName"></icon></i>
         <div class='file-meta'>
           <div class="file-name">{{ filename }}</div>
