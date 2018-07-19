@@ -47,7 +47,7 @@
       },
       iconStyle() {
         return {
-          fill: this.$core.UI.colors.headerTitleColor,
+          fill: this.$core.UI.colors.headerIconColor,
         };
       },
       subtitleStyle() {
