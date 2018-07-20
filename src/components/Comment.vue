@@ -235,8 +235,12 @@ export default {
       this.menuMoreClicked(null);
     },
     gotoComment() {
-      const element = document.getElementById(this.comment.payload.replied_comment_id);
-      if (!element) return;
+      const commentId = this.comment.payload.replied_comment_id;
+      const element = document.getElementById(commentId);
+      if (!element) {
+        this.$emit('commentNotFound', commentId);
+        return;
+      }
       element.scrollIntoView({ block: 'end',  behaviour: 'smooth' });
     },
     resend(comment) {
