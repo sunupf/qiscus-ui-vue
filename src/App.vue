@@ -79,9 +79,10 @@ export default {
       isReading: false,
       isMessageInfoActive: false,
       messageInfoData: null,
+      autoExpandWidget: false,
       chatTarget(target) {
         return self.core.chatTarget(target).then((res) => {
-          if (!self.chatWindowStatus) self.toggleWindowStatus();
+          if (!self.chatWindowStatus && self.core.UI.autoExpandWidget) self.toggleWindowStatus();
           window.setTimeout(() => scrollIntoLastElement(self.core), 0);
           focusMessageForm();
           self.core.UI.isReading = false;
@@ -94,7 +95,7 @@ export default {
       },
       chatGroup(id) {
         return self.core.chatGroup(id).then((res) => {
-          if (!self.chatWindowStatus) self.toggleWindowStatus();
+          if (!self.chatWindowStatus && self.core.UI.autoExpandWidget) self.toggleWindowStatus();
           window.setTimeout(() => scrollIntoLastElement(self.core), 0);
           self.core.UI.isReading = false;
           focusMessageForm();
