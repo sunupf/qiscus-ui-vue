@@ -1,9 +1,11 @@
 <template lang="pug">
   div(class="qcw-attachment-form" :style="style")
-    div(class="qcw-attachment-form__header")
-      span Preview
-      span(class="qcw-attachment-form__close-btn" @click="closeFormHandler")
-        icon(name="ic-close")
+    div(class="qcw-attachment-form__header" :style="headerStyle")
+      div(class="qcw-attachment-form__title")
+        h4 Preview
+        span(:style="subtitleStyle") Send to {{ displayName }}
+      div(class="qcw-attachment-form__close-btn" @click="closeFormHandler")
+        icon(name="ic-close" :style="iconStyle")
     label()
       div(class="qcw-attachment-form__picker-btn" :class="{'populated': populated}") {{ label }}
       input(class="qcw-attachment-form__input" name="file_image" type="file" accept="image/*" @change="changeFile")
@@ -34,10 +36,31 @@
       };
     },
     computed: {
+      displayName() {
+        return this.$core.selected.name;
+      },
+      headerStyle() {
+        return {
+          background: this.$core.UI.colors.headerBackgroundColor,
+          color: this.$core.UI.colors.headerTitleColor,
+        };
+      },
+      iconStyle() {
+        return {
+          fill: this.$core.UI.colors.headerIconColor,
+        };
+      },
+      subtitleStyle() {
+        return {
+          color: this.reactiveColor,
+        };
+      },
       style() {
-        return this.thumbnail
-          ? `background: #FFF url(${this.thumbnail}) no-repeat center; background-size: cover`
-          : 'background: #FFF';
+        const backgrounds = [
+          'background: #FFF',
+          `background: #FFF url(${this.thumbnail}) no-repeat center; background-size: cover`,
+        ];
+        return backgrounds[(this.thumbnail) ? 1 : 0];
       },
     },
     methods: {
@@ -82,10 +105,10 @@
   @import '../assets/stylus/_variables.styl'
   .qcw-attachment-form
     position absolute
-    top 73px
+    top 0
     left 0
     width 100%
-    height calc(100% - 73px)
+    height 100%
     background #FFF
     display flex
     flex-direction column
@@ -99,9 +122,21 @@
     justify-content space-between
     background $darkWhite
     border-bottom 1px solid $lightGrey
-    padding 15px
+    padding 12px 16px
     color $darkGrey
     align-items center
+  .qcw-attachment-form__title
+    align-self flex-start
+    flex 1
+    height 48px
+    overflow hidden
+    text-overflow ellipsis
+    white-space nowrap
+    h4
+      margin 0
+      font-size 15px
+    span
+      font-size 13px
   .qcw-attachment-form__action
     display flex
     justify-content space-between
@@ -146,7 +181,11 @@
     height 150px
     margin 10px auto
   .qcw-attachment-form__close-btn
+    margin-left auto
     cursor pointer
+    display flex
+    flex 0 28px
+    justify-content flex-end
     .qc-icon
       width 14px
   .send-button
