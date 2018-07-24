@@ -47,7 +47,7 @@ export default {
       if (imageExts.includes(ext)) return 'image';
       if (videoExts.includes(ext)) return 'video';
       if (audioExts.includes(ext)) return 'audio';
-      return 'unavailable';
+      return 'ic-file-attachment';
     },
   },
 };

@@ -67,19 +67,19 @@
         return false;
       },
       loadImage() {
-        const self    = this;
+        const self = this;
         const comment = self.comment;
         const isReply = comment.type === 'reply';
+        const commentMessage = (!isReply) ? self.message : comment.payload.replied_comment_message;
         self.isLoading = true;
         self.$nextTick(() => {
-          self.isImage  = (!isReply) ? comment.isImageAttachment(this.message)
-                            : comment.isImageAttachment(comment.payload.replied_comment_message);
-          self.uri      = (!isReply) ? comment.getAttachmentURI(this.message)
-                            : comment.getAttachmentURI(comment.payload.replied_comment_message);
+          self.isImage = comment.isImageAttachment(commentMessage);
+          self.uri = comment.getAttachmentURI(commentMessage);
           self.filename = self.uri.split('/').pop().split('#')[0].split('?')[0];
-          self.ext      = self.filename.split('.').pop();
-          self.error    = '';
+          self.ext = self.filename.split('.').pop();
+          self.error = '';
           self.imageSrc = self.uri;
+          if (!self.isImage) self.imageLoaded();
         });
       },
       imageLoaded() {
