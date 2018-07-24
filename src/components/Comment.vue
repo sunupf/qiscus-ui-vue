@@ -237,11 +237,25 @@ export default {
     gotoComment() {
       const commentId = this.comment.payload.replied_comment_id;
       const element = document.getElementById(commentId);
+      let ofs = 0;
+      let timer = 1;
+
       if (!element) {
         this.$emit('commentNotFound', commentId);
-        return;
+        return this.$toasted.error('Comment not loaded yet, load more to go to comment');
       }
-      element.scrollIntoView({ block: 'end',  behaviour: 'smooth' });
+
+      const blink = window.setInterval(() => {
+        element.style.background = `rgba(255, 252, 218, ${Math.abs(Math.sin(ofs))})`;
+        ofs += 0.05;
+        timer += 1;
+        if (timer === 300) {
+          window.clearInterval(blink);
+          element.style.background = 'transparent';
+        }
+      }, 10);
+
+      return element.scrollIntoView({ block: 'end',  behaviour: 'smooth' });
     },
     resend(comment) {
       return this.core.resendComment(comment)
