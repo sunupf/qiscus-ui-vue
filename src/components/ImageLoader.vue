@@ -134,7 +134,6 @@
     align-items center
     justify-content center
     overflow hidden
-    width 194px !important
 
   .qcw-image-container
     img
