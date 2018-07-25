@@ -10,7 +10,7 @@
       <img :src="imageSrc" :alt="imageSrc" ref="imageContainer" @load="imageLoaded"/>
     </div>
     <div v-show="error">
-      <p><i style="font-size: 2em; display: inline-block"><icon name="close"></icon></i> {{ error }}</p>    
+      <p><i style="font-size: 2em; display: inline-block"><icon name="close"></icon></i> {{ error }}</p>
       <button @click="loadImage" class="reload-image-btn">Reload Image</button>
     </div>
     <div class="qcw-file-container" v-show="!isImage && !isLoading">
@@ -32,7 +32,7 @@
   export default {
     name: 'ImageLoader',
     components: { Icon },
-    props: ['comment', 'message', 'callback', 'onClickImage'],
+    props: ['comment', 'message', 'callback', 'onClickImage', 'thumbnailMode'],
     data() {
       return {
         isLoading: true,
@@ -61,6 +61,15 @@
       URL.revokeObjectURL(this.imageSrc);
     },
     methods: {
+      getImageThumbnail(url) {
+        const baseUrlSegment = url.split('//');
+        const urlSegment = baseUrlSegment[1].split('/');
+        if (urlSegment.length !== 6) return url;
+        // take two last segment
+        const imageRelativePath = `${urlSegment[4]}/${urlSegment[5]}`;
+        const baseImagePath = url.substr(0, url.length - imageRelativePath.length);
+        return `${baseImagePath}c_thumb,g_center,h_100,w_100/${imageRelativePath}`;
+      },
       clickImageHandler() {
         if (this.onClickImage) {
           return this.onClickImage(this.comment);
@@ -75,7 +84,9 @@
         self.isLoading = true;
         self.$nextTick(() => {
           self.isImage = comment.isImageAttachment(commentMessage);
-          self.uri = comment.getAttachmentURI(commentMessage);
+          self.uri = (self.isImage && self.thumbnailMode)
+                   ? self.getImageThumbnail(comment.getAttachmentURI(commentMessage))
+                   : comment.getAttachmentURI(commentMessage);
           self.filename = self.uri.split('/').pop().split('#')[0].split('?')[0];
           self.ext = self.filename.split('.').pop();
           self.error = '';
@@ -98,7 +109,7 @@
   .reply-wrapper .qcw-image-container
     margin 0
     width 100%
-    
+
   .image-loader + .qcw-comment__content
     width 100%
     overflow hidden
@@ -121,7 +132,7 @@
     align-items center
     justify-content center
     overflow hidden
-    height 194px !important
+    width 194px !important
 
   .qcw-image-container
     img
