@@ -235,11 +235,13 @@ export default {
       this.menuMoreClicked(null);
     },
     gotoComment() {
-      const element = document.getElementById(this.comment.payload.replied_comment_id);
+      const commentId = this.comment.payload.replied_comment_id;
+      const element = document.getElementById(commentId);
       let ofs = 0;
       let timer = 1;
 
       if (!element) {
+        this.$emit('commentNotFound', commentId);
         return this.$toasted.error('Comment not loaded yet, load more to go to comment');
       }
 
