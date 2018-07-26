@@ -39,7 +39,7 @@
             ul
               li(@click="replyHandler(comment)") Reply
               li(@click="confirmDeleteComment(comment)") Delete
-              li(@click="messageInfoHandler(comment)") Message Info
+              //- li(@click="messageInfoHandler(comment)") Message Info
 
           //- CommentType: "location"
           static-map(:lat="comment.payload.latitude"
