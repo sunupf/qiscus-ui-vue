@@ -24,7 +24,7 @@
 
   export default {
     name: 'AttachmentForm',
-    props: ['uploadHandler', 'closeFormHandler', 'displaying'],
+    props: ['uploadHandler', 'closeFormHandler', 'displaying', 'attachmentData'],
     components: { Icon },
     data() {
       return {
@@ -58,10 +58,13 @@
       style() {
         const backgrounds = [
           'background: #FFF',
-          `background: #FFF url(${this.thumbnail}) no-repeat center; background-size: cover`,
+          `background: #FFF url(${this.attachmentData.thumbnail}) no-repeat center; background-size: cover`,
         ];
-        return backgrounds[(this.thumbnail) ? 1 : 0];
+        return backgrounds[(this.attachmentData.thumbnail) ? 1 : 0];
       },
+    },
+    created() {
+      this.focusInCaption();
     },
     methods: {
       changeFile(event) {
@@ -69,16 +72,18 @@
         const file = event.target.files[0];
         const fileReader = new FileReader();
         fileReader.onload = () => {
-          self.thumbnail = fileReader.result;
+          self.setAttachmentData({
+            file: event,
+            thumbnail: fileReader.result,
+          });
           self.label = 'Change';
-          self.file = event;
           self.populated = true;
         };
         fileReader.readAsDataURL(file);
         self.focusInCaption();
       },
       uploadFile() {
-        this.uploadHandler(this.file, this.caption);
+        this.uploadHandler(this.attachmentData.file, this.caption);
       },
       tryUploadFile(e) {
         if (!e.shiftKey) {

@@ -5,9 +5,9 @@
       label
         input(class="uploader__input" name="file_all" type="file" @change="changeFile")
         icon(name="ic-file-attachment" :fill="core.UI.colors.formMessageIconColor")
-    i(class='qcw-icon' @click="toggleAttachmentForm")
+    i(class='qcw-icon')
       label
-        //- input(class="uploader__input" name="file_image" type="file" accept="image/*" @change="changeFile")
+        input(class="uploader__input" name="file_image" type="file" accept="image/*" @change="changeImage")
         icon(name="ic-image-attachment" :fill="core.UI.colors.formMessageIconColor")
 
     textarea(placeholder="Type your message"
@@ -27,7 +27,10 @@ import Icon from './Icon';
 export default {
   name: 'CommentForm',
   components: { Icon },
-  props: ['core', 'repliedComment', 'closeReplyHandler', 'showAttachmentForm', 'toggleAttachmentForm'],
+  props: [
+    'core', 'repliedComment',
+    'closeReplyHandler', 'showAttachmentForm',
+    'toggleAttachmentForm', 'setAttachmentData'],
   data() {
     return {
       commentInput: '',
@@ -58,6 +61,18 @@ export default {
     // addEmoji(emoji) {
     //   this.commentInput = this.commentInput + emoji.native;
     // },
+    changeImage(event) {
+      const self = this;
+      const file = event.target.files[0];
+      const fileReader = new FileReader();
+      fileReader.onload = () => {
+        self.setAttachmentData({
+          file: event,
+          thumbnail: fileReader.result,
+        });
+      };
+      fileReader.readAsDataURL(file);
+    },
     trySubmitComment(e) {
       if (!e.shiftKey) {
         e.preventDefault();
