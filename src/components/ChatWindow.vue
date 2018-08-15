@@ -22,6 +22,8 @@
         :uploadHandler="uploadFile"
         :displaying="showAttachmentForm"
         v-if="showAttachmentForm"
+        :attachmentData="attachmentData"
+        :setAttachmentData="setAttachmentData"
         :closeFormHandler="toggleAttachmentForm"
       )
 
@@ -42,6 +44,7 @@
         :repliedComment="repliedComment"
         :showAttachmentForm="showAttachmentForm"
         :toggleAttachmentForm="toggleAttachmentForm"
+        :setAttachmentData="setAttachmentData"
         :closeReplyHandler="closeReply")
 
     //- Start of message info
@@ -86,6 +89,10 @@ export default {
       imageModalIsActive: false,
       dragging: false,
       showAttachmentForm: false,
+      attachmentData: {
+        thumbnail: null,
+        file: null,
+      },
     };
   },
   computed: {
@@ -124,6 +131,11 @@ export default {
     },
   },
   methods: {
+    setAttachmentData(data) {
+      this.attachmentData.file = data.file;
+      this.attachmentData.thumbnail = data.thumbnail;
+      this.showAttachmentForm = true;
+    },
     toggleAttachmentForm() {
       this.showAttachmentForm = !this.showAttachmentForm;
     },

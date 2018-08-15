@@ -16,6 +16,7 @@
       :comment="comment"
       :message="comment.message"
       :on-click-image="onClickImage"
+      :thumbnailMode="true"
       :callback="callback")
 
     comment-render(:text="comment.payload.caption" v-if="comment.payload.caption != ''")
