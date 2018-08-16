@@ -26,7 +26,7 @@ export default {
 .qcw-trigger-btn
   background: $green
   color: $white
-  padding: 10px 15px
+  padding: 10px
   border-radius: $big-border-radius
   vertical-align middle
   text-align center
@@ -38,6 +38,9 @@ export default {
   align-items: center;
   justify-content: center;
 
+  & > div {
+    margin-left 8px
+  }
   img
     margin-right 8px
     display block
