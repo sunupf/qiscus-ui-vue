@@ -25,6 +25,7 @@
             :showAvatar="core.options.avatar"
             :currentMenuId="currentMenuId"
             @onChangeMenu="onChangeMenu"
+            @commentNotFound="loadMoreComment"
             ref="comment"
           )
         //- component for uploader progress
@@ -48,6 +49,9 @@ export default {
       commentLength: 0,
       currentMenuId: null,
       timeoutId: -1,
+      timesLoadingMore: 1,
+      maxTimesLoadingMore: 3,
+      lastCommentId: null,
     };
   },
   computed: {
@@ -95,6 +99,27 @@ export default {
     },
     onDragging(status) {
       this.$emit('onDragging', status);
+    },
+    loadMoreComment(id) {
+      const self = this;
+      const currentCommentId = (self.lastCommentId) ? self.lastCommentId : self.comments[0].id;
+      if (self.timesLoadingMore >= self.maxTimesLoadingMore) return;
+      self.isLoadingMore = true;
+      self.core.loadMore(currentCommentId).then(async (response) => {
+        self.lastCommentId = response[0].id;
+        if (!response || response.length < 20) self.timesLoadingMore = self.maxTimesLoadingMore;
+        const element = document.getElementById(id);
+        if (!element) {
+          self.timesLoadingMore += 1;
+          const elementTop = document.getElementById(self.lastCommentId);
+          await elementTop.scrollIntoView({ block: 'end',  behaviour: 'smooth' });
+          await self.loadMoreComment(id);
+          return;
+        }
+        self.isLoadingMore = false;
+        self.timesLoadingMore = 1;
+        await element.scrollIntoView({ block: 'end',  behaviour: 'smooth' });
+      });
     },
   },
 };
@@ -439,7 +464,7 @@ export default {
       ul
         top 25px
         left -175px
-  
+
   .failed-info
     text-align right
     margin-top -3px
@@ -482,6 +507,7 @@ export default {
     border-radius 8px
 
     audio
+      min-width 250px
       width 100%
     .comment--parent &
       margin-left 60px
@@ -555,5 +581,3 @@ export default {
       display inline-block
       vertical-align middle
 </style>
-
-

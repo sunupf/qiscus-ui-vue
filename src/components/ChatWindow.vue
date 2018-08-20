@@ -1,39 +1,54 @@
 <template lang="pug">
   div.qcw-chat-wrapper
+    div.qcw-main
+      svg-icon
 
-    svg-icon
+      image-modal(:comment="imageModalContent"
+        :closeBtnHandler="closeImageModal"
+        v-if="imageModalIsActive")
 
-    image-modal(:comment="imageModalContent"
-      :closeBtnHandler="closeImageModal"
-      v-if="imageModalIsActive")
+      comment-reply-preview(v-if="repliedComment"
+        :comment="repliedComment"
+        :closeReplyHandler="closeReply")
 
-    comment-reply-preview(v-if="repliedComment"
-      :comment="repliedComment"
-      :closeReplyHandler="closeReply")
+      upload-info(v-if="uploadedFiles.length > 0"
+        :files="uploadedFiles")
 
-    upload-info(v-if="uploadedFiles.length > 0"
-      :files="uploadedFiles")
+      chat-header(v-if="core.selected && core.UI.config.showHeader"
+        @toggle-window="() => toggleWindowStatus()"
+        @header-click="() => headerClickedHandler()")
 
-    chat-header(v-if="core.selected && core.UI.config.showHeader"
-      @toggle-window="() => toggleWindowStatus()"
-      @header-click="() => headerClickedHandler()")
+      attachment-form(
+        :uploadHandler="uploadFile"
+        :displaying="showAttachmentForm"
+        v-if="showAttachmentForm"
+        :attachmentData="attachmentData"
+        :setAttachmentData="setAttachmentData"
+        :closeFormHandler="toggleAttachmentForm"
+      )
 
-    file-drag-drop(
-      :core="core"
-      :dragging="dragging"
-      @onDragging="onDragging")
+      file-drag-drop(
+        :core="core"
+        :dragging="dragging"
+        @onDragging="onDragging")
 
-    comment-list(:core="core" 
-      :on-click-image="openImageModal"
-      :repliedComment="repliedComment"
-      :replyHandler="setReply" 
-      :onupdate="scrollToBottom"
-      @onDragging="onDragging")
+      comment-list(:core="core"
+        :on-click-image="openImageModal"
+        :repliedComment="repliedComment"
+        :replyHandler="setReply"
+        :onupdate="scrollToBottom"
+        @onDragging="onDragging")
 
-    comment-form(:core="core"
-      v-if="core.UI.config.showCommentForm"
-      :repliedComment="repliedComment"
-      :closeReplyHandler="closeReply")
+      comment-form(:core="core"
+        v-if="core.UI.config.showCommentForm"
+        :repliedComment="repliedComment"
+        :showAttachmentForm="showAttachmentForm"
+        :toggleAttachmentForm="toggleAttachmentForm"
+        :setAttachmentData="setAttachmentData"
+        :closeReplyHandler="closeReply")
+
+    //- Start of message info
+    message-info(v-if="core.UI.isMessageInfoActive" :core="core")
 </template>
 
 <script>
@@ -47,6 +62,9 @@ import ImageModal from './ImageModal';
 import UploadInfo from './UploadInfo';
 import ChatHeader from './ChatHeader';
 import FileDragDrop from './FileDragDrop';
+import { uploadFile } from '../lib/fileUploader';
+import AttachmentForm from './AttachmentForm';
+import MessageInfo from './MessageInfo';
 
 export default {
   name: 'ChatWindow',
@@ -61,6 +79,8 @@ export default {
     UploadInfo,
     ChatHeader,
     FileDragDrop,
+    AttachmentForm,
+    MessageInfo,
   },
   data() {
     return {
@@ -68,6 +88,11 @@ export default {
       imageModalContent: null,
       imageModalIsActive: false,
       dragging: false,
+      showAttachmentForm: false,
+      attachmentData: {
+        thumbnail: null,
+        file: null,
+      },
     };
   },
   computed: {
@@ -106,6 +131,14 @@ export default {
     },
   },
   methods: {
+    setAttachmentData(data) {
+      this.attachmentData.file = data.file;
+      this.attachmentData.thumbnail = data.thumbnail;
+      this.showAttachmentForm = true;
+    },
+    toggleAttachmentForm() {
+      this.showAttachmentForm = !this.showAttachmentForm;
+    },
     headerClickedHandler() {
       this.core.options.headerClickedCallback();
     },
@@ -133,6 +166,10 @@ export default {
     onDragging(status) {
       this.dragging = status;
     },
+    uploadFile(file, caption) {
+      uploadFile(file, caption, this.core, this.$toasted);
+      this.showAttachmentForm = false;
+    },
   },
 };
 </script>
@@ -145,7 +182,6 @@ export default {
     width 360px
     height 0
     display flex
-    flex-direction column
     box-shadow 0 7px 16px rgba(46,46,46,.15)
     border-radius 19px
     overflow hidden
@@ -163,6 +199,12 @@ export default {
         height 100vh
         z-index 1
         border-radius 0
+
+  .qcw-main
+    width 100%
+    display flex
+    flex-direction column
+    position relative
 
   .qcw-window-toggle-btn
     cursor pointer
@@ -259,5 +301,3 @@ export default {
       height 12px
       width 12px
 </style>
-
-

@@ -79,12 +79,16 @@ export default {
       widgetButtonText: 'Talk to Us',
       widgetButtonIcon: null,
       isReading: false,
+      isMessageInfoActive: false,
+      messageInfoData: null,
+      autoExpandWidget: false,
       chatTarget(target) {
-        self.core.chatTarget(target).then((res) => {
-          if (!self.chatWindowStatus) self.toggleWindowStatus();
+        return self.core.chatTarget(target).then((res) => {
+          if (!self.chatWindowStatus && self.core.UI.autoExpandWidget) self.toggleWindowStatus();
           window.setTimeout(() => scrollIntoLastElement(self.core), 0);
           focusMessageForm();
           self.core.UI.isReading = false;
+          QiscusUI.isMessageInfoActive = false;
           return Promise.resolve(res);
         }, (err) => {
           self.$toasted.error(`Error opening chatroom: ${err}`);
@@ -92,17 +96,18 @@ export default {
         });
       },
       chatGroup(id) {
-        self.core.chatGroup(id).then((res) => {
-          if (!self.chatWindowStatus) self.toggleWindowStatus();
+        return self.core.chatGroup(id).then((res) => {
+          if (!self.chatWindowStatus && self.core.UI.autoExpandWidget) self.toggleWindowStatus();
           window.setTimeout(() => scrollIntoLastElement(self.core), 0);
           self.core.UI.isReading = false;
           focusMessageForm();
+          QiscusUI.isMessageInfoActive = false;
           return Promise.resolve(res);
         }, err => Promise.reject(err));
       },
       gotoComment(comment) {
-        if (!self.core.isInit) return;
-        self.core.chatGroup(comment.room_id).then((res) => {
+        if (!self.core.isInit) return Promise.reject('widget is not initiated');
+        return self.core.chatGroup(comment.room_id).then((res) => {
           self.core.UI.isReading = false;
           window.setTimeout(() => scrollIntoElement(comment.id), 0);
           focusMessageForm();
