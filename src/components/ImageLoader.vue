@@ -7,7 +7,7 @@
       <span class="label">Loading Image...</span>
     </div>
     <div class="qcw-image-container" v-show="isImage && !isLoading && error==''" @click="clickImageHandler">
-      <img :src="imageSrc" :alt="imageSrc" ref="imageContainer" @load="imageLoaded"/>
+      <img :src="imageSrc" :alt="imageSrc" ref="imageContainer" @error="imageFallback" @load="imageLoaded"/>
     </div>
     <div v-show="error">
       <p><i style="font-size: 2em; display: inline-block"><icon name="close"></icon></i> {{ error }}</p>
@@ -64,14 +64,23 @@
       URL.revokeObjectURL(this.imageSrc);
     },
     methods: {
-      getImageThumbnail(url) {
+      imageFallback() {
+        const comment = this.comment;
+        const textMessage = (!this.isReply) ? this.message : comment.payload.replied_comment_message;
+        const uri = this.getImageThumbnail(comment.getAttachmentURI(textMessage), 100, 100);
+        this.imageSrc = uri;
+      },
+      getImageThumbnail(url, width, height) {
         const baseUrlSegment = url.split('//');
         const urlSegment = baseUrlSegment[1].split('/');
         if (urlSegment.length !== 6) return url;
         // take two last segment
         const imageRelativePath = `${urlSegment[4]}/${urlSegment[5]}`;
         const baseImagePath = url.substr(0, url.length - imageRelativePath.length);
-        return `${baseImagePath}c_thumb,g_center,h_100,w_100/${imageRelativePath}`;
+        if (typeof width !== 'undefined' && typeof height !== 'undefined') {
+          return `${baseImagePath}c_thumb,g_center,h_100,w_100/${imageRelativePath}`;
+        }
+        return `${baseImagePath}w_320,h_320,c_limit/${imageRelativePath}`;
       },
       clickImageHandler() {
         if (this.onClickImage) {
@@ -134,8 +143,7 @@
     align-items center
     justify-content center
     overflow hidden
-    max-width 200px
-    max-height 200px
+    height 200px
 
   .qcw-image-container
     img
