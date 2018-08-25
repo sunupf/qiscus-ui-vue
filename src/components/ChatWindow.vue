@@ -138,6 +138,7 @@ export default {
     },
     toggleAttachmentForm() {
       this.showAttachmentForm = !this.showAttachmentForm;
+      document.querySelectorAll('.qcw-comment-form input[type=file]')[1].value = null;
     },
     headerClickedHandler() {
       this.core.options.headerClickedCallback();
