@@ -258,7 +258,9 @@ export default {
       return element.scrollIntoView({ block: 'end',  behaviour: 'smooth' });
     },
     resend(comment) {
-      return this.core.resendComment(comment)
+      const commentToBeSent = Object.assign({}, comment);
+      commentToBeSent.payload = JSON.stringify(commentToBeSent.payload);
+      return this.core.resendComment(commentToBeSent)
         .then(() => this.$toasted.success('Resending comment successful'),
         () => this.$toasted.error('Resending comment failed'));
     },
