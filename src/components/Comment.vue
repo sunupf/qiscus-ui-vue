@@ -19,7 +19,8 @@
 
           //- Comment User
           //- span(class="qcw-comment__username" v-if="isParent && isGroupRoom && !isMe") {{comment.username_as}}
-          span(class="qcw-comment__username" v-if="isParent && !isMe") {{comment.username_as}}
+          span(class="qcw-comment__username" :class="{'qcw-comment__username--hide': isMe}" v-if="isParent") {{comment.username_as}}
+          
 
           //- reply button
           i(@click="replyHandler(comment)" class="reply-btn" :class="{'reply-btn--me': isMe}" v-if="!isDeleted && !isMe")
