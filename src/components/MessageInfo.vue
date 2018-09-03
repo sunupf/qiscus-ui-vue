@@ -2,11 +2,18 @@
   div(class="qcw-message-info")
     div(class="qcw-message-info__header")
       span Message Info
-      span(@click="closeMessageInfo") 
+      span(@click="closeMessageInfo")
         icon(name="ic-close")
 
     div(class="qcw-message-info__comment")
-      div(class="qcw-message-info__comment-text" v-html="data.comment.message")
+      div(class="qcw-message-info__comment-text"
+        v-if="data.comment.type=='file_attachment'")
+        image-loader(
+          :comment="data.comment"
+          :message="data.comment.message")
+      div(class="qcw-message-info__comment-text"
+        v-html="data.comment.message"
+        v-if="data.comment.type != 'file_attachment'")
       small(class="qcw-message-info__comment-time") {{ data.comment.time }}
 
     div(class="qcw-message-info__info")
@@ -33,11 +40,12 @@
 
 <script>
 import Icon from './Icon';
+import ImageLoader from './ImageLoader';
 
 export default {
   name: 'MessageInfo',
   props: ['core'],
-  components: { Icon },
+  components: { Icon, ImageLoader },
   data() {
     return {
       delivered: [],
@@ -90,7 +98,7 @@ export default {
   flex 0 auto
   .qc-icon
     width 14px
-    height 14px    
+    height 14px
 
   & span:nth-child(2)
     cursor pointer
