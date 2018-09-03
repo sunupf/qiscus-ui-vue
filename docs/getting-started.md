@@ -28,7 +28,7 @@ your user to other users on the same `APP ID`. You can get your `APP ID` [here](
 You can find your `APP ID` on your Qiscus app dashboard. Here you can see the
 picture as a reference.
 
-![App ID Location](https://cdn.rawgit.com/qiscus/qiscus-sdk-web/feature/docs/docs/images/app-id.png "Your APP ID location")
+![App ID Location](https://cdn.rawgit.com/qiscus/qiscus-ui-vue/raw/master/screenshots/app-id.png "Your APP ID location")
 
 > All users within the same qiscus application are able to communicate with
 > each other, across all platforms. This means users using iOS, Android, web
@@ -114,13 +114,14 @@ Don’t forget to save your file as HTML file.
 
 >id value “qiscus-widget” is fixed. For now you cannot change it to anything else.
 
-After creating a container, you need to render Qiscus Chat UI by calling render function.
+After creating a container, you need to set the user and render Qiscus Chat UI by calling render function.
 ```html
+QiscusSDK.core.setUser('userId', 'userKey', 'Qiscus Demo', 'http://some-url.com/avatar.png')
 QiscusSDK.render();
 ```
 
 If everything is done properly you will get something like this
-![sdk screen](https://cdn.rawgit.com/qiscus/qiscus-sdk-web/feature/docs/docs/images/sdk-screen.png "SDK Screen")
+![sdk screen](https://cdn.rawgit.com/qiscus/qiscus-ui-vue/raw/master/screenshots/sdk-screen.png "SDK Screen")
 
 The widget chat above appear and it seems inactive. This happened because you
 have not set any target to chat with. But don't worry, the step-by-step guidance
@@ -162,7 +163,7 @@ _Event Handler_), to enable chatting after user successfully logged into the app
 
 When everything is done correctly, you will see Qiscus Chat UI as showed in the
 figure below:
-![1-on-1 Screen](https://cdn.rawgit.com/qiscus/qiscus-sdk-web/feature/docs/docs/images/1-on-1-screen.png "1-on-1 Screen")
+![1-on-1 Screen](https://cdn.rawgit.com/qiscus/qiscus-ui-vue/raw/master/screenshots/1-on-1-screen.png "1-on-1 Screen")
 
 
 ## Group Chat Room
@@ -265,11 +266,14 @@ QiscusSDK.core.UI.chatGroup('room-id')
 ### Participant Management
 
 In some cases, you may need to add additional participants into your room chat
-or even removing any participant. Currently, Qiscus Chat SDK only allow you
-to manage your users server to server. You cannot do it on you client app side.
-Hence, we recommend to invite and remove user out of specific room through
-our [SERVER API](https://www.qiscus.com/docs/restapi) for simplicity and
-security reason. You can learn how to use Server API here.
+or even removing any participant. This two methods you can use to managing participant.
+
+```
+QiscusSDK.core.addParticipantsToGroup(roomId, [emails])
+QiscusSDK.core.removeParticipantsFromGroup(roomId, [emails])
+```
+
+
 ## Enable Desktop Notification
 
 By default, desktop notification feature is available on your web browser. To get notification, you need to enable browser notification on the browser pop-up.
