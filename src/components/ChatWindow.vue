@@ -18,6 +18,10 @@
         @toggle-window="() => toggleWindowStatus()"
         @header-click="() => headerClickedHandler()")
 
+      div(v-if="!core.selected" class="empty-state")
+        img(v-if="core.UI.emptyStateUrl" :src="core.UI.emptyStateUrl")
+        div No Active Room. Please open conversation first.
+
       attachment-form(
         :uploadHandler="uploadFile"
         :displaying="showAttachmentForm"
@@ -40,7 +44,7 @@
         @onDragging="onDragging")
 
       comment-form(:core="core"
-        v-if="core.UI.config.showCommentForm"
+        v-if="core.UI.config.showCommentForm && core.selected"
         :repliedComment="repliedComment"
         :showAttachmentForm="showAttachmentForm"
         :toggleAttachmentForm="toggleAttachmentForm"
@@ -301,4 +305,15 @@ export default {
     svg.qc-icon
       height 12px
       width 12px
+
+  .empty-state
+      display flex
+      flex-direction column
+      align-items center
+      justify-content center
+      width 100%
+      height 100%
+      padding 30px
+      background #FFF
+      text-align center
 </style>

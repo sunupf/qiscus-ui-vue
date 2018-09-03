@@ -82,6 +82,7 @@ export default {
       isMessageInfoActive: false,
       messageInfoData: null,
       autoExpandWidget: false,
+      emptyStateUrl: '',
       chatTarget(target) {
         return self.core.chatTarget(target).then((res) => {
           if (!self.chatWindowStatus && self.core.UI.autoExpandWidget) self.toggleWindowStatus();
