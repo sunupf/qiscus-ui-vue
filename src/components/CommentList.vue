@@ -406,6 +406,9 @@ export default {
       left 0
       text-align left
       white-space nowrap
+      &.qcw-comment__username--hide{
+        display : none;
+      }
     .qcw-comment__more
       position absolute
       overflow hidden
