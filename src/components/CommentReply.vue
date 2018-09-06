@@ -5,18 +5,20 @@
       image-loader(v-if="comment.isAttachment(comment.payload.replied_comment_message)"
         :comment="comment"
         :message="comment.payload.replied_comment_message"
+        :thumbnailMode="true"
         :on-click-image="onClickImage"
         :callback="callback")
-      
-      comment-render(v-if="!comment.isAttachment(comment.payload.replied_comment_message)" 
+
+      comment-render(v-if="!comment.isAttachment(comment.payload.replied_comment_message)"
         :text="comment.payload.replied_comment_message")
-    
+
     image-loader(v-if="comment.isAttachment(comment.payload.text)"
       :comment="comment"
       :message="comment.payload.text"
+      :thumbnailMode="true"
       :on-click-image="onClickImage"
       :callback="callback")
-    
+
     comment-render(v-if="!comment.isAttachment(comment.payload.text)"
       :text="comment.payload.text")
 </template>

@@ -2,3 +2,6 @@
 - Fix message info displaying url instead of thumbnail or file data
 - Add config to display custom image when there's no chatroom active.
 `QiscusUI.emptyStateUrl = 'url to empty state image'`
+- Update docs
+- Display username in message bubble by default
+- Set reply comment type to use thumbnail instead of the bigger version
