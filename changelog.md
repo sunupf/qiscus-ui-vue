@@ -5,3 +5,4 @@
 - Update docs
 - Display username in message bubble by default
 - Set reply comment type to use thumbnail instead of the bigger version
+- Fix wrong url when opening in new tab for replied message

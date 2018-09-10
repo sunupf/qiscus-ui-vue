@@ -25,14 +25,20 @@ export default {
     };
   },
   mounted() {
-    this.imageSrc = this.comment.message.substring(6, this.comment.message.length - 7).trim();
+    const message = (typeof this.comment !== 'string' && this.comment.type !== 'reply')
+      ? this.comment.message
+      : this.comment.payload.replied_comment_message;
+    this.imageSrc = message.substring(6, message.length - 7).trim();
   },
   methods: {
     openImage() {
       // get url
+      const message = (typeof this.comment !== 'string' && this.comment.type !== 'reply')
+        ? this.comment.message
+        : this.comment.payload.replied_comment_message;
       const url = (typeof this.comment !== 'string')
-                  ? this.comment.message.substring(7, this.comment.message.length - 8)
-                  : this.comment;
+        ? message.substring(7, message.length - 8)
+        : this.comment;
       window.open(url, '_blank');
     },
   },
