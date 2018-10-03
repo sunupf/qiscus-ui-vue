@@ -238,7 +238,7 @@ export default {
       };
       this.tipMessageStyle = {
         borderLeftColor: (this.isMe)
-          ? this.core.UI.colors.bubleRightTextColor
+          ? this.core.UI.colors.bubleRightColor
           : 'transparent',
         borderRightColor: (this.isMe)
           ? 'transparent'
