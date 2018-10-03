@@ -76,7 +76,7 @@ export default {
 
 <style lang="stylus">
   @import '../assets/stylus/_variables.styl'
-  .qcw-comment__message.card:before
+  .qcw-comment__message.card > .tip
     display none
   // .comment--me
   //   .comment__card--container

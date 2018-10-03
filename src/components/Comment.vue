@@ -14,8 +14,13 @@
         avatar(:src="comment.avatar" :class="{'qcw-avatar--hide': !isParent}")
 
         div(class="qcw-comment__message"
-          :style="{messageStyle:!isCustomBuble}"
+          :style="messageStyle"
           :class="{'extra-margin carousel': comment.type === 'carousel','card':comment.type === 'card','hover-effect':!isDeleted && !isCustomBuble}")
+          
+          //- Only for buble tip, for supporting js styling
+          div.tip(
+            :style="tipMessageStyle"
+          )
 
           //- Comment User
           //- span(class="qcw-comment__username" v-if="isParent && isGroupRoom && !isMe") {{comment.username_as}}
@@ -214,6 +219,7 @@ export default {
         [`qcw-comment--${this.comment.type} comment--me`]: this.comment.username_real === this.userData.email,
       },
       messageStyle: {},
+      tipMessageStyle: {},
       messageStatusIconStyle: { fill: QiscusUI.colors.messageStatusIconColor },
       messageFailedIconStyle: { fill: QiscusUI.colors.messageFailedIconColor },
       messageTimeStyle: { color: QiscusUI.colors.messageTimeColor },
@@ -221,14 +227,24 @@ export default {
     };
   },
   mounted() {
-    this.messageStyle = {
-      color: (this.isMe)
-        ? this.core.UI.colors.bubleRightTextColor
-        : this.core.UI.colors.bubleLeftTextColor,
-      background: (this.isMe)
-        ? this.core.UI.colors.bubleRightColor
-        : this.core.UI.colors.bubleLeftColor,
-    };
+    if (!this.isCustomBuble) {
+      this.messageStyle = {
+        color: (this.isMe)
+          ? this.core.UI.colors.bubleRightTextColor
+          : this.core.UI.colors.bubleLeftTextColor,
+        background: (this.isMe)
+          ? this.core.UI.colors.bubleRightColor
+          : this.core.UI.colors.bubleLeftColor,
+      };
+      this.tipMessageStyle = {
+        borderLeftColor: (this.isMe)
+          ? this.core.UI.colors.bubleRightTextColor
+          : 'transparent',
+        borderRightColor: (this.isMe)
+          ? 'transparent'
+          : this.core.UI.colors.bubleLeftColor,
+      };
+    }
   },
   methods: {
     onClickMenuOutside() {

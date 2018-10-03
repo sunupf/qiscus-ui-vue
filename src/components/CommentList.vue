@@ -533,7 +533,7 @@ export default {
       margin-right 12px
     .comment--parent.comment--last &
       margin-left 12px
-    .comment--parent &:before
+    .comment--parent & > .tip
       position absolute
       top 15px
       left -8px
@@ -543,7 +543,7 @@ export default {
       width 0
       border 4px solid transparent
       border-right-color $lightGrey
-    .comment--parent.comment--me &:before
+    .comment--parent.comment--me & > .tip
       border-left-color $white
       border-right-color transparent
       box-shadow 0 7px 16px rgba(199,199,199,.25)
